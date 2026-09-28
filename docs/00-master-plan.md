@@ -2,7 +2,7 @@
 title: Quantara POS — Master Plan
 status: living
 owner: PO
-version: 1.1
+version: 1.2
 last_updated: 2026-09-28
 mirror: Google Doc "Quantara POS — Master Plan" (humans edit there; PO syncs each approved version here)
 ---
@@ -36,7 +36,7 @@ Sprints are **1 week, Sun–Thu**, named as in Jira. The backend builds **one mo
 
 | Phase | Dates | Backend module | Design · PO / HTML | Gate |
 |---|---|---|---|---|
-| Sprint 1 — Design first | Sun 20 Sep – Fri 2 Oct | — | Research, HTML prototype (all 111 requirements), panel in Figma | — |
+| Sprint 1 — Design first | Sun 20 Sep – Thu 1 Oct | — | Research, HTML prototype (all 111 requirements), core design in Figma — closes when the backend has a good start ([close checklist](08-delivery/sprint-01.md)); the rest of the design continues in Sprint 2 | Backend start pack ready |
 | **Planning gate** | Mon 28 Sep – Thu 1 Oct | — | Scope cut, decisions group A, ADR-001 stack, Module 1 handoff | **G1: Ready to build** (Thu 1 Oct) |
 | Sprint 2 — Platform core | Sun 4 – Thu 8 Oct | **M1** tenants, branches, registers, users & roles, catalogue ([plan](08-delivery/sprint-02.md)) | Figma: platform core + cashier sale & payment · HTML: offline & power cut · M2 handoff | Decisions group B closed |
 | Sprint 3 | Sun 11 – Thu 15 Oct | **M2** Sale → payment → invoice → prep ticket, online + offline | Figma: shift close, invoices, kitchen · HTML: mixed payment, shift close | — |
@@ -82,4 +82,5 @@ Full list: [risk register](08-delivery/risk-register.md).
 | Version | Date | Change |
 |---|---|---|
 | 1.0 | 28 Sep 2026 | First version |
+| 1.2 | 28 Sep 2026 | Sprint 1 ends Thu 1 Oct (was Fri 2 Oct); it closes on "backend has a good start", not on finished design (D-34) |
 | 1.1 | 28 Sep 2026 | Sprints renamed as in Jira (design sprint = Sprint 1); backend builds one module per sprint behind a readiness gate; team: designer named, 1 backend developer |

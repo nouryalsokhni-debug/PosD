@@ -60,6 +60,7 @@ Read-only: the agent must **never** create, move, rename or delete anything in F
 ## Weekly report — Thursday 16:45 (max ~80 lines)
 Jira is the truth; the week runs Sun–Thu.
 1. **Verdict for the week** — sprint goal met / partly / not, with the evidence (Jira sprint data).
+   **If the active sprint ends today:** add its close checklist from `docs/08-delivery/sprint-NN.md` (e.g. Sprint 1 = backend start pack) with each line ✓/✗, and say which open tickets move to the next sprint.
 2. **Numbers** — planned vs done (tickets and estimated days), by owner (backend, designer, PO); carry-over list with the reason.
 3. **Backend module** — which module, what works now (from Jira Done + repo), what spills to next week.
 4. **Design** — tickets done and verified in Figma (the daily check, summarised for the week); what the front end can now build; screens `figma-approved` this week.

@@ -12,7 +12,7 @@ Score = Likelihood (1–3) × Impact (1–3). Review every Thursday; the PO agen
 | ID | Risk | L | I | Score | Mitigation | Trigger | Owner |
 |---|---|---|---|---|---|---|---|
 | R-01 | Scope (105 launch items) doesn't fit 6 weeks | 3 | 3 | 9 | Scope cut 30 Sep; weekly burn-up check | < 70% of sprint goal done | PO |
-| R-02 | Open decisions block build | 3 | 3 | 9 | Decision log with dates; weekly client check-in | Any group-A item open on 2 Oct | PO |
+| R-02 | Open decisions block build | 3 | 3 | 9 | Decision log with dates; weekly client check-in | Any group-A item open on Thu 1 Oct (Sprint 1 close) | PO |
 | R-03 | Offline sync bugs (duplicates, conflicts, double print) | 2 | 3 | 6 | Offline behaviour settled in HTML before M2; ADR-001 #3–#5; no auto-replay of prints; real outage tests | Sync defect found in Sprint 4 | Tech lead |
 | R-04 | Local payments (Syriatel Cash, Sham Cash, cards) can't integrate in time | 2 | 3 | 6 | Spike on day 1 of M2 (Sprint 3); fallback = record method + reference manually | Spike fails by 13 Oct | Tech lead |
 | R-05 | Only 1 backend developer; front end not staffed | 3 | 3 | 9 | One module per sprint; P0/P1/P2 order; catalogue may spill one day; name front-end dev before Sprint 3 | Any Sprint 2 P0 not done on 8 Oct | PO |

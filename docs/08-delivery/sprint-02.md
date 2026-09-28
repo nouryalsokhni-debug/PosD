@@ -12,21 +12,20 @@ jira: Sprint 2 — Platform core (board 638, sprint 690)
 **Sprint goal:** The backend starts Module 1 (Platform core): tenants, branches, registers, users and roles running with tenant isolation, while design and the HTML get the Sale module ready for backend in Sprint 3.
 
 ## Where we are (28 Sep)
-- Sprint 1 (design, 20 Sep – 2 Oct): 8 of 9 tasks done. **POSD-95** (panel in Figma: foundations, shell, Tenants, Tenant overview) is in progress → carries over if not done by Fri 2 Oct.
+- Sprint 1 (design, 20 Sep – Thu 1 Oct): closes when the backend has a good start — see [sprint-01](sprint-01.md). **POSD-95** (panel in Figma) is nearly done → carries over if not done by Thu 1 Oct. POSD-104 (G1) moved into Sprint 1: it is part of the start pack.
 - HTML prototype: covers all 111 requirements; Quantara panel complete; cashier printing done (step 2 A–B).
 - No backend yet. ADR-001 (stack) still *proposed*. No dev project; backend tickets live in POSD with label `backend`.
 
 ## Capacity
 | Person | Days | Plan to | Notes |
 |---|---|---|---|
-| Backend developer | 5 | 4 days (80%) | Starts only if G1 is met (POSD-104) |
+| Backend developer | 5 | 4 days (80%) | Starts only if G1 is met (POSD-104, closes with Sprint 1) |
 | Designer | 5 | 4 days | POSD-95 carryover first |
 | PO | — | — | Gate G1, Module 2 readiness, HTML step 2 C–D |
 
 ## Sprint backlog
 | Pri | Jira | Item | Est. | Owner | Depends on |
 |---|---|---|---|---|---|
-| P0 | POSD-104 | Gate G1: accept ADR-001 stack, hand Module 1 over (**due Thu 1 Oct**) | — | PO | — |
 | P0 | POSD-97 | BE-1 Project setup: repo, stack, CI, environments | 0.5 d | Backend | POSD-104 |
 | P0 | POSD-98 | BE-2 Tenants, plans, branches, registers — isolation + plan limits | 1 d | Backend | POSD-97 |
 | P0 | POSD-99 | BE-3 Users, roles & permission matrix, login (HQ, till PIN/card, manager approval) | 1.5 d | Backend | POSD-98 |
@@ -57,8 +56,7 @@ jira: Sprint 2 — Platform core (board 638, sprint 690)
 ## Key dates
 | Date | Event |
 |---|---|
-| Thu 1 Oct | Gate G1 — ADR-001 accepted, Module 1 handed over |
-| Fri 2 Oct | Sprint 1 ends; review + move POSD-95 if open |
+| Thu 1 Oct | Gate G1 — ADR-001 accepted, Module 1 handed over · **Sprint 1 closes** (16:45 weekly report = review) · move POSD-95 if open |
 | Sun 4 Oct | Sprint 2 starts |
 | Tue 6 Oct | Mid-sprint check |
 | Thu 8 Oct | Demo (tenant + branch + user created through the API; login; permission refused) · Module 2 readiness check · retro |

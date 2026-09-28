@@ -32,7 +32,7 @@ Figma is **not** a gate for the backend (it only changes looks). It is a gate fo
 Billing, subscriptions and the support queue are built in HTML but are **not** needed for 10 Nov (Electro Café is a design partner). They wait for D-32.
 
 ## What must be done to unlock the next module
-- **Unlock M1 (by 1 Oct, POSD-104):** accept ADR-001 #1 (shared DB + `tenant_id`) and #6 (backend language, framework, database). Backend developer reads the M1 handoff and flags questions.
+- **Unlock M1 (by Thu 1 Oct = Sprint 1 close, POSD-104; checklist in [sprint-01](sprint-01.md)):** accept ADR-001 #1 (shared DB + `tenant_id`) and #6 (backend language, framework, database). Backend developer reads the M1 handoff and flags questions.
 - **Unlock M2 (by 8 Oct, POSD-105):** ~~finish step 2 C–D in HTML~~ done 28 Sep; write the M2 handoff; decide ADR-001 #2–#5; answer D-10, D-11, D-14, D-29 (or accept assumptions).
 - **Unlock M3 (by 15 Oct):** finish step 2 E–F; M3 handoff; D-05, D-06, D-23.
 - **Unlock M4 (by 22 Oct):** M4 handoff; D-01, D-03, D-04.

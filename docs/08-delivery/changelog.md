@@ -9,6 +9,7 @@ last_updated: 2026-09-28
 
 Newest first. One line per meaningful change to scope, decisions, approved docs or releases.
 
+- **2026-09-28** — Sprint 1 ends Thu 1 Oct (was Fri 2 Oct) and closes on the backend start pack, not finished design (D-34). POSD-104 moved into Sprint 1. Master plan v1.2; new sprint-01 close checklist.
 - **2026-09-28** — PO agent v2: Jira is the truth for status; daily report adds a Figma design check (Done ✓ / Missing ✗ / How to fix per design ticket); new Thursday 16:45 weekly report. Figma map added; registry links for SCR-OPS-01…03.
 - **2026-09-28** — Cashier prototype step 2 C–D: long outage (hours counter, stronger warning, last known rate on a new day, retention warning, sync report with HQ changes) and power cut mid-payment (payment restored, non-cash check, never two invoices). FLOW-05 updated. Fixed a duplicate text key that broke the offline pill.
 - **2026-09-28** — Master plan v1.1 (timeline follows Jira sprints and backend modules), D-33 decided, risks R-05/R-11/R-12 updated, PO playbook adds the module readiness check.
