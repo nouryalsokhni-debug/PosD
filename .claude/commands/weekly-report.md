@@ -1,0 +1,1 @@
+Run the po-agent in `weekly` mode: the Thursday weekly report following `docs/09-operating/po-agent.md` (Jira is the truth). Save to `reports/YYYY-MM-DD-weekly.md`, then print the verdict, next-week scope and asks.

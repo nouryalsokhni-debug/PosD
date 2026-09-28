@@ -7,13 +7,15 @@ last_updated: 2026-09-28
 
 # Research — conclusions only
 
-Jira tickets hold the work; **conclusions live here** so they survive the sprint. One file per study: question · what we looked at · findings · what we decided.
+Jira holds the work; **conclusions live here**. Evidence (screenshots, matrices) stays in Figma *POS Product*.
 
-| Study | Jira | Status | Conclusions file |
+| ID | Study | Jira | Conclusions |
 |---|---|---|---|
-| Benchmark of 5 POS systems — cashier side | POSD-69 | done | _to migrate_ |
-| Counter sale — first pass, our hypothesis | POSD-90 | done | _to migrate_ |
-| SaaS back office — Foodics & Square | POSD-89 | done | _to migrate_ |
-| Tenant dashboard walkthrough with PO | POSD-92 | done | _to migrate_ |
-| Panel references (Pinterest) | POSD-94 | done | _to migrate_ |
-| Lessons: offline POS & multi-tenant SaaS | — | done | [lessons-saas-pos.md](lessons-saas-pos.md) |
+| R-01 | Cashier benchmark — 5 POS systems | POSD-69 | [R-01](R-01-cashier-benchmark.md) |
+| R-02 | Counter sale — first-pass hypothesis | POSD-90 | [R-02](R-02-counter-sale-hypothesis.md) |
+| R-03 | SaaS back office — Foodics & Square | POSD-89 | [R-03](R-03-saas-back-office.md) |
+| R-04 | Panel walkthrough & visual references | POSD-92, POSD-94 | [R-04](R-04-walkthrough-and-references.md) |
+| R-05 | Subscription models — 10 studies, top 3 recommendations | — | [R-05](R-05-subscription-models.md) |
+| — | Lessons: offline POS & multi-tenant SaaS | — | [lessons](lessons-saas-pos.md) |
+
+Control-panel build briefs (POSD-83, POSD-85) are captured as product rules in [ownership boundaries](../01-product/ownership-boundaries.md).

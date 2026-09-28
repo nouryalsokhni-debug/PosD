@@ -22,15 +22,16 @@ last_updated: 2026-09-28
 | Sun | Sprint start | Sprint goal in Jira; only DoR-ready tickets enter |
 | Tue | Client check-in (30 min) | Decisions closed → decision log + config updated; meeting note in `clients/electro-cafe/meetings/` |
 | Wed | Design review for next sprint | Screens for next sprint `figma-approved` |
-| Thu | Sprint review + planning, risk review | Demo, changelog line, risks re-scored, master plan updated if dates move |
+| Thu | Sprint review + planning, risk review, **module readiness** | Demo, changelog line, risks re-scored, master plan updated if dates move; next module's row in `08-delivery/module-readiness.md` all ✓ or escalated; next `sprint-NN.md` written |
 
 ## Per feature
 1. **Flow** exists in `docs/03-flows/` with requirement IDs.
 2. **HTML draft** → PO walk-through → `html-draft` in registry.
 3. **Figma** → review → `figma-approved`.
 4. **Decisions** affecting it are `decided`.
-5. **Jira dev ticket**: requirement IDs + flow + screen ID + acceptance criteria.
-6. **Done** = DoD met, docs updated, changelog line if scope changed.
+5. **Module handoff** (`docs/05-architecture/module-NN-*.md`) written and read by the backend developer; the module passes the [readiness gate](../08-delivery/module-readiness.md).
+6. **Jira dev ticket** (label `backend`, module epic): requirement IDs + handoff section + HTML route + acceptance criteria.
+7. **Done** = DoD met, docs updated, changelog line if scope changed.
 
 ## Per client meeting
 Before: agenda = open decisions due soonest. After (same day): meeting note · decision log · config · Google Doc mirror · regenerate client export if the spec changed.
@@ -38,7 +39,7 @@ Before: agenda = open decisions due soonest. After (same day): meeting note · d
 ## Definition of Ready (dev ticket)
 - [ ] Requirement IDs linked, acceptance criteria written
 - [ ] Flow documented
-- [ ] Screen `figma-approved` (UI tickets)
+- [ ] Screen `figma-approved` (UI tickets) · backend tickets: module handoff reviewed instead
 - [ ] Related decisions `decided`
 - [ ] Nov-10 column = IN
 

@@ -17,7 +17,7 @@ New term? Add it here **before** using it anywhere.
 | Register / POS terminal | نقطة البيع | One cashier station in a branch |
 | Cashier app | تطبيق نقطة البيع (الكاشير) | The selling screen |
 | Customer display | شاشة الزبون | Screen facing the customer |
-| Back office / HQ | لوحة التحكم المركزية | Tenant's central management |
+| Tenant HQ / back office | لوحة التحكم المركزية / الإدارة المركزية | The tenant's head office. "Central" in the client spec = tenant HQ, **never** Quantara |
 | Operator control panel | لوحة تحكم المشغّل | Quantara staff panel across all tenants |
 | Order | الطلب | Items being sold before payment is complete |
 | Held order | طلب معلّق | Order parked to serve another customer (POS-06) |

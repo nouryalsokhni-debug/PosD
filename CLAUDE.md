@@ -5,7 +5,7 @@ Read this first. It tells you where the truth lives and the rules for changing i
 ## What this is
 - **Quantara** — a multi-tenant POS SaaS for restaurants & cafés (tenant → branch → register).
 - **First client / design partner:** Electro Café (Syria). Go-live target: **Tue 10 Nov 2026**.
-- **Current phase:** planning + design (design started 18 Sep 2026). Development starts Sun 4 Oct.
+- **Current phase:** design + HTML; backend starts Sun 4 Oct with Module 1 Platform core (see `docs/08-delivery/module-readiness.md`).
 - Built by Sankari Holding — Digital Transformation. PO owns this repo.
 
 ## Three product surfaces (never mix them up)
@@ -19,14 +19,16 @@ Read this first. It tells you where the truth lives and the rules for changing i
 | Topic | Truth | Not truth |
 |---|---|---|
 | Plan, milestones, dates | `docs/00-master-plan.md` (mirror of the Google Doc) | chat, Jira descriptions |
+| Who owns what (Quantara / HQ / branch) | `docs/01-product/ownership-boundaries.md` (D-25) | screens |
 | What the product does | `docs/02-requirements/requirements.md` (IDs: GEN-01…) | `source/*.xlsx` (frozen v1) |
 | Client values | `clients/electro-cafe/config.md` | requirements |
 | Decisions | `docs/06-decisions/decision-log.md` (IDs: D-01…) | meeting memory |
 | Step-by-step behaviour | `docs/03-flows/` | screens |
 | Visuals of a screen | **Figma** once the screen is `figma-approved` in `docs/04-design/screen-registry.md` | HTML |
 | Behaviour / flow exploration | **HTML prototype** in `prototype/` while screen is `html-draft` | Figma |
-| Work status | **Jira** (POSD = design, dev project TBD) | this repo |
-| Architecture | `docs/05-architecture/adr/` | code comments |
+| Work status | **Jira** POSD (design, PO and backend — label `backend`) | this repo |
+| Architecture | `docs/05-architecture/adr/` + module handoffs `docs/05-architecture/module-NN-*.md` | code comments |
+| When the backend may start a module | `docs/08-delivery/module-readiness.md` | chat |
 
 If two sources disagree: follow the table, then **flag the conflict** to the PO — never silently pick one.
 
@@ -44,14 +46,14 @@ If two sources disagree: follow the table, then **flag the conflict** to the PO 
 ## Map
 ```
 docs/00-master-plan.md        plan, timeline, team, governance (mirror of Google Doc)
-docs/01-product/              overview, glossary (EN/AR), roles
+docs/01-product/              overview, glossary (EN/AR), roles, ownership boundaries (Quantara · HQ · branch)
 docs/02-requirements/         requirements (master), out-of-scope
 docs/03-flows/                business flows (sale, refund, shift, offline, back office)
 docs/04-design/               screen registry, Figma↔HTML rules, design tokens
-docs/05-architecture/adr/     architecture decisions
+docs/05-architecture/         ADRs (adr/) and backend module handoffs (module-NN-*.md)
 docs/06-decisions/            decision log (client/business decisions)
 docs/07-research/             research conclusions (benchmarks etc.)
-docs/08-delivery/             delivery plan, risk register, changelog
+docs/08-delivery/             delivery plan, sprint plans, module readiness, risk register, changelog
 docs/09-operating/            PO playbook, DoR/DoD, doc conventions, PO-agent spec
 clients/electro-cafe/         config, meetings
 prototype/                    HTML reference prototype (see its CLAUDE.md)
@@ -60,6 +62,6 @@ templates/                    ADR, screen spec, meeting note, feature brief
 ```
 
 ## Connected tools
-- **Jira** site `sankari-holding.atlassian.net`, project **POSD** (design). Dev project key: TBD.
-- **Figma** — file links are recorded per screen in the screen registry.
+- **Jira** site `sankari-holding.atlassian.net`, project **POSD** — design, PO and backend work (backend label `backend`, one epic per module, e.g. POSD-96).
+- **Figma** — file "POS Product" (fileKey `oMDP77W6vVs5lD3GRZurFE`); page and frame IDs in `docs/04-design/figma-map.md`, links per screen in the screen registry.
 - **Google Drive** — human folder "Quantara POS" (see `docs/09-operating/drive-structure.md`).

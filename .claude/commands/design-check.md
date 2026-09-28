@@ -1,0 +1,1 @@
+Run the po-agent in `design` mode: check every in-progress or just-done design ticket in Jira against the Figma file (see `docs/04-design/figma-map.md`). For each: Done ✓, Missing ✗, How to fix, Verdict. Read-only in Figma. Save to `reports/YYYY-MM-DD-design.md`.

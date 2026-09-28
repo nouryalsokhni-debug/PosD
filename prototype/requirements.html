@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quantara · Requirements in the prototype</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <style>
+    :root { --bg:#f4f2ee; --surface:#fff; --line:#e3dfd8; --ink:#1c1b19; --ink2:#5c554b; --accent:#1f5f5b; --pos:#1e6b3a; --pos-bg:#e4f2e8; --warn:#7a4f0e; --warn-bg:#fbf1de; --crit:#a1261b; --crit-bg:#fbe7e4; --neu:#4f4b45; --neu-bg:#eeebe6; --info:#1f4f8a; --info-bg:#e6eef8; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 "IBM Plex Sans", system-ui, sans-serif; }
+    header { padding: 24px 28px 8px; }
+    h1 { margin: 0 0 4px; font-size: 26px; }
+    .sub { margin: 0; color: var(--ink2); }
+    .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; padding: 16px 28px; }
+    .tile { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; cursor: pointer; text-align: start; font: inherit; color: inherit; }
+    .tile.on { outline: 2px solid var(--accent); }
+    .tile b { display: block; font-size: 26px; }
+    .bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; padding: 0 28px 12px; }
+    label { font-size: 12.5px; color: var(--ink2); display: grid; gap: 4px; }
+    input, select { font: inherit; padding: 8px 10px; border: 1px solid #cfc9bf; border-radius: 8px; background: #fff; min-width: 180px; }
+    main { padding: 0 28px 40px; }
+    table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+    th, td { text-align: start; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; font-size: 14px; }
+    th { background: #faf8f5; font-size: 12.5px; color: var(--ink2); position: sticky; top: 0; }
+    tr.dom td { background: var(--neu-bg); font-weight: 600; font-size: 13px; }
+    code { font-family: "IBM Plex Mono", monospace; font-size: 12.5px; }
+    .muted { color: var(--ink2); font-size: 13px; }
+    .b { display: inline-block; border-radius: 999px; padding: 1px 9px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+    .works { background: var(--pos-bg); color: var(--pos); } .decision { background: var(--warn-bg); color: var(--warn); } .phase2, .dropped { background: var(--neu-bg); color: var(--neu); }
+    .shown { background: var(--info-bg); color: var(--info); } .open { background: var(--crit-bg); color: var(--crit); }
+    .dtag { background: var(--warn-bg); color: var(--warn); border: 1px dashed #e0b86a; }
+    a { color: var(--accent); } .links a { display: inline-block; margin-inline-end: 10px; }
+    .n10 { font-family: "IBM Plex Mono", monospace; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Requirements in the prototype</h1>
+    <p class="sub">All 111 requirements from <code>docs/02-requirements/requirements.md</code>, where to see each one, and what still waits. Internal PO tool — English only. Open a link to jump to the screen.</p>
+  </header>
+  <div class="tiles" id="tiles"></div>
+  <div class="bar">
+    <label>Search <input id="q" type="search" placeholder="ID or text"></label>
+    <label>Domain <select id="dom"></select></label>
+    <label>Scope for 10 Nov <select id="n10"><option value="">Any</option><option>IN</option><option>MIN</option><option>LATER</option><option>TBD</option></select></label>
+  </div>
+  <main><table><thead><tr><th>ID</th><th>Requirement</th><th>Priority · phase</th><th>10 Nov</th><th>In the prototype</th><th>Where to see it</th></tr></thead><tbody id="rows"></tbody></table></main>
+  <script src="js/coverage-data.js"></script>
+  <script>
+    var STATES = { works: "Works", decision: "Waits for a decision", shown: "Shown (guaranteed)", phase2: "Phase 2", dropped: "Dropped", open: "Requirement text missing" };
+    var HINT = { works: "Clickable in the prototype", decision: "Shown with a placeholder until the client decides", shown: "Shown as a rule; nothing to click", phase2: "Shown as out of the first launch", dropped: "Removed by a PO decision", open: "Fix the requirement row first" };
+    var R = window.COVERAGE, f = { state: "", q: "", dom: "", n10: "" };
+    function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+    var doms = []; R.forEach(function (r) { if (doms.indexOf(r.domain) < 0) doms.push(r.domain); });
+    document.getElementById("dom").innerHTML = '<option value="">Any</option>' + doms.map(function (d) { return "<option>" + esc(d) + "</option>"; }).join("");
+    function tiles() {
+      var c = {}; R.forEach(function (r) { c[r.state] = (c[r.state] || 0) + 1; });
+      document.getElementById("tiles").innerHTML = '<button class="tile' + (f.state ? "" : " on") + '" data-s=""><span class="muted">All requirements</span><b>' + R.length + "</b></button>" +
+        Object.keys(STATES).filter(function (s) { return c[s]; }).map(function (s) { return '<button class="tile' + (f.state === s ? " on" : "") + '" data-s="' + s + '" title="' + HINT[s] + '"><span class="b ' + s + '">' + STATES[s] + "</span><b>" + c[s] + "</b></button>"; }).join("");
+    }
+    function draw() {
+      tiles(); var last = "", q = f.q.toLowerCase();
+      document.getElementById("rows").innerHTML = R.filter(function (r) {
+        return (!f.state || r.state === f.state) && (!f.dom || r.domain === f.dom) && (!f.n10 || r.nov10 === f.n10) && (!q || (r.id + " " + r.title + " " + r.detail).toLowerCase().indexOf(q) > -1);
+      }).map(function (r) {
+        var head = r.domain !== last ? '<tr class="dom"><td colspan="6">' + esc(r.domain) + "</td></tr>" : ""; last = r.domain;
+        return head + "<tr><td><code>" + esc(r.id) + "</code></td><td><b>" + esc(r.title) + '</b><div class="muted">' + esc(r.detail) + "</div></td><td class=muted>" + esc(r.priority || "—") + " · " + esc(r.phase || "—") + '</td><td class="n10">' + esc(r.nov10) + "</td>" +
+          '<td><span class="b ' + r.state + '" title="' + HINT[r.state] + '">' + STATES[r.state] + "</span>" + (r.decision ? ' <span class="b dtag">' + esc(r.decision) + "</span>" : "") + "</td>" +
+          '<td class="links">' + (r.links.length ? r.links.map(function (l) { return '<a href="' + esc(l[1]) + '" target="_blank">' + esc(l[0]) + "</a>"; }).join("") : '<span class="muted">—</span>') + "</td></tr>";
+      }).join("");
+    }
+    document.getElementById("tiles").addEventListener("click", function (e) { var b = e.target.closest("[data-s]"); if (b) { f.state = b.getAttribute("data-s"); draw(); } });
+    document.getElementById("q").addEventListener("input", function (e) { f.q = e.target.value; draw(); });
+    document.getElementById("dom").addEventListener("change", function (e) { f.dom = e.target.value; draw(); });
+    document.getElementById("n10").addEventListener("change", function (e) { f.n10 = e.target.value; draw(); });
+    draw();
+  </script>
+</body>
+</html>

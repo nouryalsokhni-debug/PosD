@@ -1,0 +1,76 @@
+/* Day 10 operations screens. Same tokens as panel.css; logical properties only. */
+.req-ref { display: inline-block; font-family: var(--mono); font-size: 11.5px; color: var(--ink-3, #6b665e); background: var(--neu-bg); border-radius: 4px; padding: 1px 6px; direction: ltr; unicode-bidi: isolate; }
+.decision-tag { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; color: var(--warn); background: var(--warn-bg); border: 1px dashed #e0b86a; border-radius: 999px; padding: 1px 8px; white-space: nowrap; }
+.decision-tag .icon svg { inline-size: 13px; block-size: 13px; }
+.pos { color: var(--pos); } .neg { color: var(--crit); }
+.cell-line { display: block; white-space: nowrap; }
+.tile__sub { font-size: 12px; color: var(--ink-3, #6b665e); }
+.stack--tight { display: inline-flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+
+.bars { display: flex; align-items: flex-end; gap: 6px; block-size: 220px; padding-block: 8px 4px; border-block-end: 1px solid var(--line); overflow-x: auto; }
+.bars__col { flex: 1 0 34px; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; block-size: 100%; gap: 4px; }
+.bars__bar { inline-size: 70%; min-inline-size: 16px; background: var(--accent); border-radius: 4px 4px 0 0; opacity: .85; }
+.bars__col:hover .bars__bar { opacity: 1; }
+.bars__val { font-size: 10.5px; color: var(--ink-3, #6b665e); white-space: nowrap; writing-mode: horizontal-tb; max-inline-size: 90px; overflow: hidden; text-overflow: ellipsis; }
+.bars__lbl { font-size: 11.5px; color: var(--ink-2, #4f4b45); white-space: nowrap; }
+
+.sharebar { display: inline-flex; align-items: center; gap: 8px; justify-content: flex-end; min-inline-size: 110px; }
+.sharebar__fill { display: inline-block; block-size: 6px; background: var(--accent); border-radius: 3px; max-inline-size: 60px; }
+
+.count-grid { display: grid; gap: 10px; }
+.count-row { display: grid; grid-template-columns: 56px 1fr 160px 120px; gap: 10px; align-items: center; }
+
+.thumb { display: inline-flex; align-items: center; justify-content: center; inline-size: 34px; block-size: 34px; border-radius: 6px; background: var(--accent-soft); color: var(--accent); font-weight: 700; }
+.thumb--none { background: var(--neu-bg); color: var(--ink-3, #6b665e); }
+
+.tree, .tree ul { list-style: none; margin: 0; padding-inline-start: 0; }
+.tree ul { padding-inline-start: 28px; border-inline-start: 1px dashed var(--line-strong); margin-inline-start: 10px; }
+.tree li { padding-block: 5px; }
+.tree__node { display: inline-flex; align-items: center; gap: 8px; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border: 1px solid var(--line-strong); border-radius: 999px; background: var(--surface); font-size: 13.5px; }
+
+.dropzone { display: grid; justify-items: center; gap: 6px; padding: 28px 16px; border: 2px dashed var(--line-strong); border-radius: var(--radius-lg); background: var(--surface); text-align: center; }
+.dropzone p { margin: 0; }
+.fieldset { border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 14px; margin: 0; }
+.fieldset legend { font-size: 13px; font-weight: 600; padding-inline: 4px; }
+
+.matrix th[scope="row"] { font-weight: 500; }
+.matrix__role { text-align: center; font-size: 12.5px; }
+.matrix__cell { text-align: center; }
+.matrix__cell input { inline-size: 18px; block-size: 18px; accent-color: var(--accent); }
+.matrix__group th { background: var(--neu-bg); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-2, #4f4b45); }
+.receipt-panel { display: grid; gap: 10px; }
+
+@media (max-width: 760px) { .count-row { grid-template-columns: 1fr 1fr; } }
+
+.tabs__panel .tiles .tile__value { font-size: 22px; overflow-wrap: anywhere; }
+.tabs__list { flex-wrap: wrap; }
+
+/* Day 11 — screen states, lifecycle, ticket thread */
+.state { display: grid; justify-items: center; text-align: center; gap: 8px; padding: 32px 16px; }
+.state--error .empty__icon { color: var(--crit); background: var(--crit-bg); }
+.state--offline .empty__icon { color: var(--warn); background: var(--warn-bg); }
+.state--forbidden .empty__icon { color: var(--neu); background: var(--neu-bg); }
+.state--loading { justify-items: stretch; }
+.skeleton { display: block; block-size: 16px; border-radius: 6px; background: linear-gradient(90deg, var(--neu-bg), #f7f5f1, var(--neu-bg)); background-size: 200% 100%; animation: sk 1.2s linear infinite; }
+.skeleton:nth-child(3) { inline-size: 80%; } .skeleton:nth-child(4) { inline-size: 60%; }
+@keyframes sk { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+@media (prefers-reduced-motion: reduce) { .skeleton { animation: none; } }
+.states-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+.lifecycle { list-style: none; margin: 0 0 12px; padding: 0; display: grid; gap: 6px; }
+.lifecycle li { display: grid; grid-template-columns: auto 1fr; gap: 8px; align-items: center; padding: 6px 8px; border-radius: 8px; font-size: 13px; }
+.lifecycle li.is-current { background: var(--accent-soft); outline: 1px solid var(--accent); }
+.row-actions.wrap { flex-wrap: wrap; }
+.thread { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.thread__msg { background: var(--neu-bg); border-radius: 10px; padding: 8px 12px; max-inline-size: 85%; }
+.thread__msg--us { background: var(--accent-soft); margin-inline-start: auto; }
+.thread__msg p { margin: 4px 0 0; }
+.thread__who { font-size: 12px; color: var(--ink-3, #6b665e); }
+.textarea { min-block-size: 70px; padding: 8px 10px; resize: vertical; }
+.cell-wrap { display: block; white-space: normal; min-inline-size: 240px; }
+.states-grid .section__head, .states-grid header { flex-wrap: wrap; }
+.link-btn { all: unset; cursor: pointer; color: var(--ink); font-weight: 600; text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px; }
+.link-btn:hover { text-decoration-color: currentColor; }
+.link-btn:focus-visible { outline: 2px solid var(--focus, currentColor); outline-offset: 2px; border-radius: 2px; }

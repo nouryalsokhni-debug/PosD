@@ -12,7 +12,7 @@ mirror: Google Doc 'Quantara POS — Open Decisions' (humans edit there; PO sync
 - **Ref** = requirement IDs · questionnaire question numbers (Q).
 - *Proposed* = an answer already written in client spec v1 that the client has **not** confirmed yet.
 - When a decision is made: fill Answer + Date, set `decided`, update the affected requirements / config, add a line to `docs/08-delivery/changelog.md`.
-- D-23 and D-24 were added on 28 Sep from the Electro Café config sheet.
+- D-23 and D-24 were added on 28 Sep from the Electro Café config sheet. D-25 → D-30 are product decisions taken from the design research (Jira POSD).
 
 ## A. Needed by Thu 1 Oct — blocks design & dev start
 
@@ -52,6 +52,20 @@ mirror: Google Doc 'Quantara POS — Open Decisions' (humans edit there; PO sync
 | D-16 | Policy for staff meals and free items? | Otherwise a permanent gap in stock & sales. | USR-07 · Q42 | Owner | proposed | Spec v1: zero-price within a daily limit. Limit value still open. | |
 | D-17 | Mall-staff discount %, and how staff prove eligibility? | Needed to configure the discount. | PRC-06 · Q17 | Owner + Mall mgmt | open |  | |
 | D-19 | Opening hours, closing days, staff per branch? | Sets support window, shifts and training plan. | OPS-01, OPS-02 · Q11, Q71 | Admin | open |  | |
+
+## P. Product decisions (PO) — from design research
+
+| ID | Question | Why it matters | Ref | Owner | Status | Answer | Date |
+|---|---|---|---|---|---|---|---|
+| D-25 | Who owns what across Quantara / tenant HQ / branch? | Every screen and permission depends on it | POSD-85 · [ownership boundaries](../01-product/ownership-boundaries.md) | PO | decided | Boundary table in ownership-boundaries.md | 2026-09-24 |
+| D-26 | Sync conflict rule | Offline registers vs HQ edits | OFF-05, OFF-06 · POSD-85 | PO | decided | Owner of the value wins, other side notified; branch overrides are separate records; sales/refunds/shift closes never conflict | 2026-09-24 |
+| D-27 | Invoice numbering scheme | Must stay gapless while registers sell offline | FIS-01 · POSD-85 | PO + Accountant | proposed | Gapless per register, `<TENANT>-<BRANCH>-R<n>` — awaiting accountant | |
+| D-28 | Live screen mirroring (NH-07) at launch? | Scope | NH-07 · POSD-85 | PO | decided | Dropped; HQ gets live order/activity feed per register | 2026-09-24 |
+| D-29 | Cashier payment details: change in USD or mixed? delivery mode? card payment when? | Payment & change screens | PAY-* · POSD-90 · R-02 | PO | open | | |
+| D-30 | SaaS packaging: plan changes self-service or via us? inventory behind a paid tier? POS mode per device? | Operator panel, pricing, modules | POSD-89 · R-03 | PO | open | | |
+| D-31 | 17 open UX questions from the panel walkthrough (layers, catalogue & prices, branches & plan, support access, suspension) | They decide behaviour on 9 panel screens | POSD-92 · [prototype README → Open questions](../../prototype/README.md) | PO | open | Each question lists what the prototype does for now | |
+| D-33 | How the backend runs next to design | Order of work for 10 Nov | [module-readiness](../08-delivery/module-readiness.md) · [sprint-02](../08-delivery/sprint-02.md) | PO | decided | One module at a time behind a 5-point readiness gate; M1 Platform core first (Sprint 2, 4–8 Oct); 1-week sprints; backend tickets in POSD with label `backend`; 1 backend developer | 2026-09-28 |
+| D-32 | How Quantara charges tenants: plans, add-ons, billing | Pricing, billing screen, suspension rules | [R-05](../07-research/R-05-subscription-models.md) · D-30 | PO + management | proposed | Per-branch plans (Starter · Growth · Chain) with registers included · modules as add-ons · USD, monthly or yearly, 30-day trial, no lock-in, till never stops | |
 
 ## Decided
 

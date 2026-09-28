@@ -22,4 +22,6 @@ Electro Café launch mode: order at the counter, pay up front, takeaway.
 
 **Open decisions:** D-03 tax · D-04 discount ceiling · D-10 mixed payment · D-11 rounding · D-18 company invoice · D-01 stock level.
 
-**Edge cases to specify:** offline during payment · printer offline · wallet payment confirmed late / twice · rate changed mid-shift · power cut mid-order (OFF-08).
+**Printing (prototype, step 2):** receipt prints only on request; kitchen ticket prints per station by itself. If a printer is out of paper or off, the sale is still saved (FIS-01), the cashier sees "not printed", and the job waits in *To print*. Nothing is replayed by itself when the printer comes back (avoids duplicate tickets); a late kitchen ticket is marked "Late print".
+
+**Edge cases to specify:** offline during payment · wallet payment confirmed late / twice · rate changed mid-shift · power cut mid-order (OFF-08).

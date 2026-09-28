@@ -2,7 +2,7 @@
 title: Quantara POS — Master Plan
 status: living
 owner: PO
-version: 1.0
+version: 1.1
 last_updated: 2026-09-28
 mirror: Google Doc "Quantara POS — Master Plan" (humans edit there; PO syncs each approved version here)
 ---
@@ -23,7 +23,7 @@ mirror: Google Doc "Quantara POS — Master Plan" (humans edit there; PO syncs e
 ## 3. Scope
 - **Master list:** [requirements](02-requirements/requirements.md) — 111 requirements (87 Must, 105 Launch).
 - **Excluded:** [out-of-scope](02-requirements/out-of-scope.md) — tables, QR ordering, reservations, loyalty, mall-% module, deferred sales.
-- **10-Nov cut:** 105 "Launch" items do **not** fit 6 weeks. Each requirement gets `IN / LATER` in the *Nov-10* column during the **scope-cut session (Wed 30 Sep)**, driven by D-21.
+- **10-Nov cut:** 105 "Launch" items do **not** fit 6 weeks. A proposal is in the *Nov-10* column (66 IN · 14 MIN · 23 LATER · 8 TBD) — see [scope-nov10](02-requirements/scope-nov10.md). Confirmed in the **scope-cut session (Wed 30 Sep)**, driven by D-21.
 - **Three surfaces**, in priority order:
   1. **Cashier app** (+ customer display, prep tickets) — must be complete.
   2. **Tenant back office** — essentials only (catalogue, prices, exchange rate, users, shift & sales reports).
@@ -32,24 +32,26 @@ mirror: Google Doc "Quantara POS — Master Plan" (humans edit there; PO syncs e
 ## 4. Timeline
 Work week assumed **Sun–Thu** (confirm). Design runs one sprint ahead of development.
 
-| Phase | Dates | Output | Gate |
-|---|---|---|---|
-| Design & research | 18 Sep → ongoing | Benchmarks, HTML prototypes, Figma | — |
-| **Planning gate** | Mon 28 Sep – Thu 1 Oct | Scope cut, decisions group A, ADR-001, dev Jira project, repo | **G1: Ready to build** (Thu 1 Oct) |
-| Sprint 1 | Sun 4 – Thu 8 Oct | Tenancy, auth & roles, catalogue, offline storage skeleton · Figma: cashier flows approved | Decisions group B closed |
-| Sprint 2 | Sun 11 – Thu 15 Oct | Sale → payment → receipt & prep ticket · Figma: back office essentials | — |
-| Sprint 3 | Sun 18 – Thu 22 Oct | Shift & cash drawer, cancel/refund, offline sync · hardware ordered | Decisions group C closed |
-| Sprint 4 | Sun 25 – Thu 29 Oct | Back office essentials, reports, exchange rate, inventory (per D-01) | **G2: Feature complete** (Thu 29 Oct) |
-| Hardening & UAT | Sun 1 – Thu 5 Nov | Bug fixing, client UAT sign-off, menu data loaded | **G3: UAT signed** (Thu 5 Nov) |
-| Install & training | Sat 7 – Mon 9 Nov | Hardware on site, staff trained, dry run | **G4: Go / no-go** (Mon 9 Nov) |
-| **Go-live** | **Tue 10 Nov** | Live at Electro Café, hyper-care 2 weeks | — |
+Sprints are **1 week, Sun–Thu**, named as in Jira. The backend builds **one module at a time**, starting a module only when it passes the [readiness gate](08-delivery/module-readiness.md) (HTML complete, flows, handoff doc, decisions, stack). Figma gates the front end, not the backend.
+
+| Phase | Dates | Backend module | Design · PO / HTML | Gate |
+|---|---|---|---|---|
+| Sprint 1 — Design first | Sun 20 Sep – Fri 2 Oct | — | Research, HTML prototype (all 111 requirements), panel in Figma | — |
+| **Planning gate** | Mon 28 Sep – Thu 1 Oct | — | Scope cut, decisions group A, ADR-001 stack, Module 1 handoff | **G1: Ready to build** (Thu 1 Oct) |
+| Sprint 2 — Platform core | Sun 4 – Thu 8 Oct | **M1** tenants, branches, registers, users & roles, catalogue ([plan](08-delivery/sprint-02.md)) | Figma: platform core + cashier sale & payment · HTML: offline & power cut · M2 handoff | Decisions group B closed |
+| Sprint 3 | Sun 11 – Thu 15 Oct | **M2** Sale → payment → invoice → prep ticket, online + offline | Figma: shift close, invoices, kitchen · HTML: mixed payment, shift close | — |
+| Sprint 4 | Sun 18 – Thu 22 Oct | **M3** Shift & cash drawer, cancel/refund, printing, sync conflicts · hardware ordered | Figma: back office essentials | Decisions group C closed |
+| Sprint 5 | Sun 25 – Thu 29 Oct | **M4** Back office: prices & offers, exchange rate, reports, inventory (per D-01) · **M5** Quantara minimum | States, polish · UAT script | **G2: Feature complete** (Thu 29 Oct) |
+| Hardening & UAT | Sun 1 – Thu 5 Nov | Bug fixing, performance | Client UAT sign-off, menu data loaded | **G3: UAT signed** (Thu 5 Nov) |
+| Install & training | Sat 7 – Mon 9 Nov | Hardware on site, dry run | Staff trained | **G4: Go / no-go** (Mon 9 Nov) |
+| **Go-live** | **Tue 10 Nov** | Live at Electro Café, hyper-care 2 weeks | | — |
 
 ## 5. Team & roles
 | Role | Who | Owns |
 |---|---|---|
 | Product Owner | Sankari DT (PO) | Scope, priorities, decisions, this plan |
-| Designer | TBD | Figma, screen registry |
-| Developers | TBD (count, stack, full-time?) | Build, ADRs |
+| Designer | Mariam Kabbani | Figma, screen registry |
+| Developers | 1 backend developer (name TBD — by 1 Oct); front end TBD | Build, ADRs, module handoffs |
 | QA | TBD | Test cases, UAT support |
 | Client owner | Electro Café owner | Business decisions |
 | Client technical contact | TBD (D-20) | Site, hardware, UAT |
@@ -58,16 +60,17 @@ Work week assumed **Sun–Thu** (confirm). Design runs one sprint ahead of devel
 ## 6. How we work
 - **Truth lives in the repo**; Jira tracks work; Figma holds visuals; Drive holds human/client docs. See [CLAUDE.md](../CLAUDE.md).
 - **Cadence:** daily report (PO agent, 09:00) · daily 15-min stand-up · weekly sprint review & planning (Thu) · weekly client check-in (decisions).
-- **Gates:** Definition of Ready / Done in [po-playbook](09-operating/po-playbook.md).
+- **Gates:** Definition of Ready / Done in [po-playbook](09-operating/po-playbook.md); module readiness in [module-readiness](08-delivery/module-readiness.md).
+- **Jira:** everything in POSD — design, PO and backend (label `backend`, one epic per module).
 - **Change control:** after G1, any scope addition needs a decision-log entry and must name what moves out.
 
 ## 7. Top risks
 Full list: [risk register](08-delivery/risk-register.md).
 1. Scope too large for 6 weeks → scope cut on 30 Sep, weekly re-check.
 2. Open decisions block build → owners & dates in [decision log](06-decisions/decision-log.md).
-3. Offline sync bugs (duplicates, conflicts, double printing) → offline-first from sprint 1, tested with real cuts.
-4. Local payment integrations (Syriatel Cash, Sham Cash, cards) → spike in sprint 1; manual-record fallback.
-5. Team capacity unknown → confirm this week.
+3. Offline sync bugs (duplicates, conflicts, double printing) → offline behaviour settled in HTML before M2 (Sprint 3); tested with real cuts.
+4. Local payment integrations (Syriatel Cash, Sham Cash, cards) → spike at the start of M2 (Sprint 3); manual-record fallback.
+5. One backend developer → one module per sprint, strict P0/P1/P2; stack must be accepted by Thu 1 Oct or the backend can't start 4 Oct.
 6. IP ownership not in writing (D-22) → sign before G1.
 
 ## 8. Key links
@@ -79,3 +82,4 @@ Full list: [risk register](08-delivery/risk-register.md).
 | Version | Date | Change |
 |---|---|---|
 | 1.0 | 28 Sep 2026 | First version |
+| 1.1 | 28 Sep 2026 | Sprints renamed as in Jira (design sprint = Sprint 1); backend builds one module per sprint behind a readiness gate; team: designer named, 1 backend developer |

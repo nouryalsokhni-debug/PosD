@@ -10,18 +10,20 @@ last_updated: 2026-09-28
 Dates & gates: [master plan §4](../00-master-plan.md). This file = sprint goals and Jira structure.
 
 ## Jira structure
-- **POSD** — design (existing). Epics: POSD-1 Screens & design system · POSD-2 Process models · POSD-68 Sprint 1 design.
-- **Dev project** — to create by Thu 1 Oct. Proposed key: `QPOS`. One epic per requirement domain:
-  Platform & tenancy · Sales · Items & menu · Pricing & promotions · Payment & currencies · Cash drawer & shifts · Kitchen/prep · Users & permissions · Invoicing & compliance · Inventory · Reports · Offline · Hardware.
-- Every ticket: requirement IDs in the title or a label (e.g. `POS-06`), link to flow + screen ID, Definition of Done checklist.
+- **POSD** holds design, PO and backend work (decided 28 Sep). Backend tickets carry the label `backend` and a module label (`module-1`…). A separate dev project can come later.
+- Epics: POSD-1 Screens & design system · POSD-2 Process models · POSD-68 Sprint 1 design · **POSD-96 Backend — Module 1: Platform core**. One backend epic per module.
+- Every ticket: requirement IDs as labels (e.g. `USR-01`), link to the handoff doc and HTML route, Definition of Done.
 
-## Sprint goals
-| Sprint | Dates | Dev goal | Design goal (one sprint ahead) |
-|---|---|---|---|
-| Planning gate | 28 Sep – 1 Oct | Stack, repo, CI, environments | Cashier: sale + payment in Figma |
-| S1 | 4 – 8 Oct | Tenancy, auth & roles, catalogue API, offline storage skeleton, payment-integration spike | Cashier flows approved; back office essentials start |
-| S2 | 11 – 15 Oct | Sale → payment → invoice → prep ticket (online + offline) | Back office essentials approved |
-| S3 | 18 – 22 Oct | Shift & drawer, cancel/refund, sync & conflict rules, printing | Operator panel minimum; print layouts |
-| S4 | 25 – 29 Oct | Back office essentials, reports, exchange rate, inventory per D-01 | Polish, empty/error states |
-| Hardening | 1 – 5 Nov | Bugs, performance, UAT | UAT support |
-| Install | 7 – 9 Nov | Hardware, data load, training, dry run | Training material |
+## How the backend runs in parallel
+The backend builds **one module at a time**, starting a module only when it passes the readiness gate in [module-readiness.md](module-readiness.md) (HTML complete, flows, handoff doc, decisions, stack). Figma gates the front end, not the backend.
+
+## Sprints (1 week, Sun–Thu)
+| Sprint | Dates | Backend module | Design (one sprint ahead) | PO / HTML |
+|---|---|---|---|---|
+| Sprint 1 — Design first | 20 Sep – 2 Oct | — | Research, panel HTML, panel in Figma (POSD-95) | Folder, requirements, decisions |
+| **Sprint 2 — Platform core** | 4 – 8 Oct | **M1** tenants, branches, registers, users & roles, catalogue ([plan](sprint-02.md)) | Platform core screens; cashier sale & payment | G1 by 1 Oct; make M2 ready (step 2 C–D, handoff) |
+| Sprint 3 | 11 – 15 Oct | **M2** Sale: order → payment → invoice → prep ticket, online + offline | Cashier: shift close, invoices, kitchen | Make M3 ready (step 2 E–F) |
+| Sprint 4 | 18 – 22 Oct | **M3** Shift & money: shift, drawer, cancel/refund, printing, sync conflicts | HQ back office: prices, reports | Make M4 ready |
+| Sprint 5 | 25 – 29 Oct | **M4** Back office: prices & offers, exchange rate, reports, inventory · **M5** Quantara minimum | States, polish | UAT script |
+| Hardening | 1 – 5 Nov | Bugs, performance, UAT | UAT support | UAT with Electro Café |
+| Install | 7 – 9 Nov | Hardware, data load, training, dry run | Training material | Go-live Tue 10 Nov |
