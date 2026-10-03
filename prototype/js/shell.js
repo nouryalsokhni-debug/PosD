@@ -55,7 +55,6 @@
       { group: "nav.group.hq_business", items: [
         { id: "hq_branches",  icon: "pin",   href: "/branches" },
         { id: "hq_people",    icon: "users", href: "/people" },
-        { id: "hq_roles",     icon: "lock",  href: "/roles" },
         { id: "hq_reports",   icon: "chart", href: "/reports" },
         { id: "hq_payments",  icon: "coin",  href: "/payments" },
         { id: "hq_till",      icon: "cash",  href: "/till" },

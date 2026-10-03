@@ -444,15 +444,20 @@
       stateKey: "onboarding",
       header: { breadcrumbs: [{ label: t("scope.all"), href: "#/tenants" }, { label: t("flow.title") }], title: t("flow.title"), subtitle: t("flow.subtitle") },
       cancelHref: "#/tenants",
-      init: function () { return { name_en: "", name_ar: "", email: "", plan_id: "starter", currency: "SYP", time_zone: "Asia/Damascus", branch_en: "", branch_ar: "", city_en: "", city_ar: "", registers: 1 }; },
+      init: function () { return { name_en: "", name_ar: "", code: "", owner_name: "", email: "", plan_id: "starter", currency: "SYP", time_zone: "Asia/Damascus", branch_en: "", branch_ar: "", branch_code: "", city_en: "", city_ar: "", registers: 1 }; },
       steps: [
         { id: "business", label: t("flow.s1"),
           render: function (d, e, f) { return [
             row(d, e, f, "name_en", "flow.name_en", { required: true, dir: "ltr" }),
             row(d, e, f, "name_ar", "flow.name_ar", { required: true, dir: "rtl" }),
-            row(d, e, f, "email", "flow.email", { required: true, type: "email", dir: "ltr", help: t("flow.email_help") })]; },
+            row(d, e, f, "code", "flow.code", { required: true, dir: "ltr", help: t("flow.code_help") }),
+            h("div", { class: "grid-2" },
+              row(d, e, f, "owner_name", "flow.owner_name", { required: true }),
+              row(d, e, f, "email", "flow.email", { required: true, type: "email", dir: "ltr", help: t("flow.owner_help") }))]; },
           validate: function (d) {
-            var e = required(d, ["name_en", "name_ar", "email"]);
+            var e = required(d, ["name_en", "name_ar", "code", "owner_name", "email"]), code = String(d.code).trim().toUpperCase();
+            if (!e.code && !/^[A-Z0-9]{2,4}$/.test(code)) { e.code = t("flow.error_code"); e._form = e.code; }
+            else if (!e.code && Store.tenants().some(function (x) { return (x.invoice_prefix || "").toUpperCase() === code; })) { e.code = t("flow.error_code_taken"); e._form = e.code; }
             if (!e.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) { e.email = t("flow.error_email"); e._form = t("flow.error_email"); }
             return e;
           } },
@@ -468,9 +473,13 @@
               row(d, e, f, "branch_ar", "flow.branch_ar", { required: true, dir: "rtl" }),
               row(d, e, f, "city_en", "flow.city_en", { dir: "ltr" }),
               row(d, e, f, "city_ar", "flow.city_ar", { dir: "rtl" })),
-            row(d, e, f, "registers", "flow.registers", { type: "number", min: 1, max: 50, help: t("flow.registers_help") })]; },
+            h("div", { class: "grid-2" },
+              row(d, e, f, "branch_code", "flow.branch_code", { required: true, dir: "ltr", help: t("flow.branch_code_help") }),
+              row(d, e, f, "registers", "flow.registers", { type: "number", min: 1, max: 50, help: t("flow.registers_help") })),
+            UI.Banner({ tone: "info", body: t("flow.server_note") })]; },
           validate: function (d) {
-            var e = required(d, ["branch_en", "branch_ar"]), plan = Store.plan(d.plan_id);
+            var e = required(d, ["branch_en", "branch_ar", "branch_code"]), plan = Store.plan(d.plan_id);
+            if (!e.branch_code && !/^[A-Z0-9]{2,4}$/.test(String(d.branch_code).trim().toUpperCase())) { e.branch_code = t("flow.error_code"); e._form = e.branch_code; }
             if (!(d.registers >= 1)) e.registers = t("flow.required");
             else if (d.registers > plan.max_registers) { e.registers = t("flow.error_plan_limit", { plan: I18n.pick(plan, "name"), max: I18n.number(plan.max_registers) }); e._form = e.registers; }
             return e;
@@ -482,16 +491,18 @@
       finalLabel: t("flow.create"),
       finish: function (d) {
         var id = Store.slug(d.name_en), now = new Date().toISOString();
-        var regs = []; for (var i = 1; i <= d.registers; i++) regs.push({ id: id + "-1-" + i, label: "Register " + i, status: "offline", last_seen_at: null });
+        var regs = []; for (var i = 1; i <= d.registers; i++) regs.push({ id: id + "-1-" + i, n: i, label: "Register " + i, status: "offline", last_seen_at: null });
         var tn = Store.addTenant({
           id: id, name_en: d.name_en.trim(), name_ar: d.name_ar.trim(), is_sample: false, status: "onboarding",
-          plan_id: d.plan_id, currency: d.currency, time_zone: d.time_zone,
+          plan_id: d.plan_id, currency: d.currency, time_zone: d.time_zone, invoice_prefix: String(d.code).trim().toUpperCase(),
           customer_since: now.slice(0, 10), last_activity_at: now, account_owner_id: Store.me().id,
-          contact: { name: "—", email: d.email.trim(), phone: "—" },
+          contact: { name: d.owner_name.trim(), email: d.email.trim(), phone: "—" },
           settings: { receipt_bilingual: true, manager_pin_for_refunds: true, tax_number: "" },
-          branches: [{ id: id + "-1", name_en: d.branch_en.trim(), name_ar: d.branch_ar.trim(), city_en: d.city_en.trim(), city_ar: d.city_ar.trim(), status: "active", registers: regs }],
+          branches: [{ id: id + "-1", name_en: d.branch_en.trim(), name_ar: d.branch_ar.trim(), city_en: d.city_en.trim(), city_ar: d.city_ar.trim(), code: String(d.branch_code).trim().toUpperCase(), status: "active", has_invoices: false, server: { status: "never" }, registers: regs }],
           activity: [{ at: now, kind: "tenant_created", text_en: "Tenant created by onboarding", text_ar: "أنشأ فريق التهيئة المستأجر" }]
         });
+        // The owner is created as "invited": they set their own password from the invite link (Module 1 rule 9).
+        Store.hq(tn).users.push({ id: id + "-owner", name_en: d.owner_name.trim(), name_ar: d.owner_name.trim(), role: "owner", branch_id: null, status: "invited", email: d.email.trim(), panel: true, sign_in: null });
         return function () { location.hash = "/t/" + tn.id; UI.toast(t("flow.created", { name: I18n.pick(tn, "name") })); };
       }
     });
@@ -501,12 +512,15 @@
       return UI.DescList([
         { label: t("flow.name_en"), value: dash(d.name_en) },
         { label: t("flow.name_ar"), value: dash(d.name_ar) },
+        { label: t("flow.code"), value: d.code ? h("span", { dir: "ltr" }, String(d.code).toUpperCase()) : dash("") },
+        { label: t("flow.owner_name"), value: dash(d.owner_name) },
         { label: t("flow.email"), value: d.email ? h("span", { dir: "ltr" }, d.email) : dash("") },
         { label: t("flow.plan"), value: I18n.pick(plan, "name") },
         { label: t("flow.currency"), value: d.currency },
         { label: t("flow.time_zone"), value: h("span", { dir: "ltr" }, d.time_zone) },
         { label: t("col.branch"), value: dash(I18n.lang === "ar" ? d.branch_ar : d.branch_en) },
-        { label: t("col.registers"), value: I18n.number(d.registers || 0) }
+        { label: t("col.registers"), value: I18n.number(d.registers || 0) },
+        { label: t("flow.series_preview"), value: d.code && d.branch_code ? h("code", { dir: "ltr" }, String(d.code).toUpperCase() + "-" + String(d.branch_code).toUpperCase() + "-000001") : dash("") }
       ]);
     }
   }

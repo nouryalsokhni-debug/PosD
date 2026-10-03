@@ -2,7 +2,7 @@
 title: Delivery plan
 status: living
 owner: PO
-last_updated: 2026-09-28
+last_updated: 2026-10-01
 ---
 
 # Delivery plan
@@ -20,7 +20,7 @@ The backend builds **one module at a time**, starting a module only when it pass
 ## Sprints (1 week, Sun–Thu)
 | Sprint | Dates | Backend module | Design (one sprint ahead) | PO / HTML |
 |---|---|---|---|---|
-| Sprint 1 — Design first | 20 Sep – Thu 1 Oct | — | Research, panel HTML, core design in Figma (POSD-95) | Backend start pack ([close checklist](sprint-01.md)) |
+| Sprint 1 — Design first | 20 Sep – open (PO closes it) | — | Research, panel HTML, core design in Figma (POSD-95) | Backend start pack ([close checklist](sprint-01.md)) |
 | **Sprint 2 — Platform core** | 4 – 8 Oct | **M1** tenants, branches, registers, users & roles, catalogue ([plan](sprint-02.md)) | Platform core screens; cashier sale & payment | G1 by 1 Oct; make M2 ready (step 2 C–D, handoff) |
 | Sprint 3 | 11 – 15 Oct | **M2** Sale: order → payment → invoice → prep ticket, online + offline | Cashier: shift close, invoices, kitchen | Make M3 ready (step 2 E–F) |
 | Sprint 4 | 18 – 22 Oct | **M3** Shift & money: shift, drawer, cancel/refund, printing, sync conflicts | HQ back office: prices, reports | Make M4 ready |

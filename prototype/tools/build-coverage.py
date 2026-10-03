@@ -1,4 +1,5 @@
-"""Rebuilds js/coverage-data.js: every requirement in docs/02-requirements/requirements.md mapped to where the prototype shows it.
+"""Rebuilds js/coverage-data.js and js/project-data.js (the Project picture dashboard in requirements.html).
+js/coverage-data.js: every requirement in docs/02-requirements/requirements.md mapped to where the prototype shows it.
 Run from anywhere:  python prototype/tools/build-coverage.py   (edit the map M below when a screen changes)."""
 import os
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -96,6 +97,7 @@ M={
 "HW-06":("decision",[p("/devices","Devices · card terminal")],"D-29"),"HW-07":("works",[p("/devices","Devices · approved list"),["Platform settings · approved hardware","index.html#/settings"]]),
 "NH-07":("dropped",[p("","Home · live feed instead")],"D-28"),
 }
+MODULE={"General & Platform":"M1","Users & Permissions":"M1","Items & Menu":"M1","Sales":"M2","Payment & Currencies":"M2","Kitchen Display (KDS)":"M2","Offline Operation":"M2","Invoicing & Compliance":"M2","Cash Drawer & Shifts":"M3","Hardware":"M3","Pricing & Promotions":"M4","Inventory":"M4","Reports":"M4"}
 rows=[]; seen={}
 for line in open(os.path.join(ROOT, '..', 'docs', '02-requirements', 'requirements.md'), encoding='utf-8'):
     m=re.match(r'^\| ([A-Z]{2,3}-[0-9]+(?:-[0-9]+)?) \| (.*?) \| (.*?) \| (.*?) \| (.*?) \| (.*?) \| (.*?) \|',line)
@@ -105,7 +107,35 @@ for line in open(os.path.join(ROOT, '..', 'docs', '02-requirements', 'requiremen
     rid=m.group(1); seen[rid]=seen.get(rid,0)+1
     key=rid+"#"+str(seen[rid]) if rid=="POS-02" else rid
     v=M[key]; 
-    rows.append({"id":rid,"domain":dom,"title":m.group(2),"detail":m.group(3),"priority":m.group(5),"phase":m.group(6),"nov10":m.group(7),"state":v[0],"links":v[1],"decision":v[2] if len(v)>2 else ""})
+    rows.append({"id":rid,"module":MODULE.get(dom,"—"),"domain":dom,"title":m.group(2),"detail":m.group(3),"priority":m.group(5),"phase":m.group(6),"nov10":m.group(7),"state":v[0],"links":v[1],"decision":v[2] if len(v)>2 else ""})
 assert len(rows)==111, len(rows)
 open(os.path.join(ROOT, 'js', 'coverage-data.js'), 'w', encoding='utf-8').write("/* Generated from docs/02-requirements/requirements.md + the prototype map. Regenerate when either changes. */\nwindow.COVERAGE = "+json.dumps(rows,ensure_ascii=False,indent=0)+";\n")
 from collections import Counter; print(Counter(r["state"] for r in rows))
+
+# ---------- Project picture: docs/08-delivery/project-picture.md + live counts ----------
+DOCS=os.path.join(ROOT,'..','docs')
+def md_tables(path):
+    """Return {section heading: [row dicts]} for every pipe table under a '## ' heading."""
+    out={}; sec=None; head=None
+    for line in open(path,encoding='utf-8'):
+        line=line.rstrip('\n')
+        if line.startswith('## '): sec=line[3:].strip(); head=None; continue
+        if not line.startswith('|'): head=None if not line.strip() else head; continue
+        cells=[c.strip() for c in line.strip('|').split('|')]
+        if head is None: head=cells; out.setdefault(sec,[]); continue
+        if set(''.join(cells))<=set('-: '): continue
+        out[sec].append(dict(zip(head,cells)))
+    return out
+pp_path=os.path.join(DOCS,'08-delivery','project-picture.md')
+pp=md_tables(pp_path)
+meta=dict(re.findall(r'^(\w+): (.*)$',open(pp_path,encoding='utf-8').read().split('---')[1],re.M))
+dec=Counter(); 
+for line in open(os.path.join(DOCS,'06-decisions','decision-log.md'),encoding='utf-8'):
+    m=re.match(r'^\| (D-\d+) \|(?:[^|]*\|){4} (open|proposed|decided) \|',line)
+    if m: dec[m.group(2)]+=1
+scr=Counter(re.findall(r'\| (todo|html-draft|figma-wip|figma-approved|in-dev|done) \|',open(os.path.join(DOCS,'04-design','screen-registry.md'),encoding='utf-8').read()))
+project={"last_analysis":meta.get('last_analysis',''),"areas":pp.get('Area health',[]),"modules":pp.get('Module gates',[]),"gaps":pp.get('Gaps',[]),
+  "counts":{"requirements":len(rows),"req_state":dict(Counter(r["state"] for r in rows)),"nov10":dict(Counter(r["nov10"] for r in rows)),"decisions":dict(dec),"screens":dict(scr)}}
+assert project["areas"] and project["gaps"] and project["modules"], "project-picture.md tables not found"
+open(os.path.join(ROOT,'js','project-data.js'),'w',encoding='utf-8').write("/* Generated from docs/08-delivery/project-picture.md + live counts (requirements, decision log, screen registry). Regenerate: python prototype/tools/build-coverage.py */\nwindow.PROJECT = "+json.dumps(project,ensure_ascii=False,indent=0)+";\n")
+print("project:",len(project["gaps"]),"gaps ·",dict(dec),"·",dict(scr))

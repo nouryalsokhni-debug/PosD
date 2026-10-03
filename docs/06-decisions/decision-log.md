@@ -2,7 +2,7 @@
 title: Decision log
 status: living
 owner: PO
-last_updated: 2026-09-28
+last_updated: 2026-10-03
 mirror: Google Doc 'Quantara POS — Open Decisions' (humans edit there; PO syncs here)
 ---
 
@@ -59,12 +59,14 @@ mirror: Google Doc 'Quantara POS — Open Decisions' (humans edit there; PO sync
 |---|---|---|---|---|---|---|---|
 | D-25 | Who owns what across Quantara / tenant HQ / branch? | Every screen and permission depends on it | POSD-85 · [ownership boundaries](../01-product/ownership-boundaries.md) | PO | decided | Boundary table in ownership-boundaries.md | 2026-09-24 |
 | D-26 | Sync conflict rule | Offline registers vs HQ edits | OFF-05, OFF-06 · POSD-85 | PO | decided | Owner of the value wins, other side notified; branch overrides are separate records; sales/refunds/shift closes never conflict | 2026-09-24 |
-| D-27 | Invoice numbering scheme | Must stay gapless while registers sell offline | FIS-01 · POSD-85 | PO + Accountant | proposed | Gapless per register, `<TENANT>-<BRANCH>-R<n>` — awaiting accountant | |
+| D-27 | Invoice numbering scheme | Must stay gapless while the branch sells offline | FIS-01, FIS-03 · POSD-85 · [ADR-001](../05-architecture/adr/ADR-001-offline-first-multi-tenant.md) | PO + Accountant | proposed | **Revised 3 Oct:** gapless **per branch**, `<TENANT>-<BRANCH>-000001`, allocated by the branch server (was per register, `…-R<n>`). The register is a field on the invoice. Accountant still to confirm the format | 2026-10-03 |
 | D-28 | Live screen mirroring (NH-07) at launch? | Scope | NH-07 · POSD-85 | PO | decided | Dropped; HQ gets live order/activity feed per register | 2026-09-24 |
 | D-29 | Cashier payment details: change in USD or mixed? delivery mode? card payment when? | Payment & change screens | PAY-* · POSD-90 · R-02 | PO | open | | |
 | D-30 | SaaS packaging: plan changes self-service or via us? inventory behind a paid tier? POS mode per device? | Operator panel, pricing, modules | POSD-89 · R-03 | PO | open | | |
 | D-31 | 17 open UX questions from the panel walkthrough (layers, catalogue & prices, branches & plan, support access, suspension) | They decide behaviour on 9 panel screens | POSD-92 · [prototype README → Open questions](../../prototype/README.md) | PO | open | Each question lists what the prototype does for now | |
-| D-34 | When does Sprint 1 end? | Sets when the backend may start | [sprint-01](../08-delivery/sprint-01.md) · Jira sprint 655 | PO | decided | Sprint 1 closes Thu 1 Oct (not Fri 2 Oct) when the backend start pack is ready (Module 1 handoff, HTML, stack accepted, Sprint 2 planned). Design need not be finished; it continues in Sprint 2 | 2026-09-28 |
+| D-36 | Answers to the designer's 26 Module 1 questions | Fields and rules of branches, people, menu | [designer-questions](../04-design/designer-questions.md) · [module-01](../05-architecture/module-01-platform-core.md) | PO | decided | As listed in designer-questions.md (branch code chosen and locked, pause, rename/retire, back-office invite, person status, temporary PIN, item option prices, sold-at set, category rules). Two wait for the client: matrix defaults (P7), staff card stock (P5) | 2026-10-03 |
+| D-35 | Technology stack and tiers | The backend can't start without it | [ADR-001](../05-architecture/adr/ADR-001-offline-first-multi-tenant.md) · `source/POS_Platform_Recommended_Tech_Stack_v1.docx` · POSD-104 | Tech lead + PO | decided | Three tiers: till (Electron + React + TypeScript) → branch server (Node.js + PostgreSQL mini-PC, owns stock, orders, shifts, invoice numbers, printing) → cloud (Node.js + TypeScript, PostgreSQL with RLS). Append-only event sync. Hosting provider still open | 2026-10-03 |
+| D-34 | When does Sprint 1 end? | Sets when the backend may start | [sprint-01](../08-delivery/sprint-01.md) · Jira sprint 655 | PO | decided | Sprint 1 closes when the PO decides the backend start pack is ready (Module 1 handoff, HTML, stack accepted, Sprint 2 planned) — kept open on 1 Oct. Design need not be finished; design days continue in sequence while it is open | 2026-10-01 |
 | D-33 | How the backend runs next to design | Order of work for 10 Nov | [module-readiness](../08-delivery/module-readiness.md) · [sprint-02](../08-delivery/sprint-02.md) | PO | decided | One module at a time behind a 5-point readiness gate; M1 Platform core first (Sprint 2, 4–8 Oct); 1-week sprints; backend tickets in POSD with label `backend`; 1 backend developer | 2026-09-28 |
 | D-32 | How Quantara charges tenants: plans, add-ons, billing | Pricing, billing screen, suspension rules | [R-05](../07-research/R-05-subscription-models.md) · D-30 | PO + management | proposed | Per-branch plans (Starter · Growth · Chain) with registers included · modules as add-ons · USD, monthly or yearly, 30-day trial, no lock-in, till never stops | |
 

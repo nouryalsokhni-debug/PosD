@@ -223,5 +223,5 @@ Scripts: `js/pos-data.js · pos-i18n.js · pos-store.js · pos-more.js · pos-pr
 
 The ✓ button opens the **flow guide**; steps tick themselves.
 
-## Requirements coverage (`requirements.html`)
-Every requirement with its *10 Nov* scope and where to see it. Regenerate after changing a screen or the requirements list: `python prototype/tools/build-coverage.py` (edit its map when a screen moves).
+## Project picture (`requirements.html`)
+Two tabs. **Project picture:** open gaps, red areas, decisions, screens in Figma, module gates (can the backend start?), and the list of what's missing with owner and due date — from `docs/08-delivery/project-picture.md` plus live counts. **Requirements:** all 111 requirements with their *10 Nov* scope, backend module (M1–M4) and where to see each one. Regenerate after an analysis session or any requirement/screen change: `python prototype/tools/build-coverage.py` (edit its map when a screen moves).

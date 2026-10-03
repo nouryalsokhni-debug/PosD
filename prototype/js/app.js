@@ -43,7 +43,7 @@
     "payments":      { nav: "hq_payments",     kind: "settings", page: function (tn) { return OPS.Payments(tn); } },
     "till":          { nav: "hq_till",         kind: "settings", page: function (tn) { return OPS.TillRules(tn); } },
     "devices":       { nav: "hq_devices",      kind: "list",     page: function (tn) { return OPS.Devices(tn); } },
-    "roles":         { nav: "hq_roles",        kind: "list",     page: function (tn) { return OPS.Roles(tn); } },
+    "roles":         { nav: "hq_people",       kind: "list",     page: function (tn) { return OPS.Roles(tn); } },
     "settings":      { nav: "hq_settings",     kind: "settings", page: function (tn) { return HQ.Settings(tn); } },
     "subscription":  { nav: "hq_subscription", kind: "settings", page: function (tn) { return HQ.Subscription(tn); } },
     "support-access":{ nav: "hq_support",      kind: "record",   page: function (tn) { return HQ.SupportAccess(tn); } }

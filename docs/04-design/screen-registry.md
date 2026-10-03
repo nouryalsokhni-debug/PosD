@@ -2,7 +2,7 @@
 title: Screen registry
 status: living
 owner: Designer + PO
-last_updated: 2026-09-28
+last_updated: 2026-10-03
 ---
 
 # Screen registry
@@ -19,9 +19,9 @@ All in `prototype/pos.html` (28 Sep). Flows FLOW-01 → FLOW-05 clickable end-to
 | ID | Screen | Flow | Key reqs | HTML | Figma | Jira | Status | Nov-10 |
 |---|---|---|---|---|---|---|---|---|
 | SCR-POS-01 | Login / switch user (PIN) | — | USR-03 | pos.html | — | POSD-91 | html-draft | IN |
-| SCR-POS-02 | Sale — favourites grid, categories, search/barcode, basket | FLOW-01 | CAT-05, POS-03, POS-04, POS-09 | pos.html | — | POSD-90, POSD-91 | html-draft | IN |
-| SCR-POS-03 | Item options (size, sugar, note) | FLOW-01 | POS-04 | pos.html | — | POSD-91 | html-draft | IN |
-| SCR-POS-04 | Payment (mixed tenders, SYP/USD pinned rate, wallets with ref) | FLOW-01 | PAY-01→10 | pos.html | — | POSD-91 | html-draft | IN |
+| SCR-POS-02 | Sale — favourites grid, categories, search/barcode, basket | FLOW-01 | CAT-05, POS-03, POS-04, POS-09 | pos.html | [EN](https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product?node-id=124-2) · [AR](https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product?node-id=124-680) (1440 — till sizes due Day 12) | POSD-90, POSD-91 | figma-wip | IN |
+| SCR-POS-03 | Item options (size, sugar, note) | FLOW-01 | POS-04 | pos.html | [EN](https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product?node-id=124-326) · [AR](https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product?node-id=124-1004) | POSD-91 | figma-wip | IN |
+| SCR-POS-04 | Payment (mixed tenders, SYP/USD pinned rate, wallets with ref) | FLOW-01 | PAY-01→10 | pos.html | [EN](https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product?node-id=126-932) · [AR](https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product?node-id=126-1280) · Paid [EN](https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product?node-id=126-1169) · [AR](https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product?node-id=126-1517) | POSD-91 | figma-wip | IN |
 | SCR-POS-05 | Held orders | FLOW-01 | POS-06 | pos.html | — | POSD-91 | html-draft | IN |
 | SCR-POS-06 | Invoices, cancel (manager) & refund (cashier) | FLOW-03 | POS-10, PAY-12, RPT-05 | pos.html | — | POSD-91 | html-draft | IN |
 | SCR-POS-07 | Shift open (float per currency) | FLOW-04 | CSH-01 | pos.html | — | POSD-91 | html-draft | IN |
@@ -48,8 +48,8 @@ Layers & ownership: [ownership boundaries](../01-product/ownership-boundaries.md
 | SCR-HQ-03 | Prices & offers | list | PRC-02→08 | pages-hq.js | — | html-draft | IN |
 | SCR-HQ-04 | Exchange rate | settings | PAY-04 | pages-hq.js | — | html-draft | IN |
 | SCR-HQ-05 | Inventory & purchasing | record | STK-01…10 | pages-ops2.js | — | html-draft | per D-01 |
-| SCR-HQ-06 | Branches & registers (plan usage, upgrade request) | list | GEN-02 | pages-hq.js | — | html-draft | IN |
-| SCR-HQ-07 | People & roles | list/record | USR-01, USR-02 | pages-hq.js | — | html-draft | IN |
+| SCR-HQ-06 | Branches and registers — branch record (code, pause), branch server, registers (rename, retire), plan usage · **Figma behind the HTML since 3 Oct (Day 14)** | list | GEN-02, CSH-08, OFF-05/07, FIS-03 | pages-m1.js | [EN](https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product?node-id=109-206) · [AR](https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product?node-id=109-560) · limit banner [EN](https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product?node-id=110-528) · [AR](https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product?node-id=110-549) | figma-wip | IN |
+| SCR-HQ-07 | People and roles — People tab (status, back-office access, till sign-in, add / edit / disable, temporary PIN) · **Figma behind the HTML since 3 Oct (Day 14)** | list/record | USR-01…06 | pages-m1.js | People [EN](https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product?node-id=110-570) · [AR](https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product?node-id=110-915) · Add a person [EN](https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product?node-id=110-1261) · [AR](https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product?node-id=110-1531) | figma-wip | IN |
 | SCR-HQ-08 | Reports | record | RPT-01…09, PAY-05 | pages-ops.js | — | html-draft | MIN |
 | SCR-HQ-09 | Settings (spec §٥) | settings | — | pages-hq.js | — | html-draft | IN |
 | SCR-HQ-10 | Subscription & modules (on/off per branch) | settings | — | pages-hq.js | — | html-draft | MIN |
@@ -61,9 +61,9 @@ Layers & ownership: [ownership boundaries](../01-product/ownership-boundaries.md
 | SCR-BR-05 | Branch — Reports | record | RPT-01…09 | pages-ops.js | — | html-draft | MIN |
 | SCR-BR-06 | Branch — Shift reports & cash count | list | CSH-02…07 | pages-ops.js | — | html-draft | IN |
 | SCR-BR-07 | Branch — Stock (waste, count) | record | STK-01, 05, 06 | pages-ops2.js | — | html-draft | MIN |
-| SCR-HQ-12 | Menu setup — items, categories, options, Excel import | record | CAT-01…07, POS-09 | pages-ops2.js | — | html-draft | IN (import LATER) |
+| SCR-HQ-12 | Menu setup — items (sub-category, sold-at, image, item option prices), categories (rename, reorder, delete), option groups, Excel import · **Figma behind the HTML since 3 Oct (Day 14)** | record | CAT-01…07, POS-09 | pages-ops2.js | Items [EN](https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product?node-id=112-1384) · [AR](https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product?node-id=112-1750) · Item record [EN](https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product?node-id=113-1674) · [AR](https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product?node-id=113-1988) | figma-wip | IN (import LATER) |
 | SCR-HQ-13 | Offers & price history | record | PRC-02…09 | pages-ops2.js | — | html-draft | IN |
-| SCR-HQ-14 | Roles & permissions matrix, add person | matrix | USR-01…07 | pages-ops2.js | — | html-draft | MIN |
+| SCR-HQ-14 | People and roles — Permissions tab (matrix); same page as SCR-HQ-07 | matrix | USR-01…07 | pages-m1.js | Roles matrix [EN](https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product?node-id=111-1166) · [AR](https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product?node-id=111-1762) | figma-wip | MIN |
 | SCR-HQ-15 | Payment methods | settings | PAY-01…11 | pages-ops2.js | — | html-draft | IN |
 | SCR-HQ-16 | Till & invoice rules | settings | CSH, POS, FIS, KDS, OFF, USR | pages-ops2.js | — | html-draft | IN |
 | SCR-HQ-17 | Devices & approved hardware | list | HW-01…07 | pages-ops2.js | — | html-draft | IN |
@@ -73,11 +73,11 @@ Built on one shell + four page kinds (list · record · settings · flow) — PO
 
 | ID | Screen | Page kind | HTML | Figma | Jira | Status | Nov-10 |
 |---|---|---|---|---|---|---|---|
-| SCR-OPS-01 | Shell (nav, header, language switch) | — | shell.js | [EN](https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product?node-id=1-538) · [AR](https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product?node-id=1-616) | POSD-95 | figma-wip | IN |
-| SCR-OPS-02 | Tenants list | list | pages.js | [EN](https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product?node-id=1-694) · [AR](https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product?node-id=1-880) | POSD-93 | figma-wip | IN |
-| SCR-OPS-03 | Tenant record | record | pages.js | [EN](https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product?node-id=1-1066) · [AR](https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product?node-id=1-1281) | POSD-93 | figma-wip | IN |
+| SCR-OPS-01 | Shell (nav, header, language switch) | — | shell.js | Quantara shell missing since 1 Oct (Day 12) · HQ shell [EN](https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product?node-id=53-3237) · Branch shell [EN](https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product?node-id=53-3589) | POSD-95 | figma-wip | IN |
+| SCR-OPS-02 | Tenants list | list | pages.js | [EN](https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product?node-id=53-2031) · [AR](https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product?node-id=53-2311) | POSD-93 | figma-wip | IN |
+| SCR-OPS-03 | Tenant record | record | pages.js | [EN](https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product?node-id=53-2591) · [AR](https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product?node-id=53-2914) | POSD-93 | figma-wip | IN |
 | SCR-OPS-04 | Operations health — every register, every tenant | list | pages-ops2.js | — | — | html-draft | MIN |
-| SCR-OPS-05 | Onboarding (new tenant) | flow | pages.js | — | POSD-93 | html-draft | IN |
+| SCR-OPS-05 | Onboarding (new tenant) — tenant code, owner invite, branch code, first invoice number | flow | pages.js | — | POSD-93 | html-draft | IN |
 | SCR-OPS-06 | Support access (ask, approve, audit) | list | pages.js | — | POSD-93 | html-draft | IN |
 | SCR-OPS-07 | Billing — every invoice, record payment, reminders | list | pages-quantara.js | — | — | html-draft | MIN |
 | SCR-OPS-08 | Support queue — every ticket, reply, solve, ask access | list | pages-quantara.js | — | — | html-draft | IN |

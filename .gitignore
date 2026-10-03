@@ -3,3 +3,10 @@ Thumbs.db
 ~$*
 *.tmp
 node_modules/
+
+# local copies sent around (not source)
+*.zip
+*.tar
+
+# replaced files waiting for manual delete
+_to_delete/

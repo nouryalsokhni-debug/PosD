@@ -176,25 +176,39 @@
             { key: "o", label: t("ops.col.options"), render: function (it) { var ids = o.item_meta[it.id].options; return ids.length ? ids.map(function (g) { return I18n.pick(o.option_groups.filter(function (x) { return x.id === g; })[0], "name"); }).join(", ") : h("span", { class: "muted" }, "—"); } },
             { key: "bc", label: t("ops.col.barcode"), render: function (it) { return o.item_meta[it.id].barcode ? h("code", { dir: "ltr" }, o.item_meta[it.id].barcode) : h("span", { class: "muted" }, "—"); } },
             { key: "tax", label: t("ops.col.tax"), render: function () { return Decision("D-03"); } },
+            { key: "sold", label: t("m1.menu.col_sold"), render: function (it) { var sa = it.sold_at || "all"; return sa === "all" ? t("m1.menu.sold_all") : sa.map(function (id) { return branchName(tn, id); }).join(", "); } },
             { key: "p", label: t("col.price"), align: "end", render: function (it) { return X.money(tn, it.price); } },
             { key: "e", label: "", render: function (it) { return UI.Button({ label: t("ops.edit"), size: "sm", variant: "ghost", onClick: function () { itemDialog(tn, it); } }); } }
           ], hq.items));
       } },
       { id: "cats", label: t("ops.menu.cats"), count: hq.categories.length + o.subcategories.length, render: function () {
+        function node(c, list, isSub) {
+          var i = list.indexOf(c), n = hq.items.filter(function (it) { return isSub ? o.item_meta[it.id].subcategory_id === c.id : it.category_id === c.id; }).length;
+          var move = function (dir) { return function () { var j = i + dir; list.splice(i, 1); list.splice(j, 0, c); App.render(); }; };
+          return h("span", { class: "tree__node" }, isSub ? null : UI.icon("layers"), I18n.pick(c, "name"), h("span", { class: "cell-sub" }, I18n.pickOther(c, "name")),
+            h("span", { class: "muted" }, " · " + t("ops.menu.n_items", { n: I18n.number(n) })),
+            h("span", { class: "row-actions tree__actions" },
+              UI.Button({ label: t("m1.menu.cat_up"), icon: "sortUp", iconOnly: true, size: "sm", variant: "ghost", disabled: i === 0, onClick: move(-1) }),
+              UI.Button({ label: t("m1.menu.cat_down"), icon: "sortDown", iconOnly: true, size: "sm", variant: "ghost", disabled: i === list.length - 1, onClick: move(1) }),
+              UI.Button({ label: t("m1.menu.cat_rename"), size: "sm", variant: "ghost", onClick: function () { catDialog(tn, c, isSub); } }),
+              UI.Button({ label: t("m1.menu.cat_delete"), size: "sm", variant: "ghost", onClick: function () { deleteCat(tn, c, isSub); } })));
+        }
         return h("div", { class: "stack" }, h("p", { class: "muted" }, t("ops.menu.cats_note"), " ", req("CAT-03")),
           h("ul", { class: "tree" }, hq.categories.map(function (c) {
             var subs = o.subcategories.filter(function (s) { return s.parent_id === c.id; });
-            return h("li", null, h("span", { class: "tree__node" }, UI.icon("layers"), I18n.pick(c, "name"), h("span", { class: "cell-sub" }, I18n.pickOther(c, "name")), h("span", { class: "muted" }, " · " + t("ops.menu.n_items", { n: I18n.number(hq.items.filter(function (it) { return it.category_id === c.id; }).length) }))),
-              subs.length ? h("ul", null, subs.map(function (s) { return h("li", null, h("span", { class: "tree__node" }, I18n.pick(s, "name"), h("span", { class: "cell-sub" }, I18n.pickOther(s, "name")))); })) : null);
+            return h("li", null, node(c, hq.categories, false),
+              subs.length ? h("ul", null, subs.map(function (s) { return h("li", null, node(s, o.subcategories, true)); })) : null);
           })),
-          UI.Button({ label: t("ops.menu.add_cat"), icon: "plus", onClick: function () { catDialog(tn); } }));
+          h("div", null, UI.Button({ label: t("ops.menu.add_cat"), icon: "plus", onClick: function () { catDialog(tn); } })));
       } },
       { id: "opts", label: t("ops.menu.options"), count: o.option_groups.length, render: function () {
         return h("div", { class: "stack" }, h("p", { class: "muted" }, t("ops.menu.options_note"), " ", req("CAT-04")),
           o.option_groups.map(function (g) {
-            return UI.Section({ title: I18n.pick(g, "name"), actions: UI.Badge(t(g.price_effect ? "ops.menu.changes_price" : "ops.menu.no_price"), g.price_effect ? "info" : "neutral"),
+            return UI.Section({ title: I18n.pick(g, "name"), actions: h("span", { class: "row-actions" }, UI.Badge(t(g.price_effect ? "ops.menu.changes_price" : "ops.menu.no_price"), g.price_effect ? "info" : "neutral"),
+                UI.Button({ label: t("m1.menu.grp_edit"), size: "sm", variant: "ghost", onClick: function () { groupDialog(tn, g); } })),
               body: h("div", { class: "chips" }, g.choices.map(function (c) { return h("span", { class: "chip" }, I18n.pick(c, "name"), c.delta ? h("small", { dir: "ltr" }, " +" + I18n.number(c.delta)) : null); })) });
-          }));
+          }),
+          h("div", null, UI.Button({ label: t("m1.menu.grp_add"), icon: "plus", onClick: function () { groupDialog(tn, null); } })));
       } },
       { id: "import", label: t("ops.menu.import"), render: function () { return importPanel(tn); } }
     ];
@@ -208,56 +222,120 @@
       side: [UI.Section({ title: t("ops.menu.where"), body: [h("p", { class: "muted" }, t("ops.menu.where_body")), req("CAT-01 · CAT-06")] })]
     });
   }
+  /* Item form (Module 1 v2): sub-category, sold-at set, image add/replace/remove, option prices for this item. */
   function itemDialog(tn, it) {
     var o = ops(tn), hq = Store.hq(tn), meta = it ? o.item_meta[it.id] : { options: [], has_image: false, barcode: "", subcategory_id: null, reorder_at: 15, cost: 0 };
-    var d = { name_en: it ? it.name_en : "", name_ar: it ? it.name_ar : "", category_id: it ? it.category_id : hq.categories[0].id, price: it ? it.price : "", options: meta.options.slice(), has_image: meta.has_image, barcode: meta.barcode, branches: "all" };
+    var sold0 = it && it.sold_at && it.sold_at !== "all" ? it.sold_at.slice() : null;
+    var d = { name_en: it ? it.name_en : "", name_ar: it ? it.name_ar : "", category_id: it ? it.category_id : hq.categories[0].id, sub: meta.subcategory_id || "", price: it ? it.price : "", options: meta.options.slice(),
+      has_image: meta.has_image, barcode: meta.barcode, sold_all: !sold0, sold: sold0 || tn.branches.map(function (b) { return b.id; }), opt_prices: JSON.parse(JSON.stringify(meta.option_prices || {})) };
     var err = {};
     var body = h("div", { class: "stack" });
     function draw() {
+      var subs = o.subcategories.filter(function (x) { return x.parent_id === d.category_id; });
+      if (d.sub && !subs.some(function (x) { return x.id === d.sub; })) d.sub = "";
+      var priced = o.option_groups.filter(function (g) { return g.price_effect && d.options.indexOf(g.id) > -1; });
       body.replaceChildren(
         h("div", { class: "grid-2" },
           UI.FormRow({ id: "it-en", label: t("ops.menu.name_en"), required: true, error: err.name_en, control: UI.Input({ id: "it-en", dir: "ltr", value: d.name_en, invalid: !!err.name_en, onInput: function (v) { d.name_en = v; } }) }),
           UI.FormRow({ id: "it-ar", label: t("ops.menu.name_ar"), required: true, error: err.name_ar, control: UI.Input({ id: "it-ar", dir: "rtl", value: d.name_ar, invalid: !!err.name_ar, onInput: function (v) { d.name_ar = v; } }) })),
         h("div", { class: "grid-2" },
-          UI.FormRow({ id: "it-c", label: t("col.category"), control: UI.Select({ id: "it-c", value: d.category_id, options: options(hq.categories), onChange: function (v) { d.category_id = v; } }) }),
-          UI.FormRow({ id: "it-p", label: t("col.price") + " (" + tn.currency + ")", required: true, error: err.price, help: t("ops.menu.price_help"), control: UI.Input({ id: "it-p", type: "number", dir: "ltr", value: d.price, invalid: !!err.price, onInput: function (v) { d.price = v; } }) })),
-        h("fieldset", { class: "fieldset" }, h("legend", null, t("ops.col.options")), h("div", { class: "checks" }, o.option_groups.map(function (g) {
-          return UI.Checkbox({ id: "it-o-" + g.id, label: I18n.pick(g, "name") + (g.price_effect ? " · " + t("ops.menu.changes_price") : ""), checked: d.options.indexOf(g.id) > -1, onChange: function (v) { d.options = d.options.filter(function (x) { return x !== g.id; }); if (v) d.options.push(g.id); } });
-        }))),
+          UI.FormRow({ id: "it-c", label: t("col.category"), control: UI.Select({ id: "it-c", value: d.category_id, options: options(hq.categories), onChange: function (v) { d.category_id = v; d.sub = ""; draw(); } }) }),
+          UI.FormRow({ id: "it-sc", label: t("m1.menu.sub"), control: UI.Select({ id: "it-sc", value: d.sub, options: [{ value: "", label: t("m1.menu.sub_none") }].concat(options(subs)), onChange: function (v) { d.sub = v; } }) })),
         h("div", { class: "grid-2" },
-          UI.FormRow({ id: "it-b", label: t("ops.col.barcode"), help: t("ops.menu.barcode_help"), control: UI.Input({ id: "it-b", dir: "ltr", value: d.barcode, onInput: function (v) { d.barcode = v; } }) }),
-          UI.FormRow({ id: "it-img", label: t("ops.col.image"), help: t("ops.menu.image_help"), control: UI.Checkbox({ id: "it-img", label: t("ops.menu.has_image"), checked: d.has_image, onChange: function (v) { d.has_image = v; } }) })),
-        UI.FormRow({ id: "it-br", label: t("ops.menu.sold_at"), help: t("ops.menu.sold_at_help"), control: UI.Select({ id: "it-br", value: d.branches, options: [{ value: "all", label: t("hq.catalogue.all_branches") }].concat(tn.branches.map(function (x) { return { value: x.id, label: I18n.pick(x, "name") }; })), onChange: function (v) { d.branches = v; } }) }),
+          UI.FormRow({ id: "it-p", label: t("col.price") + " (" + tn.currency + ")", required: true, error: err.price, help: t("ops.menu.price_help"), control: UI.Input({ id: "it-p", type: "number", dir: "ltr", value: d.price, invalid: !!err.price, onInput: function (v) { d.price = v; } }) }),
+          UI.FormRow({ id: "it-b", label: t("ops.col.barcode"), help: t("ops.menu.barcode_help"), control: UI.Input({ id: "it-b", dir: "ltr", value: d.barcode, onInput: function (v) { d.barcode = v; } }) })),
+        h("fieldset", { class: "fieldset" }, h("legend", null, t("ops.col.options")), h("div", { class: "checks" }, o.option_groups.map(function (g) {
+          return UI.Checkbox({ id: "it-o-" + g.id, label: I18n.pick(g, "name") + (g.price_effect ? " · " + t("ops.menu.changes_price") : ""), checked: d.options.indexOf(g.id) > -1, onChange: function (v) { d.options = d.options.filter(function (x) { return x !== g.id; }); if (v) d.options.push(g.id); draw(); } });
+        })),
+          priced.length ? h("div", { class: "m1-col opt-prices" }, h("p", { class: "muted" }, t("m1.menu.opt_prices") + " — " + t("m1.menu.opt_prices_help")),
+            priced.map(function (g) { return h("div", { class: "opt-prices__row" }, h("strong", null, I18n.pick(g, "name")), g.choices.map(function (c) {
+              var id = "it-op-" + g.id + "-" + c.id, cur = (d.opt_prices[g.id] || {})[c.id];
+              return h("label", { class: "opt-prices__cell", for: id }, h("span", null, I18n.pick(c, "name")),
+                UI.Input({ id: id, type: "number", dir: "ltr", value: cur == null ? "" : cur, placeholder: "+" + I18n.number(c.delta), onInput: function (v) { d.opt_prices[g.id] = d.opt_prices[g.id] || {}; if (v === "") delete d.opt_prices[g.id][c.id]; else d.opt_prices[g.id][c.id] = Number(v); } })); })); })) : null),
+        h("fieldset", { class: "fieldset" }, h("legend", null, t("ops.col.image")),
+          h("div", { class: "img-field" }, d.has_image ? h("span", { class: "thumb thumb--lg", "aria-label": t("ops.menu.has_image") }, (d.name_en || "?").charAt(0)) : h("span", { class: "thumb thumb--lg thumb--none" }, "—"),
+            h("div", { class: "m1-col" }, h("p", { class: "muted" }, d.has_image ? t("m1.menu.img_help") : t("m1.menu.img_none") + " " + t("m1.menu.img_help")),
+              h("div", { class: "row-actions", style: "justify-content:flex-start" },
+                UI.Button({ label: t(d.has_image ? "m1.menu.img_replace" : "m1.menu.img_add"), size: "sm", onClick: function () { d.has_image = true; draw(); } }),
+                d.has_image ? UI.Button({ label: t("m1.menu.img_remove"), size: "sm", variant: "ghost", onClick: function () { d.has_image = false; draw(); } }) : null)))),
+        h("fieldset", { class: "fieldset" }, h("legend", null, t("ops.menu.sold_at")),
+          h("div", { class: "checks" },
+            UI.Checkbox({ id: "it-sold-all", label: t("m1.menu.sold_all"), checked: d.sold_all, onChange: function (v) { d.sold_all = v; draw(); } })),
+          d.sold_all ? h("p", { class: "muted" }, t("ops.menu.sold_at_help")) : h("div", { class: "checks" }, tn.branches.map(function (b) {
+            return UI.Checkbox({ id: "it-sold-" + b.id, label: I18n.pick(b, "name"), checked: d.sold.indexOf(b.id) > -1, onChange: function (v) { d.sold = d.sold.filter(function (x) { return x !== b.id; }); if (v) d.sold.push(b.id); } }); })),
+          err.sold ? h("p", { class: "form-row__error", role: "alert" }, err.sold) : null),
         h("p", { class: "muted" }, t("ops.menu.tax_note"), " ", Decision("D-03")));
     }
     draw();
     UI.Dialog({ title: it ? t("ops.menu.edit_item") : t("ops.menu.add_item"), wide: true, body: body, actions: [{ label: t("flow.cancel"), variant: "ghost" }, { label: t("ops.save"), variant: "primary", onClick: function (close) {
       err = {}; if (!d.name_en.trim()) err.name_en = t("ops.required"); if (!d.name_ar.trim()) err.name_ar = t("ops.required"); if (!(Number(d.price) > 0)) err.price = t("ops.required");
+      if (!d.sold_all && !d.sold.length) err.sold = t("m1.menu.sold_pick");
       if (Object.keys(err).length) { draw(); return; }
-      var me = X.hqMeId(tn), now = Store.now();
+      var me = X.hqMeId(tn), now = Store.now(), soldAt = d.sold_all ? "all" : d.sold.slice();
       if (it) {
         if (Number(d.price) !== it.price) o.price_history.push({ item_id: it.id, from: it.price, to: Number(d.price), at: now, by: me });
-        Object.assign(it, { name_en: d.name_en.trim(), name_ar: d.name_ar.trim(), category_id: d.category_id, price: Number(d.price), updated_by: me, updated_at: now });
+        Object.assign(it, { name_en: d.name_en.trim(), name_ar: d.name_ar.trim(), category_id: d.category_id, price: Number(d.price), sold_at: soldAt, updated_by: me, updated_at: now });
       } else {
-        it = { id: "item-" + Date.now(), category_id: d.category_id, name_en: d.name_en.trim(), name_ar: d.name_ar.trim(), price: Number(d.price), updated_by: me, updated_at: now };
+        it = { id: "item-" + Date.now(), category_id: d.category_id, name_en: d.name_en.trim(), name_ar: d.name_ar.trim(), price: Number(d.price), sold_at: soldAt, updated_by: me, updated_at: now };
         hq.items.push(it); tn.branches.forEach(function (b) { o.stock[b.id][it.id] = { qty: 0, counted_at: now }; });
       }
-      o.item_meta[it.id] = Object.assign(o.item_meta[it.id] || { reorder_at: 15, cost: Math.round(Number(d.price) * 0.38), subcategory_id: null, tax_rate: null }, { options: d.options, has_image: d.has_image, barcode: d.barcode.trim() });
+      var op = {}; d.options.forEach(function (g) { if (d.opt_prices[g] && Object.keys(d.opt_prices[g]).length) op[g] = d.opt_prices[g]; });
+      o.item_meta[it.id] = Object.assign(o.item_meta[it.id] || { reorder_at: 15, cost: Math.round(Number(d.price) * 0.38), tax_rate: null }, { options: d.options, option_prices: op, has_image: d.has_image, barcode: d.barcode.trim(), subcategory_id: d.sub || null });
       close(); App.render(); UI.toast(t("ops.saved"));
     } }] });
   }
-  function catDialog(tn) {
-    var o = ops(tn), hq = Store.hq(tn), d = { en: "", ar: "", parent: "" };
-    UI.Dialog({ title: t("ops.menu.add_cat"), body: h("div", { class: "stack" },
-      UI.FormRow({ id: "cat-en", label: t("ops.menu.name_en"), required: true, control: UI.Input({ id: "cat-en", dir: "ltr", onInput: function (v) { d.en = v; } }) }),
-      UI.FormRow({ id: "cat-ar", label: t("ops.menu.name_ar"), required: true, control: UI.Input({ id: "cat-ar", dir: "rtl", onInput: function (v) { d.ar = v; } }) }),
-      UI.FormRow({ id: "cat-p", label: t("ops.menu.parent"), help: t("ops.menu.parent_help"), control: UI.Select({ id: "cat-p", value: "", options: [{ value: "", label: t("ops.menu.top_level") }].concat(options(hq.categories)), onChange: function (v) { d.parent = v; } }) })),
+  /* Category: add, or rename an existing one (two levels; delete only when empty — rule 12). */
+  function catDialog(tn, c, isSub) {
+    var o = ops(tn), hq = Store.hq(tn), d = c ? { en: c.name_en, ar: c.name_ar, parent: c.parent_id || "" } : { en: "", ar: "", parent: "" };
+    UI.Dialog({ title: t(c ? "m1.menu.cat_edit" : "ops.menu.add_cat"), body: h("div", { class: "stack" },
+      UI.FormRow({ id: "cat-en", label: t("ops.menu.name_en"), required: true, control: UI.Input({ id: "cat-en", dir: "ltr", value: d.en, onInput: function (v) { d.en = v; } }) }),
+      UI.FormRow({ id: "cat-ar", label: t("ops.menu.name_ar"), required: true, control: UI.Input({ id: "cat-ar", dir: "rtl", value: d.ar, onInput: function (v) { d.ar = v; } }) }),
+      c && !isSub ? null : UI.FormRow({ id: "cat-p", label: t("ops.menu.parent"), help: t("ops.menu.parent_help"), control: UI.Select({ id: "cat-p", value: d.parent, options: (c ? [] : [{ value: "", label: t("ops.menu.top_level") }]).concat(options(hq.categories)), onChange: function (v) { d.parent = v; } }) })),
       actions: [{ label: t("flow.cancel"), variant: "ghost" }, { label: t("ops.save"), variant: "primary", onClick: function (close) {
         if (!d.en.trim() || !d.ar.trim()) { UI.toast(t("ops.required")); return; }
-        var rec = { id: "cat-" + Date.now(), name_en: d.en.trim(), name_ar: d.ar.trim() };
-        if (d.parent) { rec.parent_id = d.parent; o.subcategories.push(rec); } else hq.categories.push(rec);
+        if (c) { c.name_en = d.en.trim(); c.name_ar = d.ar.trim();
+          if (isSub && d.parent && d.parent !== c.parent_id) { c.parent_id = d.parent; hq.items.forEach(function (it) { if (o.item_meta[it.id].subcategory_id === c.id) it.category_id = d.parent; }); } }
+        else { var rec = { id: "cat-" + Date.now(), name_en: d.en.trim(), name_ar: d.ar.trim() };
+          if (d.parent) { rec.parent_id = d.parent; o.subcategories.push(rec); } else hq.categories.push(rec); }
         close(); App.render(); UI.toast(t("ops.saved"));
       } }] });
+  }
+  function deleteCat(tn, c, isSub) {
+    var o = ops(tn), hq = Store.hq(tn);
+    var used = isSub ? hq.items.some(function (it) { return o.item_meta[it.id].subcategory_id === c.id; })
+      : hq.items.some(function (it) { return it.category_id === c.id; }) || o.subcategories.some(function (s) { return s.parent_id === c.id; });
+    if (used) { UI.Dialog({ title: I18n.pick(c, "name"), body: [UI.Banner({ tone: "warning", body: t("m1.menu.cat_not_empty") })], actions: [{ label: t("dialog.close"), variant: "primary" }] }); return; }
+    var list = isSub ? o.subcategories : hq.categories; list.splice(list.indexOf(c), 1); App.render(); UI.toast(t("m1.menu.cat_deleted"));
+  }
+  /* Option group: names, required, choices with the default price each one adds. An item can set its own prices in the item form. */
+  function groupDialog(tn, g) {
+    var o = ops(tn), d = g ? JSON.parse(JSON.stringify(g)) : { id: "grp-" + Date.now(), name_en: "", name_ar: "", required: true, price_effect: false, choices: [{ id: "c1", name_en: "", name_ar: "", delta: 0 }, { id: "c2", name_en: "", name_ar: "", delta: 0 }] };
+    if (d.required == null) d.required = true;
+    var body = h("div", { class: "stack" }), msg = "";
+    function draw() {
+      body.replaceChildren(
+        h("div", { class: "grid-2" },
+          UI.FormRow({ id: "gr-en", label: t("ops.menu.name_en"), required: true, control: UI.Input({ id: "gr-en", dir: "ltr", value: d.name_en, onInput: function (v) { d.name_en = v; } }) }),
+          UI.FormRow({ id: "gr-ar", label: t("ops.menu.name_ar"), required: true, control: UI.Input({ id: "gr-ar", dir: "rtl", value: d.name_ar, onInput: function (v) { d.name_ar = v; } }) })),
+        UI.Checkbox({ id: "gr-req", label: t("m1.menu.grp_required"), checked: d.required, onChange: function (v) { d.required = v; } }),
+        h("div", { class: "table-wrap" }, h("table", { class: "table" }, h("caption", { class: "sr-only" }, t("ops.menu.options")),
+          h("thead", null, h("tr", null, h("th", { scope: "col" }, t("m1.menu.choice_en")), h("th", { scope: "col" }, t("m1.menu.choice_ar")), h("th", { scope: "col" }, t("m1.menu.choice_delta") + " (" + tn.currency + ")"), h("th", { scope: "col" }, ""))),
+          h("tbody", null, d.choices.map(function (c, i) { return h("tr", null,
+            h("td", null, UI.Input({ id: "gr-c-en-" + i, dir: "ltr", value: c.name_en, onInput: function (v) { c.name_en = v; } })),
+            h("td", null, UI.Input({ id: "gr-c-ar-" + i, dir: "rtl", value: c.name_ar, onInput: function (v) { c.name_ar = v; } })),
+            h("td", null, UI.Input({ id: "gr-c-d-" + i, type: "number", dir: "ltr", value: c.delta, onInput: function (v) { c.delta = Number(v) || 0; } })),
+            h("td", null, UI.Button({ label: t("m1.menu.choice_remove"), icon: "x", iconOnly: true, size: "sm", variant: "ghost", disabled: d.choices.length <= 2, onClick: function () { d.choices.splice(i, 1); draw(); } }))); })))),
+        h("div", null, UI.Button({ label: t("m1.menu.choice_add"), icon: "plus", size: "sm", onClick: function () { d.choices.push({ id: "c" + Date.now(), name_en: "", name_ar: "", delta: 0 }); draw(); } })),
+        msg ? UI.Banner({ tone: "critical", body: msg }) : null);
+    }
+    draw();
+    UI.Dialog({ title: t("m1.menu.grp_edit_title") + (g ? " · " + I18n.pick(g, "name") : ""), wide: true, body: body, actions: [{ label: t("flow.cancel"), variant: "ghost" }, { label: t("ops.save"), variant: "primary", onClick: function (close) {
+      var ok = d.name_en.trim() && d.name_ar.trim() && d.choices.length >= 2 && d.choices.every(function (c) { return c.name_en.trim() && c.name_ar.trim(); });
+      if (!ok) { msg = t("m1.menu.grp_min"); draw(); return; }
+      d.price_effect = d.choices.some(function (c) { return c.delta; });
+      if (g) Object.assign(g, d); else o.option_groups.push(d);
+      close(); App.render(); UI.toast(t("ops.saved"));
+    } }] });
   }
   /** CAT-07: import from Excel — choose file → check rows → import. Simulated: the file is parsed as sample rows. */
   function importPanel(tn) {
@@ -510,71 +588,7 @@
     });
   }
 
-  /* =====================================================================
-   * ROLES & PERMISSIONS (List-like matrix). USR-01…07.
-   * ===================================================================== */
-  function Roles(tn) {
-    var o = ops(tn), label = t("nav.hq_roles");
-    if (!o) return X.noData(tn, label);
-    var hq = Store.hq(tn), st = X.state("ops-roles:" + tn.id, { draft: JSON.parse(JSON.stringify(o.roles)) });
-    var roles = Object.keys(o.roles), dirty = JSON.stringify(st.draft) !== JSON.stringify(o.roles);
-    var groups = ["till", "cash", "branch", "stock", "hq"];
-    var table = h("div", { class: "table-wrap" }, h("table", { class: "table matrix" },
-      h("caption", { class: "sr-only" }, label),
-      h("thead", null, h("tr", null, h("th", { scope: "col" }, t("ops.roles.action")), roles.map(function (r) { return h("th", { scope: "col", class: "matrix__role" }, t("role." + r)); }))),
-      groups.map(function (g) {
-        return h("tbody", null, h("tr", { class: "matrix__group" }, h("th", { colspan: String(roles.length + 1), scope: "rowgroup" }, t("ops.roles.g." + g))),
-          o.actions.filter(function (a) { return a.group === g; }).map(function (a) {
-            return h("tr", null, h("th", { scope: "row" }, t("ops.act." + a.id), a.decision ? h("span", null, " ", Decision(a.decision)) : null),
-              roles.map(function (r) { var id = "perm-" + r + "-" + a.id;
-                return h("td", { class: "matrix__cell" }, h("input", { type: "checkbox", id: id, "aria-label": t("role." + r) + " · " + t("ops.act." + a.id), checked: !!st.draft[r][a.id], disabled: r === "owner" && a.id === "manage_people",
-                  onChange: function (e) { st.draft[r][a.id] = e.target.checked ? 1 : 0; App.render(); } })); }));
-          }));
-      })));
-    return [
-      UI.PageHeader({ breadcrumbs: X.hqCrumbs(tn, label), title: label, subtitle: t("ops.roles.subtitle"), badges: UI.OwnerTag({ owner: "hq", here: "hq" }),
-        actions: [UI.Button({ label: t("ops.roles.add_person"), icon: "plus", variant: "primary", onClick: function () { personDialog(tn); } })] }),
-      h("div", { class: "stack" }, banners(tn), UI.Banner({ tone: "info", body: t("ops.roles.note") }), h("p", { class: "muted" }, req("USR-01 · USR-02 · USR-04 · USR-05")), table,
-        UI.Section({ title: t("ops.roles.people"), flush: true, body: X.simpleTable(t("ops.roles.people"), [
-          { key: "n", label: t("col.person"), render: function (u) { return I18n.pick(u, "name"); } },
-          { key: "r", label: t("col.role"), render: function (u) { return t("role." + u.role); } },
-          { key: "b", label: t("ops.roles.branches"), render: function (u) { var ex = o.staff_extra[u.id] || { branches: [] }; return ex.branches.length ? ex.branches.map(function (id) { return branchName(tn, id); }).join(", ") : t("layer.hq"); } },
-          { key: "l", label: t("ops.roles.login"), render: function (u) { var ex = o.staff_extra[u.id] || {}; return t("ops.till.login." + (ex.login || "pin")) + (ex.card_id ? " · " + ex.card_id : ""); } }
-        ], hq.users) }),
-        h("p", { class: "muted" }, t("ops.roles.multi_note"), " ", Decision("D-15"), " ", req("USR-03 · USR-06"))),
-      h("div", { class: "savebar", hidden: dirty ? null : true, role: "region", "aria-label": t("settings.unsaved") },
-        h("span", { class: "savebar__text" }, UI.icon("info"), t("settings.unsaved")),
-        UI.Button({ label: t("settings.discard"), variant: "ghost", onClick: function () { st.draft = JSON.parse(JSON.stringify(o.roles)); App.render(); } }),
-        UI.Button({ label: t("settings.save"), variant: "primary", onClick: function () { o.roles = JSON.parse(JSON.stringify(st.draft)); o.roles_updated_by = X.hqMeId(tn); o.roles_updated_at = Store.now();
-          Store.log(tn, X.hqMeId(tn), "action", { text_en: "Changed the permissions matrix", text_ar: "عدّل مصفوفة الصلاحيات" }); App.render(); UI.toast(t("settings.saved")); } }))
-    ];
-  }
-  function personDialog(tn) {
-    var o = ops(tn), hq = Store.hq(tn), d = { en: "", ar: "", role: "cashier", branches: [tn.branches[0].id], login: "pin", card: "" };
-    var body = h("div", { class: "stack" });
-    function draw() {
-      body.replaceChildren(
-        h("div", { class: "grid-2" },
-          UI.FormRow({ id: "pp-en", label: t("ops.menu.name_en"), required: true, control: UI.Input({ id: "pp-en", dir: "ltr", value: d.en, onInput: function (v) { d.en = v; } }) }),
-          UI.FormRow({ id: "pp-ar", label: t("ops.menu.name_ar"), required: true, control: UI.Input({ id: "pp-ar", dir: "rtl", value: d.ar, onInput: function (v) { d.ar = v; } }) })),
-        UI.FormRow({ id: "pp-r", label: t("col.role"), control: UI.Select({ id: "pp-r", value: d.role, options: Object.keys(o.roles).filter(function (r) { return r !== "owner"; }).map(function (r) { return { value: r, label: t("role." + r) }; }), onChange: function (v) { d.role = v; draw(); } }) }),
-        ["hq_manager", "accountant"].indexOf(d.role) > -1 ? null : h("fieldset", { class: "fieldset" }, h("legend", null, t("ops.roles.branches") + " (USR-06)"), h("div", { class: "checks" }, tn.branches.map(function (b) {
-          return UI.Checkbox({ id: "pp-b-" + b.id, label: I18n.pick(b, "name"), checked: d.branches.indexOf(b.id) > -1, onChange: function (v) { d.branches = d.branches.filter(function (x) { return x !== b.id; }); if (v) d.branches.push(b.id); } });
-        }))),
-        h("div", { class: "grid-2" },
-          UI.FormRow({ id: "pp-l", label: t("ops.roles.login") + " (USR-03)", control: UI.Select({ id: "pp-l", value: d.login, options: ["pin", "card", "card_or_pin"].map(function (x) { return { value: x, label: t("ops.till.login." + x) }; }), onChange: function (v) { d.login = v; draw(); } }) }),
-          d.login === "pin" ? h("div") : UI.FormRow({ id: "pp-c", label: t("ops.roles.card"), help: t("ops.roles.card_help"), control: UI.Input({ id: "pp-c", dir: "ltr", value: d.card, onInput: function (v) { d.card = v; } }) })));
-    }
-    draw();
-    UI.Dialog({ title: t("ops.roles.add_person"), wide: true, body: body, actions: [{ label: t("flow.cancel"), variant: "ghost" }, { label: t("ops.save"), variant: "primary", onClick: function (close) {
-      if (!d.en.trim() || !d.ar.trim()) { UI.toast(t("ops.required")); return; }
-      var hqRole = ["hq_manager", "accountant"].indexOf(d.role) > -1;
-      var u = { id: "u-" + Date.now(), name_en: d.en.trim(), name_ar: d.ar.trim(), role: d.role, branch_id: hqRole ? null : d.branches[0] || null };
-      hq.users.push(u); o.staff_extra[u.id] = { login: d.login, card_id: d.card.trim(), branches: hqRole ? [] : d.branches.slice(), meals_today: 0 };
-      Store.log(tn, X.hqMeId(tn), "action", { text_en: "Added " + u.name_en + " (" + d.role + ")", text_ar: "أضاف " + u.name_ar });
-      close(); App.render(); UI.toast(t("ops.saved"));
-    } }] });
-  }
+  /* Roles and permissions + Add a person: moved to pages-m1.js (People and roles, one page). */
 
   /* =====================================================================
    * QUANTARA · Operations health (List) — every register, every tenant. OFF-07, OFF-05.
@@ -605,5 +619,5 @@
     });
   }
 
-  Object.assign(window.OPS, { Inventory: Inventory, MenuSetup: MenuSetup, Promotions: Promotions, Payments: Payments, TillRules: TillRules, Devices: Devices, Roles: Roles, OperationsHealth: OperationsHealth });
+  Object.assign(window.OPS, { Inventory: Inventory, MenuSetup: MenuSetup, Promotions: Promotions, Payments: Payments, TillRules: TillRules, Devices: Devices, OperationsHealth: OperationsHealth });
 })();

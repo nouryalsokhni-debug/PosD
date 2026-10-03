@@ -26,7 +26,7 @@
       tn.branches.forEach(function (b) { b.registers.forEach(function (r) { out.push(Object.assign({ branch: b }, r)); }); });
       return out;
     },
-    registerCount: function (tn) { return this.registers(tn).length; },
+    registerCount: function (tn) { return this.registers(tn).filter(function (r) { return r.status !== "retired"; }).length; }, // a retired register frees its plan slot
     onlineCount: function (tn) { return this.registers(tn).filter(function (r) { return r.status === "online"; }).length; },
 
     updateTenant: function (id, patch) { var tn = byId(D.tenants, id); Object.assign(tn, patch); return tn; },
@@ -59,8 +59,8 @@
       return { layer: "hq", person: null };
     },
 
-    /** Invoice series: gapless per register, <TENANT>-<BRANCH>-R<n>. Quantara guarantees it. */
-    invoiceSeries: function (tn, b, r) { return (tn.invoice_prefix || "T") + "-" + (b.code || "B") + "-R" + r.n; },
+    /** Invoice series: gapless per BRANCH, <TENANT>-<BRANCH>-000001. The branch server allocates each number (ADR-001, D-27 revised). */
+    invoiceSeries: function (tn, b) { return (tn.invoice_prefix || "T") + "-" + (b.code || "B"); },
 
     /* Plan usage (limits are Quantara's; usage is derived). */
     usage: function (tn) {

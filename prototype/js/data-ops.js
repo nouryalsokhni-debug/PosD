@@ -41,14 +41,15 @@
         { id: "sup-bakery",   name_en: "[Bakery]",          name_ar: "[المخبز]",       phone: "—" },
         { id: "sup-dairy",    name_en: "[Dairy]",           name_ar: "[الألبان]",      phone: "—" }
       ],
-      item_supplier: { "ec-espresso": "sup-roastery", "ec-latte": "sup-dairy", "ec-tea": "sup-roastery", "ec-iced": "sup-roastery", "ec-lemonade": "sup-dairy", "ec-croissant": "sup-bakery", "ec-cake": "sup-bakery" },
+      item_supplier: { "ec-espresso": "sup-roastery", "ec-cappuccino": "sup-roastery", "ec-latte": "sup-dairy", "ec-turkish": "sup-roastery", "ec-tea": "sup-roastery", "ec-iced": "sup-roastery", "ec-lemonade": "sup-dairy", "ec-water": "sup-dairy", "ec-frappe": "sup-dairy",
+        "ec-brownie": "sup-bakery", "ec-cheesecake": "sup-bakery", "ec-croissant": "sup-bakery", "ec-cake": "sup-bakery", "ec-club": "sup-bakery", "ec-chips": "sup-bakery" },
       subcategories: [
         { id: "hot-coffee", parent_id: "hot", name_en: "Coffee", name_ar: "قهوة" },
         { id: "hot-tea",    parent_id: "hot", name_en: "Tea",    name_ar: "شاي" }
       ],
-      item_sub: { "ec-espresso": "hot-coffee", "ec-latte": "hot-coffee", "ec-tea": "hot-tea" },
-      options: { "ec-espresso": ["size", "sugar"], "ec-latte": ["size", "sugar", "milk"], "ec-tea": ["sugar"], "ec-iced": ["size", "sugar", "milk"], "ec-lemonade": ["size", "sugar"] },
-      barcodes: { "ec-croissant": "6210001000014", "ec-cake": "6210001000021" }
+      item_sub: { "ec-espresso": "hot-coffee", "ec-cappuccino": "hot-coffee", "ec-latte": "hot-coffee", "ec-turkish": "hot-coffee", "ec-tea": "hot-tea" },
+      options: { "ec-espresso": ["size", "sugar"], "ec-cappuccino": ["size", "sugar", "milk"], "ec-latte": ["size", "sugar", "milk"], "ec-turkish": ["sugar"], "ec-tea": ["sugar"], "ec-iced": ["size", "sugar", "milk"], "ec-lemonade": ["size", "sugar"], "ec-frappe": ["size", "sugar"] },
+      barcodes: { "ec-water": "6210001000038", "ec-brownie": "6210001000045", "ec-croissant": "6210001000014", "ec-cake": "6210001000021", "ec-chips": "6210001000052" }
     },
     "sample-cedar-grill": {
       seed: 7, orders_per_day: 34, open_utc: 8, close_utc: 21,
@@ -124,7 +125,7 @@
         rounding_decision: "D-11", round_to: hq.exchange_rate ? hq.exchange_rate.round_to : 1,
         order_number: "daily_random", registers_share_orders: true,
         retention_days: 3, retention_decision: "D-12",
-        kds_mode: "printed_ticket", prep_stations: [ { id: "bar", name_en: "Coffee bar", name_ar: "بار القهوة", categories: ["hot", "cold"] }, { id: "pastry", name_en: "Pastry counter", name_ar: "ركن المعجنات", categories: ["pastry"] } ], stations_decision: "D-14",
+        kds_mode: "printed_ticket", prep_stations: [ { id: "bar", name_en: "Coffee bar", name_ar: "بار القهوة", categories: ["hot", "cold"] }, { id: "pastry", name_en: "Pastry counter", name_ar: "ركن الحلويات", categories: ["sweet", "snack"] } ], stations_decision: "D-14",
         invoice_bilingual: true, invoice_show_rate: true, invoice_show_cashier: true, invoice_footer_en: "Thank you", invoice_footer_ar: "شكراً لزيارتكم",
         company_invoice: false, company_decision: "D-18",
         tax_rate: null, tax_decision: "D-03", tax_included: true,
@@ -242,7 +243,7 @@
     ops.imports = [ { id: "imp-1", file: "electro-menu-v1.xlsx", rows: items.length, created: items.length, updated: 0, errors: 0, by: "staff-omar", at: "2026-06-01T09:30:00Z" } ];
     return ops;
   }
-  function Store_series(tn, b, r) { return (tn.invoice_prefix || "T") + "-" + (b.code || "B") + "-R" + r.n; }
+  function Store_series(tn, b, r) { return (tn.invoice_prefix || "T") + "-" + (b.code || "B"); }
 
   D.ops = {};
   D.tenants.forEach(function (tn) { if (PROFILES[tn.id] && D.hq[tn.id] && D.hq[tn.id].items.length) D.ops[tn.id] = build(tn); });

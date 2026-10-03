@@ -3,77 +3,193 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Quantara · Requirements in the prototype</title>
+  <title>Quantara · Project picture</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
   <style>
-    :root { --bg:#f4f2ee; --surface:#fff; --line:#e3dfd8; --ink:#1c1b19; --ink2:#5c554b; --accent:#1f5f5b; --pos:#1e6b3a; --pos-bg:#e4f2e8; --warn:#7a4f0e; --warn-bg:#fbf1de; --crit:#a1261b; --crit-bg:#fbe7e4; --neu:#4f4b45; --neu-bg:#eeebe6; --info:#1f4f8a; --info-bg:#e6eef8; }
+    :root { --bg:#f4f2ee; --surface:#fff; --line:#e3dfd8; --ink:#1c1b19; --ink2:#5c554b; --accent:#1f5f5b; --pos:#1e6b3a; --pos-bg:#e4f2e8; --warn:#7a4f0e; --warn-bg:#fbf1de; --crit:#a1261b; --crit-bg:#fbe6e3; --neu:#5c554b; --neu-bg:#efece6; --info:#1f5fa8; --info-bg:#e3edf9; }
     * { box-sizing: border-box; }
     body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 "IBM Plex Sans", system-ui, sans-serif; }
-    header { padding: 24px 28px 8px; }
+    header { padding: 24px 28px 0; display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: end; justify-content: space-between; }
     h1 { margin: 0 0 4px; font-size: 26px; }
+    h2 { font-size: 17px; margin: 22px 0 10px; }
     .sub { margin: 0; color: var(--ink2); }
-    .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; padding: 16px 28px; }
-    .tile { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; cursor: pointer; text-align: start; font: inherit; color: inherit; }
-    .tile.on { outline: 2px solid var(--accent); }
-    .tile b { display: block; font-size: 26px; }
-    .bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; padding: 0 28px 12px; }
+    nav.tabs { display: flex; gap: 4px; padding: 14px 28px 0; border-bottom: 1px solid var(--line); }
+    nav.tabs button { font: inherit; font-weight: 600; background: none; border: 0; border-bottom: 3px solid transparent; padding: 8px 14px; color: var(--ink2); cursor: pointer; }
+    nav.tabs button.on { color: var(--ink); border-bottom-color: var(--accent); }
+    section[hidden] { display: none; }
+    .wrap { padding: 16px 28px 40px; }
+    .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+    .tile { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; text-align: start; font: inherit; color: inherit; }
+    button.tile { cursor: pointer; } .tile.on { outline: 2px solid var(--accent); }
+    .tile b { display: block; font-size: 26px; line-height: 1.2; }
+    .tile small { color: var(--ink2); font-size: 12.5px; }
+    .areas { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; }
+    .area { border-inline-start: 6px solid var(--neu); cursor: pointer; }
+    .area.green { border-inline-start-color: var(--pos); } .area.amber { border-inline-start-color: #d99a2b; } .area.red { border-inline-start-color: var(--crit); }
+    .area h3 { margin: 0 0 4px; font-size: 15px; display: flex; justify-content: space-between; gap: 8px; }
+    .area p { margin: 0; font-size: 13px; color: var(--ink2); }
+    .bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; margin: 6px 0 12px; }
     label { font-size: 12.5px; color: var(--ink2); display: grid; gap: 4px; }
-    input, select { font: inherit; padding: 8px 10px; border: 1px solid #cfc9bf; border-radius: 8px; background: #fff; min-width: 180px; }
-    main { padding: 0 28px 40px; }
-    table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+    input, select { font: inherit; padding: 8px 10px; border: 1px solid #cfc9bf; border-radius: 8px; background: #fff; min-width: 170px; }
+    .tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+    table { width: 100%; border-collapse: collapse; }
     th, td { text-align: start; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; font-size: 14px; }
     th { background: #faf8f5; font-size: 12.5px; color: var(--ink2); position: sticky; top: 0; }
+    tr:last-child td { border-bottom: 0; }
     tr.dom td { background: var(--neu-bg); font-weight: 600; font-size: 13px; }
+    tr.late td { background: #fff6f5; }
+    td code { white-space: nowrap; }
     code { font-family: "IBM Plex Mono", monospace; font-size: 12.5px; }
     .muted { color: var(--ink2); font-size: 13px; }
     .b { display: inline-block; border-radius: 999px; padding: 1px 9px; font-size: 12px; font-weight: 600; white-space: nowrap; }
-    .works { background: var(--pos-bg); color: var(--pos); } .decision { background: var(--warn-bg); color: var(--warn); } .phase2, .dropped { background: var(--neu-bg); color: var(--neu); }
-    .shown { background: var(--info-bg); color: var(--info); } .open { background: var(--crit-bg); color: var(--crit); }
+    .works, .green, .done, .yes { background: var(--pos-bg); color: var(--pos); }
+    .decision, .amber, .doing, .part { background: var(--warn-bg); color: var(--warn); }
+    .phase2, .dropped { background: var(--neu-bg); color: var(--neu); }
+    .shown { background: var(--info-bg); color: var(--info); }
+    .open, .red, .no, .overdue { background: var(--crit-bg); color: var(--crit); }
     .dtag { background: var(--warn-bg); color: var(--warn); border: 1px dashed #e0b86a; }
     a { color: var(--accent); } .links a { display: inline-block; margin-inline-end: 10px; }
     .n10 { font-family: "IBM Plex Mono", monospace; font-size: 12px; }
+    .gates td:not(:first-child):not(:nth-child(2)) { text-align: center; }
+    .note { background: var(--surface); border: 1px dashed #cfc9bf; border-radius: 10px; padding: 10px 14px; font-size: 13px; color: var(--ink2); margin-top: 18px; }
   </style>
 </head>
 <body>
   <header>
-    <h1>Requirements in the prototype</h1>
-    <p class="sub">All 111 requirements from <code>docs/02-requirements/requirements.md</code>, where to see each one, and what still waits. Internal PO tool — English only. Open a link to jump to the screen.</p>
+    <div>
+      <h1>Quantara · Project picture</h1>
+      <p class="sub">What the project still lacks for a clear, full picture before <b>Tue 10 Nov 2026</b>, and where every requirement stands. Internal PO tool — English only.</p>
+    </div>
+    <p class="sub" id="stamp"></p>
   </header>
-  <div class="tiles" id="tiles"></div>
-  <div class="bar">
-    <label>Search <input id="q" type="search" placeholder="ID or text"></label>
-    <label>Domain <select id="dom"></select></label>
-    <label>Scope for 10 Nov <select id="n10"><option value="">Any</option><option>IN</option><option>MIN</option><option>LATER</option><option>TBD</option></select></label>
-  </div>
-  <main><table><thead><tr><th>ID</th><th>Requirement</th><th>Priority · phase</th><th>10 Nov</th><th>In the prototype</th><th>Where to see it</th></tr></thead><tbody id="rows"></tbody></table></main>
+  <nav class="tabs" role="tablist">
+    <button role="tab" data-tab="picture" class="on">Project picture</button>
+    <button role="tab" data-tab="reqs">Requirements</button>
+  </nav>
+
+  <section id="picture" class="wrap">
+    <div class="tiles" id="kpis"></div>
+    <h2>Areas</h2>
+    <div class="areas" id="areas"></div>
+    <h2>Module gates — can the backend start?</h2>
+    <div class="tablewrap"><table class="gates"><thead><tr><th>Module</th><th>Backend sprint</th><th>HTML</th><th>Flows</th><th>Handoff</th><th>Decisions</th><th>Stack</th></tr></thead><tbody id="gates"></tbody></table></div>
+    <h2>What's missing</h2>
+    <div class="bar">
+      <label>Search <input id="gq" type="search" placeholder="Gap, fix, owner or ID"></label>
+      <label>Area <select id="garea"></select></label>
+      <label>Status <select id="gstatus"><option value="">Not done</option><option value="all">All</option><option>open</option><option>doing</option><option>done</option></select></label>
+      <label>Due <select id="gdue"><option value="">Any time</option><option value="late">Overdue</option><option value="7">Within 7 days</option><option value="14">Within 14 days</option></select></label>
+      <span class="muted" id="gcount"></span>
+    </div>
+    <div class="tablewrap"><table><thead><tr><th>ID</th><th>Area</th><th>Gap</th><th>Fix</th><th>Owner</th><th>Due</th><th>Status</th><th>Blocks</th></tr></thead><tbody id="gaps"></tbody></table></div>
+    <p class="note">Source: <code>docs/08-delivery/project-picture.md</code> (edited at each analysis session) plus live counts from the requirements, the decision log and the screen registry. Regenerate with <code>python prototype/tools/build-coverage.py</code>.</p>
+  </section>
+
+  <section id="reqs" class="wrap" hidden>
+    <div class="tiles" id="tiles"></div>
+    <div class="bar" style="margin-top:14px">
+      <label>Search <input id="q" type="search" placeholder="ID or text"></label>
+      <label>Domain <select id="dom"></select></label>
+      <label>Backend module <select id="mod"><option value="">Any</option><option>M1</option><option>M2</option><option>M3</option><option>M4</option></select></label>
+      <label>Scope for 10 Nov <select id="n10"><option value="">Any</option><option>IN</option><option>MIN</option><option>LATER</option><option>TBD</option></select></label>
+    </div>
+    <div class="tablewrap"><table><thead><tr><th>ID</th><th>Requirement</th><th>Priority · phase</th><th>10 Nov</th><th>Module</th><th>In the prototype</th><th>Where to see it</th></tr></thead><tbody id="rows"></tbody></table></div>
+  </section>
+
   <script src="js/coverage-data.js"></script>
+  <script src="js/project-data.js"></script>
   <script>
+    function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+    function $(id) { return document.getElementById(id); }
+    function md(s) { return esc(s).replace(/`([^`]+)`/g, "<code>$1</code>"); }
+    var P = window.PROJECT, R = window.COVERAGE;
+    var TODAY = new Date(); TODAY.setHours(0, 0, 0, 0);
+    var GOLIVE = new Date(2026, 10, 10);
+    function days(iso) { var p = iso.split("-"); return Math.round((new Date(+p[0], +p[1] - 1, +p[2]) - TODAY) / 864e5); }
+    function dueText(iso) { var d = days(iso), p = iso.split("-"), lbl = p[2] + "/" + p[1]; return d < 0 ? lbl + ' <span class="b overdue">' + (-d) + " d late</span>" : d === 0 ? lbl + ' <span class="b amber">today</span>' : lbl + ' <span class="muted">in ' + d + " d</span>"; }
+
+    /* ---------- tabs ---------- */
+    document.querySelector("nav.tabs").addEventListener("click", function (e) {
+      var b = e.target.closest("[data-tab]"); if (!b) return;
+      document.querySelectorAll("nav.tabs button").forEach(function (x) { x.classList.toggle("on", x === b); });
+      $("picture").hidden = b.dataset.tab !== "picture"; $("reqs").hidden = b.dataset.tab !== "reqs";
+    });
+
+    /* ---------- project picture ---------- */
+    var C = P.counts, g = { q: "", area: "", status: "", due: "" };
+    $("stamp").innerHTML = "Last analysis: <b>" + esc(P.last_analysis) + "</b> · " + Math.max(0, Math.round((GOLIVE - TODAY) / 864e5)) + " days to go-live";
+    var notDone = P.gaps.filter(function (x) { return x.Status !== "done"; });
+    var late = notDone.filter(function (x) { return days(x.Due) < 0; }).length, soon = notDone.filter(function (x) { var d = days(x.Due); return d >= 0 && d <= 7; }).length;
+    var reqWorks = C.req_state.works || 0, dec = C.decisions, scr = C.screens, scrTotal = Object.keys(scr).reduce(function (a, k) { return a + scr[k]; }, 0);
+    $("kpis").innerHTML = [
+      ["Open gaps", notDone.length, late + " overdue · " + soon + " due within 7 days"],
+      ["Red areas", P.areas.filter(function (a) { return a.Health === "red"; }).length + " / " + P.areas.length, "Block a gate or a module"],
+      ["Decisions still open", (dec.open || 0) + (dec.proposed || 0) + " / " + ((dec.open || 0) + (dec.proposed || 0) + (dec.decided || 0)), (dec.open || 0) + " open · " + (dec.proposed || 0) + " proposed · " + (dec.decided || 0) + " decided"],
+      ["Screens in Figma", (scr["figma-wip"] || 0) + (scr["figma-approved"] || 0) + " / " + scrTotal, (scr["figma-approved"] || 0) + " approved · " + (scr["figma-wip"] || 0) + " in progress"],
+      ["Requirements in HTML", reqWorks + " / " + C.requirements, "10 Nov: " + (C.nov10.IN || 0) + " IN · " + (C.nov10.MIN || 0) + " MIN · " + (C.nov10.LATER || 0) + " later · " + (C.nov10.TBD || 0) + " TBD"]
+    ].map(function (k) { return '<div class="tile"><small>' + esc(k[0]) + "</small><b>" + esc(k[1]) + "</b><small>" + esc(k[2]) + "</small></div>"; }).join("");
+
+    function drawAreas() {
+      $("areas").innerHTML = P.areas.map(function (a) {
+        var n = notDone.filter(function (x) { return x.Area === a.Area; }).length;
+        return '<button class="tile area ' + esc(a.Health) + (g.area === a.Area ? " on" : "") + '" data-area="' + esc(a.Area) + '"><h3>' + esc(a.Area) + ' <span class="b ' + esc(a.Health) + '">' + (n ? n + " gap" + (n > 1 ? "s" : "") : "ok") + "</span></h3><p>" + esc(a.Summary) + "</p></button>";
+      }).join("");
+    }
+    $("areas").addEventListener("click", function (e) { var b = e.target.closest("[data-area]"); if (!b) return; g.area = g.area === b.dataset.area ? "" : b.dataset.area; $("garea").value = g.area; drawAreas(); drawGaps(); });
+
+    var GATE = { yes: "✓", no: "✗", part: "~" };
+    $("gates").innerHTML = P.modules.map(function (m) {
+      return "<tr><td><b>" + esc(m.Module) + '</b></td><td class="muted">' + esc(m["Backend sprint"]) + "</td>" + ["HTML", "Flows", "Handoff", "Decisions", "Stack"].map(function (k) { var v = m[k]; return '<td><span class="b ' + esc(v) + '">' + (GATE[v] || esc(v)) + "</span></td>"; }).join("") + "</tr>";
+    }).join("");
+
+    var areasList = []; P.gaps.forEach(function (x) { if (areasList.indexOf(x.Area) < 0) areasList.push(x.Area); });
+    $("garea").innerHTML = '<option value="">Any</option>' + areasList.map(function (a) { return "<option>" + esc(a) + "</option>"; }).join("");
+    function drawGaps() {
+      var q = g.q.toLowerCase();
+      var list = P.gaps.filter(function (x) {
+        var st = g.status === "" ? x.Status !== "done" : g.status === "all" ? true : x.Status === g.status, d = days(x.Due);
+        var due = !g.due || (g.due === "late" ? d < 0 && x.Status !== "done" : d <= +g.due);
+        return st && due && (!g.area || x.Area === g.area) && (!q || (x.ID + " " + x.Gap + " " + x.Fix + " " + x.Owner + " " + x.Blocks).toLowerCase().indexOf(q) > -1);
+      }).sort(function (a, b) { return a.Due < b.Due ? -1 : a.Due > b.Due ? 1 : a.ID < b.ID ? -1 : 1; });
+      $("gcount").textContent = list.length + " of " + P.gaps.length;
+      $("gaps").innerHTML = list.map(function (x) {
+        var isLate = days(x.Due) < 0 && x.Status !== "done";
+        return '<tr class="' + (isLate ? "late" : "") + '"><td><code>' + esc(x.ID) + '</code></td><td class="muted">' + esc(x.Area) + "</td><td><b>" + md(x.Gap) + "</b></td><td>" + md(x.Fix) + "</td><td>" + esc(x.Owner) + '</td><td style="white-space:nowrap">' + (x.Status === "done" ? esc(x.Due) : dueText(x.Due)) + '</td><td><span class="b ' + esc(x.Status) + '">' + esc(x.Status) + '</span></td><td class="muted">' + esc(x.Blocks) + "</td></tr>";
+      }).join("") || '<tr><td colspan="8" class="muted">Nothing matches.</td></tr>';
+    }
+    $("gq").addEventListener("input", function (e) { g.q = e.target.value; drawGaps(); });
+    $("garea").addEventListener("change", function (e) { g.area = e.target.value; drawAreas(); drawGaps(); });
+    $("gstatus").addEventListener("change", function (e) { g.status = e.target.value; drawGaps(); });
+    $("gdue").addEventListener("change", function (e) { g.due = e.target.value; drawGaps(); });
+    drawAreas(); drawGaps();
+
+    /* ---------- requirements ---------- */
     var STATES = { works: "Works", decision: "Waits for a decision", shown: "Shown (guaranteed)", phase2: "Phase 2", dropped: "Dropped", open: "Requirement text missing" };
-    var HINT = { works: "Clickable in the prototype", decision: "Shown with a placeholder until the client decides", shown: "Shown as a rule; nothing to click", phase2: "Shown as out of the first launch", dropped: "Removed by a PO decision", open: "Fix the requirement row first" };
-    var R = window.COVERAGE, f = { state: "", q: "", dom: "", n10: "" };
-    function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+    var HINT = { works: "Clickable in the prototype", decision: "Shown with a placeholder until the client decides", shown: "Shown as a rule; nothing to click", phase2: "Shown as out of the first launch", dropped: "Replaced by a decision", open: "The source row is empty" };
+    var f = { state: "", q: "", dom: "", n10: "", mod: "" };
     var doms = []; R.forEach(function (r) { if (doms.indexOf(r.domain) < 0) doms.push(r.domain); });
-    document.getElementById("dom").innerHTML = '<option value="">Any</option>' + doms.map(function (d) { return "<option>" + esc(d) + "</option>"; }).join("");
+    $("dom").innerHTML = '<option value="">Any</option>' + doms.map(function (d) { return "<option>" + esc(d) + "</option>"; }).join("");
     function tiles() {
       var c = {}; R.forEach(function (r) { c[r.state] = (c[r.state] || 0) + 1; });
-      document.getElementById("tiles").innerHTML = '<button class="tile' + (f.state ? "" : " on") + '" data-s=""><span class="muted">All requirements</span><b>' + R.length + "</b></button>" +
+      $("tiles").innerHTML = '<button class="tile' + (f.state ? "" : " on") + '" data-s=""><small>All requirements</small><b>' + R.length + "</b></button>" +
         Object.keys(STATES).filter(function (s) { return c[s]; }).map(function (s) { return '<button class="tile' + (f.state === s ? " on" : "") + '" data-s="' + s + '" title="' + HINT[s] + '"><span class="b ' + s + '">' + STATES[s] + "</span><b>" + c[s] + "</b></button>"; }).join("");
     }
     function draw() {
       tiles(); var last = "", q = f.q.toLowerCase();
-      document.getElementById("rows").innerHTML = R.filter(function (r) {
-        return (!f.state || r.state === f.state) && (!f.dom || r.domain === f.dom) && (!f.n10 || r.nov10 === f.n10) && (!q || (r.id + " " + r.title + " " + r.detail).toLowerCase().indexOf(q) > -1);
+      $("rows").innerHTML = R.filter(function (r) {
+        return (!f.state || r.state === f.state) && (!f.dom || r.domain === f.dom) && (!f.mod || r.module === f.mod) && (!f.n10 || r.nov10 === f.n10) && (!q || (r.id + " " + r.title + " " + r.detail).toLowerCase().indexOf(q) > -1);
       }).map(function (r) {
-        var head = r.domain !== last ? '<tr class="dom"><td colspan="6">' + esc(r.domain) + "</td></tr>" : ""; last = r.domain;
-        return head + "<tr><td><code>" + esc(r.id) + "</code></td><td><b>" + esc(r.title) + '</b><div class="muted">' + esc(r.detail) + "</div></td><td class=muted>" + esc(r.priority || "—") + " · " + esc(r.phase || "—") + '</td><td class="n10">' + esc(r.nov10) + "</td>" +
+        var head = r.domain !== last ? '<tr class="dom"><td colspan="7">' + esc(r.domain) + "</td></tr>" : ""; last = r.domain;
+        return head + "<tr><td><code>" + esc(r.id) + "</code></td><td><b>" + esc(r.title) + '</b><div class="muted">' + esc(r.detail) + "</div></td><td class=muted>" + esc(r.priority || "—") + " · " + esc(r.phase || "—") + '</td><td class="n10">' + esc(r.nov10) + '</td><td class="n10">' + esc(r.module) + "</td>" +
           '<td><span class="b ' + r.state + '" title="' + HINT[r.state] + '">' + STATES[r.state] + "</span>" + (r.decision ? ' <span class="b dtag">' + esc(r.decision) + "</span>" : "") + "</td>" +
           '<td class="links">' + (r.links.length ? r.links.map(function (l) { return '<a href="' + esc(l[1]) + '" target="_blank">' + esc(l[0]) + "</a>"; }).join("") : '<span class="muted">—</span>') + "</td></tr>";
       }).join("");
     }
-    document.getElementById("tiles").addEventListener("click", function (e) { var b = e.target.closest("[data-s]"); if (b) { f.state = b.getAttribute("data-s"); draw(); } });
-    document.getElementById("q").addEventListener("input", function (e) { f.q = e.target.value; draw(); });
-    document.getElementById("dom").addEventListener("change", function (e) { f.dom = e.target.value; draw(); });
-    document.getElementById("n10").addEventListener("change", function (e) { f.n10 = e.target.value; draw(); });
+    $("tiles").addEventListener("click", function (e) { var b = e.target.closest("[data-s]"); if (b) { f.state = b.getAttribute("data-s"); draw(); } });
+    $("q").addEventListener("input", function (e) { f.q = e.target.value; draw(); });
+    $("dom").addEventListener("change", function (e) { f.dom = e.target.value; draw(); });
+    $("mod").addEventListener("change", function (e) { f.mod = e.target.value; draw(); });
+    $("n10").addEventListener("change", function (e) { f.n10 = e.target.value; draw(); });
     draw();
   </script>
 </body>

@@ -256,100 +256,7 @@
     });
   }
 
-  /* =====================================================================
-   * HQ · Branches and registers (List) — plan usage, limit, upgrade request
-   * ===================================================================== */
-  function Branches(tn) {
-    var u = currentUsage(tn), me = hqMeId(tn), pendingUp = Store.upgradeRequest(tn);
-    var bFull = u.branches >= u.max_branches, rFull = u.registers >= u.max_registers;
-
-    function requestUpgrade(what) {
-      UI.Dialog({ title: t("limit.dialog_title"), body: [h("p", null, t("limit.dialog_body", { plan: I18n.pick(u.plan, "name") }))],
-        actions: [{ label: t("dialog.cancel"), variant: "ghost" }, { label: t("limit.request"), variant: "primary",
-          onClick: function (close) { Store.requestUpgrade(tn, what, me); close(); App.render(); UI.toast(t("limit.sent")); } }] });
-    }
-    function addBranch() {
-      var d = { en: "", ar: "", city_en: "", city_ar: "" };
-      var f = function (k, label, dir) { return UI.FormRow({ id: "nb-" + k, label: label, control: UI.Input({ id: "nb-" + k, dir: dir, onInput: function (v) { d[k] = v; } }) }); };
-      UI.Dialog({ title: t("hq.branches.add"), body: [h("p", null, t("hq.branches.add_body", { n: I18n.number(u.max_branches - u.branches) })),
-          f("en", t("flow.branch_en"), "ltr"), f("ar", t("flow.branch_ar"), "rtl"), f("city_en", t("flow.city_en"), "ltr"), f("city_ar", t("flow.city_ar"), "rtl")],
-        actions: [{ label: t("dialog.cancel"), variant: "ghost" }, { label: t("hq.branches.add"), variant: "primary", onClick: function (close) {
-          if (!d.en.trim() || !d.ar.trim()) { var el = document.getElementById(d.en.trim() ? "nb-ar" : "nb-en"); el.setAttribute("aria-invalid", "true"); el.focus(); return; }
-          var id = tn.id + "-b" + (tn.branches.length + 1);
-          tn.branches.push({ id: id, code: "B" + (tn.branches.length + 1), name_en: d.en.trim(), name_ar: d.ar.trim(), city_en: d.city_en.trim(), city_ar: d.city_ar.trim(), status: "active", registers: [] });
-          close(); App.render(); UI.toast(t("hq.branches.added")); } }] });
-    }
-    function addRegister() {
-      var bid = tn.branches[0].id;
-      UI.Dialog({ title: t("hq.registers.add"), body: [h("p", null, t("hq.registers.add_body")),
-          UI.FormRow({ id: "nr-b", label: t("col.branch"), control: UI.Select({ id: "nr-b", value: bid, onChange: function (v) { bid = v; },
-            options: tn.branches.map(function (b) { return { value: b.id, label: I18n.pick(b, "name") }; }) }) })],
-        actions: [{ label: t("dialog.cancel"), variant: "ghost" }, { label: t("hq.registers.add"), variant: "primary", onClick: function (close) {
-          var b = Store.branch(tn, bid), n = b.registers.reduce(function (m, r) { return Math.max(m, r.n || 0); }, 0) + 1;
-          var r = { id: b.id + "-" + n, n: n, label: "Register " + n, status: "offline", last_seen_at: null };
-          b.registers.push(r); close(); App.render(); UI.toast(t("hq.registers.added", { series: Store.invoiceSeries(tn, b, r) })); } }] });
-    }
-
-    var before = commonBanners(tn);
-    before.push(UI.Section({ title: t("hq.plan_usage", { plan: I18n.pick(u.plan, "name") }), actions: UI.OwnerTag({ owner: "quantara", here: "hq", label: t("owner.limits") }), body: [
-      h("div", { class: "grid-2" },
-        UI.Meter({ id: "hb-b", label: t("col.branches"), value: u.branches, max: u.max_branches }),
-        UI.Meter({ id: "hb-r", label: t("col.registers"), value: u.registers, max: u.max_registers }))] }));
-    if (bFull || rFull) before.push(UI.LimitBanner({ what: t(bFull ? "limit.what_branches" : "limit.what_registers"), plan: I18n.pick(u.plan, "name"), pending: pendingUp,
-      onRequest: function () { requestUpgrade(bFull ? "branches" : "registers"); } }));
-
-    return P.ListPage({
-      stateKey: "hq-branches:" + tn.id,
-      header: { breadcrumbs: hqCrumbs(tn, t("nav.hq_branches")), title: t("nav.hq_branches"), subtitle: t("hq.branches.subtitle"),
-        actions: [
-          UI.Button({ label: t("hq.registers.add"), icon: "plus", onClick: addRegister, disabled: rFull || !tn.branches.length || tn.status === "suspended" }),
-          UI.Button({ label: t("hq.branches.add"), icon: "plus", variant: "primary", onClick: addBranch, disabled: bFull || tn.status === "suspended" })] },
-      before: before,
-      rows: function () { return tn.branches; },
-      rowHref: function (b) { return "#/hq/" + tn.id + "/b/" + b.id; },
-      defaultSort: { key: "name", dir: "asc" },
-      filters: [],
-      columns: [
-        { key: "name", label: t("col.branch"), sortable: true, sortValue: function (b) { return I18n.pick(b, "name"); },
-          render: function (b) { return h("span", null, I18n.pick(b, "name"), h("span", { class: "cell-sub" }, I18n.pick(b, "city"))); } },
-        { key: "status", label: t("col.status"), render: function (b) { return UI.StatusBadge(b.status); } },
-        { key: "registers", label: t("col.registers"), render: function (b) {
-          if (!b.registers.length) return h("span", { class: "muted" }, "—");
-          return h("span", { class: "stack stack--tight" }, b.registers.map(function (r) {
-            return h("span", { class: "owned" }, h("span", { dir: "ltr" }, r.label), h("code", { dir: "ltr" }, Store.invoiceSeries(tn, b, r)), UI.StatusBadge(r.status),
-              r.last_seen_at ? UI.SyncNote({ kind: r.status === "online" ? "synced" : "stale", time: I18n.dateTime(r.last_seen_at, tn.time_zone) }) : h("span", { class: "sync-note" }, t("sync.never")));
-          })); } },
-        { key: "series", label: t("col.invoice_series"), render: function () { return UI.OwnerTag({ owner: "guaranteed", here: "hq", label: t("owner.series") }); } }
-      ],
-      empty: { title: t("branches.empty_title"), body: t("hq.branches.empty_body") }
-    });
-  }
-
-  /* =====================================================================
-   * HQ · People and roles (List)
-   * ===================================================================== */
-  function People(tn) {
-    var hq = Store.hq(tn);
-    return P.ListPage({
-      stateKey: "hq-people:" + tn.id,
-      header: { breadcrumbs: hqCrumbs(tn, t("nav.hq_people")), title: t("nav.hq_people"), subtitle: t("hq.people.subtitle"), badges: UI.OwnerTag({ owner: "hq", here: "hq" }) },
-      before: commonBanners(tn).concat([UI.Banner({ tone: "info", body: t("hq.people.note") })]),
-      rows: function () { return hq.users; },
-      defaultSort: { key: "role", dir: "asc" },
-      filters: [
-        { id: "role", type: "select", label: t("col.role"),
-          options: function () { return ["owner", "hq_manager", "branch_manager", "cashier"].map(function (r) { return { value: r, label: t("role." + r) }; }); },
-          match: function (u, v) { return !v || u.role === v; } }
-      ],
-      columns: [
-        { key: "name", label: t("col.person"), sortable: true, sortValue: function (u) { return I18n.pick(u, "name"); }, render: function (u) { return I18n.pick(u, "name"); } },
-        { key: "role", label: t("col.role"), sortable: true, sortValue: function (u) { return ["owner", "hq_manager", "branch_manager", "cashier"].indexOf(u.role); }, render: function (u) { return t("role." + u.role); } },
-        { key: "where", label: t("col.works_at"), render: function (u) { return u.branch_id ? I18n.pick(Store.branch(tn, u.branch_id), "name") : t("layer.hq"); } },
-        { key: "can", label: t("col.can"), render: function (u) { return h("span", { class: "muted" }, t("role." + u.role + ".can")); } }
-      ],
-      empty: { title: t("hq.people.empty_title"), body: t("hq.people.empty_body") }
-    });
-  }
+  /* HQ · Branches and registers, and HQ · People and roles: moved to pages-m1.js (Module 1, 3 Oct). */
 
   /* =====================================================================
    * HQ · Settings (Settings) — §5 of the specs, plus what Quantara guarantees
@@ -684,7 +591,7 @@
     });
   }
 
-  window.HQ = { Home: Home, Catalogue: Catalogue, Prices: Prices, ExchangeRate: ExchangeRate, Branches: Branches, People: People,
+  window.HQ = { Home: Home, Catalogue: Catalogue, Prices: Prices, ExchangeRate: ExchangeRate, 
     Settings: Settings, Subscription: Subscription, SupportAccess: SupportAccess,
     BranchToday: BranchToday, BranchItems: BranchItems, BranchDiscounts: BranchDiscounts, BranchCash: BranchCash };
 })();

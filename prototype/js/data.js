@@ -62,7 +62,8 @@ window.QuantaraData = {
       branches: [
         {
           id: "ec-main", code: "MAIN", name_en: "Main branch", name_ar: "الفرع الرئيسي", city_en: "Damascus", city_ar: "دمشق",
-          status: "active",
+          status: "active", has_invoices: true,
+          server: { status: "online", enrolled_at: "2026-06-01T10:00:00Z", last_sync_at: "2026-09-23T08:42:00Z", app_version: "1.0.3", schema_version: 12, events_waiting: 0 },
           registers: [
             { id: "ec-main-1", n: 1, label: "Register 1", status: "online",  last_seen_at: "2026-09-23T08:42:00Z" },
             { id: "ec-main-2", n: 2, label: "Register 2", status: "offline", last_seen_at: "2026-09-22T21:10:00Z" }
@@ -203,11 +204,13 @@ window.QuantaraData.modules = ["tips", "credit_sales", "loyalty", "table_service
 window.QuantaraData.hq = {
   "electro-cafe": {
     users: [
-      { id: "ec-u-owner", name_en: "[Owner]",          name_ar: "[المالك]",        role: "owner",          branch_id: null },
-      { id: "ec-u-hq",    name_en: "[HQ manager]",     name_ar: "[مدير الإدارة]",  role: "hq_manager",     branch_id: null },
-      { id: "ec-u-bm",    name_en: "[Branch manager]", name_ar: "[مدير الفرع]",    role: "branch_manager", branch_id: "ec-main" },
-      { id: "ec-u-c1",    name_en: "[Cashier 1]",      name_ar: "[كاشير 1]",       role: "cashier",        branch_id: "ec-main" },
-      { id: "ec-u-c2",    name_en: "[Cashier 2]",      name_ar: "[كاشير 2]",       role: "cashier",        branch_id: "ec-main" }
+      { id: "ec-u-owner", name_en: "Jad",          name_ar: "جاد",          role: "owner",          branch_id: null,      status: "active",  email: "owner@electro.example",    panel: true,  sign_in: "pin" },
+      { id: "ec-u-hq",    name_en: "[HQ manager]", name_ar: "[مدير الإدارة]", role: "hq_manager",     branch_id: null,      status: "active",  email: "hq@electro.example",       panel: true,  sign_in: "pin" },
+      { id: "ec-u-acc",   name_en: "[Accountant]", name_ar: "[المحاسب]",     role: "accountant",     branch_id: null,      status: "invited", email: "accounts@electro.example", panel: true,  sign_in: "pin" },
+      { id: "ec-u-bm",    name_en: "Maya",         name_ar: "مايا",         role: "branch_manager", branch_id: "ec-main", status: "active",  phone: "+963 9xx xxx 001",         panel: true,  sign_in: "card_or_pin", card: "40021877" },
+      { id: "ec-u-c1",    name_en: "Hala",         name_ar: "هلا",          role: "cashier",        branch_id: "ec-main", status: "active",  panel: false, sign_in: "pin" },
+      { id: "ec-u-c2",    name_en: "Samer",        name_ar: "سامر",         role: "cashier",        branch_id: "ec-main", status: "active",  panel: false, sign_in: "pin", pin_must_change: true },
+      { id: "ec-u-bar",   name_en: "[Barista]",    name_ar: "[الباريستا]",  role: "barista",        branch_id: "ec-main", status: "disabled", panel: false, sign_in: "pin" }
     ],
     // Business rules HQ owns (§5 of the specs) that were not on the Day 4 tenant record.
     rules: { manual_discount_cap_percent: 10, updated_by: "ec-u-owner", updated_at: "2026-09-01T09:00:00Z" },
@@ -218,18 +221,27 @@ window.QuantaraData.hq = {
       loyalty:       { on: false, branches: [],          updated_by: "ec-u-owner", updated_at: "2026-09-02T10:00:00Z" }
     },
     categories: [
-      { id: "hot",    name_en: "Hot drinks",  name_ar: "مشروبات ساخنة" },
-      { id: "cold",   name_en: "Cold drinks", name_ar: "مشروبات باردة" },
-      { id: "pastry", name_en: "Pastry",      name_ar: "معجنات" }
+      { id: "hot",   name_en: "Hot drinks",  name_ar: "مشروبات ساخنة" },
+      { id: "cold",  name_en: "Cold drinks", name_ar: "مشروبات باردة" },
+      { id: "sweet", name_en: "Sweets",      name_ar: "حلويات" },
+      { id: "snack", name_en: "Snacks",      name_ar: "سناكات" }
     ],
     items: [
-      { id: "ec-espresso",  category_id: "hot",    name_en: "Espresso",      name_ar: "إسبريسو",      price: 15000, updated_by: "ec-u-hq",    updated_at: "2026-09-10T08:00:00Z" },
-      { id: "ec-latte",     category_id: "hot",    name_en: "Latte",         name_ar: "لاتيه",         price: 22000, updated_by: "ec-u-hq",    updated_at: "2026-09-23T07:42:00Z" },
-      { id: "ec-tea",       category_id: "hot",    name_en: "Black tea",     name_ar: "شاي",           price: 8000,  updated_by: "ec-u-hq",    updated_at: "2026-09-10T08:00:00Z" },
-      { id: "ec-iced",      category_id: "cold",   name_en: "Iced coffee",   name_ar: "قهوة مثلجة",    price: 25000, updated_by: "ec-u-hq",    updated_at: "2026-09-10T08:00:00Z" },
-      { id: "ec-lemonade",  category_id: "cold",   name_en: "Lemon mint",    name_ar: "ليمون ونعناع",  price: 18000, updated_by: "ec-u-owner", updated_at: "2026-09-05T08:00:00Z" },
-      { id: "ec-croissant", category_id: "pastry", name_en: "Croissant",     name_ar: "كرواسان",       price: 14000, updated_by: "ec-u-hq",    updated_at: "2026-09-10T08:00:00Z" },
-      { id: "ec-cake",      category_id: "pastry", name_en: "Cake slice",    name_ar: "قطعة كيك",      price: 20000, updated_by: "ec-u-hq",    updated_at: "2026-09-10T08:00:00Z" }
+      { id: "ec-espresso", category_id: "hot", name_en: "Espresso", name_ar: "إسبريسو", price: 15000, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
+      { id: "ec-cappuccino", category_id: "hot", name_en: "Cappuccino", name_ar: "كابتشينو", price: 20000, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
+      { id: "ec-latte", category_id: "hot", name_en: "Latte", name_ar: "لاتيه", price: 22000, updated_by: "ec-u-hq", updated_at: "2026-09-23T07:42:00Z" },
+      { id: "ec-turkish", category_id: "hot", name_en: "Turkish coffee", name_ar: "قهوة تركية", price: 12000, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
+      { id: "ec-tea", category_id: "hot", name_en: "Black tea", name_ar: "شاي أسود", price: 8000, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
+      { id: "ec-iced", category_id: "cold", name_en: "Iced coffee", name_ar: "قهوة مثلجة", price: 25000, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
+      { id: "ec-lemonade", category_id: "cold", name_en: "Lemon mint", name_ar: "ليمون ونعناع", price: 18000, updated_by: "ec-u-owner", updated_at: "2026-09-05T08:00:00Z" },
+      { id: "ec-water", category_id: "cold", name_en: "Water", name_ar: "مياه", price: 5000, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
+      { id: "ec-frappe", category_id: "cold", name_en: "Frappé", name_ar: "فرابيه", price: 28000, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
+      { id: "ec-brownie", category_id: "sweet", name_en: "Brownie", name_ar: "براوني", price: 16000, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
+      { id: "ec-cheesecake", category_id: "sweet", name_en: "Cheesecake", name_ar: "تشيز كيك", price: 30000, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
+      { id: "ec-croissant", category_id: "sweet", name_en: "Croissant", name_ar: "كرواسان", price: 14000, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
+      { id: "ec-cake", category_id: "sweet", name_en: "Cake slice", name_ar: "قطعة كيك", price: 20000, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
+      { id: "ec-club", category_id: "snack", name_en: "Club sandwich", name_ar: "كلوب ساندويش", price: 40000, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
+      { id: "ec-chips", category_id: "snack", name_en: "Chips", name_ar: "شيبس", price: 8000, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" }
     ],
     // HQ offers: HQ-owned, apply to the branches listed ("all" = every branch).
     offers: [
@@ -338,7 +350,7 @@ window.QuantaraData.support_access = [
 window.QuantaraData.audit_log = [
   { at: "2026-06-01T08:00:00Z", tenant_id: "electro-cafe", actor: "staff-omar", kind: "requested", request_id: "sa-088" },
   { at: "2026-06-01T08:05:00Z", tenant_id: "electro-cafe", actor: "ec-u-owner", kind: "approved", request_id: "sa-088" },
-  { at: "2026-06-01T09:30:00Z", tenant_id: "electro-cafe", actor: "staff-omar", kind: "action", text_en: "Imported 7 catalogue items", text_ar: "استورد 7 أصناف إلى القائمة" },
+  { at: "2026-06-01T09:30:00Z", tenant_id: "electro-cafe", actor: "staff-omar", kind: "action", text_en: "Imported 15 catalogue items", text_ar: "استورد 15 صنفًا إلى القائمة" },
   { at: "2026-06-01T12:40:00Z", tenant_id: "electro-cafe", actor: "staff-omar", kind: "ended", request_id: "sa-088" },
   { at: "2026-09-23T08:30:00Z", tenant_id: "electro-cafe", actor: "staff-rana", kind: "requested", request_id: "sa-101" },
   { at: "2026-09-23T06:00:00Z", tenant_id: "sample-cedar-grill", actor: "staff-lina", kind: "requested", request_id: "sa-120" },

@@ -22,6 +22,7 @@ last_updated: 2026-09-28
 | Sun | Sprint start | Sprint goal in Jira; only DoR-ready tickets enter |
 | Tue | Client check-in (30 min) | Decisions closed → decision log + config updated; meeting note in `clients/electro-cafe/meetings/` |
 | Wed | Design review for next sprint | Screens for next sprint `figma-approved` |
+| Thu | **Analysis session** (30 min, before review) | Update `08-delivery/project-picture.md` — area health, module gates, gaps (close done ones, add new ones with owner + due) — then run `python prototype/tools/build-coverage.py`; the dashboard `prototype/requirements.html` shows the result |
 | Thu | Sprint review + planning, risk review, **module readiness** | Demo, changelog line, risks re-scored, master plan updated if dates move; next module's row in `08-delivery/module-readiness.md` all ✓ or escalated; next `sprint-NN.md` written |
 
 ## Per feature

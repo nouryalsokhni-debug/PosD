@@ -2,8 +2,8 @@
 title: Quantara POS — Master Plan
 status: living
 owner: PO
-version: 1.2
-last_updated: 2026-09-28
+version: 1.4
+last_updated: 2026-10-03
 mirror: Google Doc "Quantara POS — Master Plan" (humans edit there; PO syncs each approved version here)
 ---
 
@@ -19,6 +19,9 @@ mirror: Google Doc "Quantara POS — Master Plan" (humans edit there; PO syncs e
 - A new cashier is productive after **30 minutes** of training (GEN-05).
 - Zero lost orders during power/internet cuts (OFF-01, OFF-08).
 - A second tenant could be onboarded without code changes (GEN-01, GEN-02).
+
+## 2b. How it is built (ADR-001)
+Three tiers: **till** (Electron + React) → **branch server** (a mini-PC in each branch: stock, orders, shifts, invoice numbers, printing) → **Quantara cloud** (menu, prices, people, reports). The branch sells with no internet; it syncs when the line is back.
 
 ## 3. Scope
 - **Master list:** [requirements](02-requirements/requirements.md) — 111 requirements (87 Must, 105 Launch).
@@ -36,9 +39,9 @@ Sprints are **1 week, Sun–Thu**, named as in Jira. The backend builds **one mo
 
 | Phase | Dates | Backend module | Design · PO / HTML | Gate |
 |---|---|---|---|---|
-| Sprint 1 — Design first | Sun 20 Sep – Thu 1 Oct | — | Research, HTML prototype (all 111 requirements), core design in Figma — closes when the backend has a good start ([close checklist](08-delivery/sprint-01.md)); the rest of the design continues in Sprint 2 | Backend start pack ready |
-| **Planning gate** | Mon 28 Sep – Thu 1 Oct | — | Scope cut, decisions group A, ADR-001 stack, Module 1 handoff | **G1: Ready to build** (Thu 1 Oct) |
-| Sprint 2 — Platform core | Sun 4 – Thu 8 Oct | **M1** tenants, branches, registers, users & roles, catalogue ([plan](08-delivery/sprint-02.md)) | Figma: platform core + cashier sale & payment · HTML: offline & power cut · M2 handoff | Decisions group B closed |
+| Sprint 1 — Design first | Sun 20 Sep – open (PO closes it) | — | Research, HTML prototype (all 111 requirements), core design in Figma — closes when the backend has a good start ([close checklist](08-delivery/sprint-01.md)); the rest of the design continues in Sprint 2 | Backend start pack ready |
+| **Planning gate** | Mon 28 Sep – Sat 3 Oct | — | ADR-001 stack **accepted 3 Oct** · Module 1 handoff v2 · still open: scope cut, decisions group A | **G1: Ready to build** — met for Module 1 on 3 Oct |
+| Sprint 2 — Platform core | Sun 4 – Thu 8 Oct | **M1** tenants, branches, branch server, registers, people & roles, catalogue, sync skeleton ([plan](08-delivery/sprint-02.md)) | Figma: platform core + cashier sale & payment · HTML: offline & power cut · M2 handoff | Decisions group B closed |
 | Sprint 3 | Sun 11 – Thu 15 Oct | **M2** Sale → payment → invoice → prep ticket, online + offline | Figma: shift close, invoices, kitchen · HTML: mixed payment, shift close | — |
 | Sprint 4 | Sun 18 – Thu 22 Oct | **M3** Shift & cash drawer, cancel/refund, printing, sync conflicts · hardware ordered | Figma: back office essentials | Decisions group C closed |
 | Sprint 5 | Sun 25 – Thu 29 Oct | **M4** Back office: prices & offers, exchange rate, reports, inventory (per D-01) · **M5** Quantara minimum | States, polish · UAT script | **G2: Feature complete** (Thu 29 Oct) |
@@ -51,7 +54,8 @@ Sprints are **1 week, Sun–Thu**, named as in Jira. The backend builds **one mo
 |---|---|---|
 | Product Owner | Sankari DT (PO) | Scope, priorities, decisions, this plan |
 | Designer | Mariam Kabbani | Figma, screen registry |
-| Developers | 1 backend developer (name TBD — by 1 Oct); front end TBD | Build, ADRs, module handoffs |
+| Tech lead | wrote the recommended stack (name to record) | ADR-001, hosting, sync design |
+| Developers | 1 backend developer (name to confirm); front end TBD | Build, module handoffs |
 | QA | TBD | Test cases, UAT support |
 | Client owner | Electro Café owner | Business decisions |
 | Client technical contact | TBD (D-20) | Site, hardware, UAT |
@@ -70,17 +74,19 @@ Full list: [risk register](08-delivery/risk-register.md).
 2. Open decisions block build → owners & dates in [decision log](06-decisions/decision-log.md).
 3. Offline sync bugs (duplicates, conflicts, double printing) → offline behaviour settled in HTML before M2 (Sprint 3); tested with real cuts.
 4. Local payment integrations (Syriatel Cash, Sham Cash, cards) → spike at the start of M2 (Sprint 3); manual-record fallback.
-5. One backend developer → one module per sprint, strict P0/P1/P2; stack must be accepted by Thu 1 Oct or the backend can't start 4 Oct.
+5. One backend developer, and the stack adds a branch-server tier → one module per sprint, strict P0/P1/P2; sync designed before Module 2.
 6. IP ownership not in writing (D-22) → sign before G1.
 
 ## 8. Key links
 - Requirements · Decision log · Screen registry · Delivery plan · Risk register · PO playbook (all in `docs/`)
 - Jira POSD: https://sankari-holding.atlassian.net/browse/POSD
-- Figma: TBD · Drive folder: TBD
+- Figma: https://www.figma.com/design/oMDP77W6vVs5lD3GRZurFE/POS-Product ([map](04-design/figma-map.md)) · Drive folder: TBD
 
 ## 9. Change history
 | Version | Date | Change |
 |---|---|---|
+| 1.4 | 3 Oct 2026 | Stack accepted (ADR-001, D-35): till → branch server → cloud; Module 1 ready for the backend (handoff v2, D-36); invoice series per branch (D-27 revised) |
 | 1.0 | 28 Sep 2026 | First version |
+| 1.3 | 1 Oct 2026 | Sprint 1 kept open until the PO closes it (D-34 updated) |
 | 1.2 | 28 Sep 2026 | Sprint 1 ends Thu 1 Oct (was Fri 2 Oct); it closes on "backend has a good start", not on finished design (D-34) |
 | 1.1 | 28 Sep 2026 | Sprints renamed as in Jira (design sprint = Sprint 1); backend builds one module per sprint behind a readiness gate; team: designer named, 1 backend developer |

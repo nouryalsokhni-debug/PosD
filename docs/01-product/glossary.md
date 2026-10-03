@@ -2,7 +2,7 @@
 title: Glossary (EN / AR)
 status: living
 owner: PO
-last_updated: 2026-09-28
+last_updated: 2026-10-03
 ---
 
 # Glossary — use these words exactly (UI, docs, Jira, Figma)
@@ -16,6 +16,13 @@ New term? Add it here **before** using it anywhere.
 | Branch | الفرع | One location of a tenant |
 | Register / POS terminal | نقطة البيع | One cashier station in a branch |
 | Cashier app | تطبيق نقطة البيع (الكاشير) | The selling screen |
+| Branch server | خادم الفرع | The small computer in each branch: keeps the branch's stock, orders, shifts and invoice numbers, prints, and syncs with Quantara (ADR-001) |
+| Setup code | رمز التجهيز | One-time code that links a new branch server to its branch |
+| Tenant code / Branch code | رمز المستأجر / رمز الفرع | 2–4 letters; together they start every invoice number (`EC-MAIN-000001`) |
+| People and roles | الأشخاص والأدوار | The HQ page for staff (People) and what each role may do (Permissions) |
+| Back-office access | دخول لوحة الإدارة | Sign-in to the panel by email or phone + password, through an invite |
+| Temporary PIN | رمز مؤقت | 4-digit PIN shown once to HQ; the person changes it at the first till sign-in |
+| Retire (a register) | إخراج من الخدمة | The register can't open new shifts; its history stays |
 | Customer display | شاشة الزبون | Screen facing the customer |
 | Tenant HQ / back office | لوحة التحكم المركزية / الإدارة المركزية | The tenant's head office. "Central" in the client spec = tenant HQ, **never** Quantara |
 | Operator control panel | لوحة تحكم المشغّل | Quantara staff panel across all tenants |

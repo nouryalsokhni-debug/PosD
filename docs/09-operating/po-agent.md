@@ -2,8 +2,8 @@
 title: PO agent — specification
 status: approved
 owner: PO
-last_updated: 2026-09-28
-version: 2.0
+last_updated: 2026-10-03
+version: 2.1
 ---
 
 # PO agent — specification (v2)
@@ -24,6 +24,8 @@ In Claude Code the same logic runs as the [`po-agent`](../../.claude/agents/po-a
 | Figma "POS Product" (fileKey `oMDP77W6vVs5lD3GRZurFE`) | read — `get_metadata`, `get_screenshot`, read-only `use_figma` scripts | pages, frames, components, variable binding |
 | GitHub repo (public) | read | plan, readiness, decisions, registry, commits |
 | Google Drive | read | human mirrors |
+
+**Jira workflow note:** POSD has no *To Do* status — every new ticket starts in **In Progress**. Treat a ticket as *started* only when it has an assignee and an update after creation; never report "In Progress with no updates" for tickets whose sprint has not started.
 
 ## How the agent thinks (every run)
 1. **Know the plan:** today's sprint and goal (Jira sprint), the gate that comes next (master plan §4), the module the backend is on and the next one ([module-readiness](../08-delivery/module-readiness.md)).
@@ -54,6 +56,11 @@ For every **design ticket** (label `design`, or assignee is the designer, or sum
 4. Report per ticket: **Done ✓** list · **Missing ✗** list · **How to fix** (concrete: "Create page *References* with the Day 8 boards", "Add component *Table row* with header/body variants", "Bind 6 fills on `02 Quantara · Tenants — AR` to colour variables") · **Verdict**: complete / nearly complete (≤ 2 gaps) / behind.
 5. Flag **Done in Jira but incomplete in Figma** as 🔴 with a Jira comment text for the PO.
 6. Also note: new screens in Figma that no ticket or registry row asks for; screens in the registry marked `figma-approved` that changed.
+7. **Check against the rules, not only the ticket:** the module handoff and ADR-001 (e.g. invoice series per branch `EC-MAIN-000001`, a branch server block per branch, person status). A screen can match its ticket and still be wrong.
+8. **Notes:** "For the PO — …" frames are the designer's questions; "PO answers — …" frames are the PO's replies. Every question lives in [designer-questions](../04-design/designer-questions.md) with a status. Report new questions and the count not yet answered.
+
+## Daily backend check (Jira vs the plan)
+For tickets with label `backend`: compare the ticket text with the sprint file and the module handoff. Flag text older than the handoff version, tickets the sprint file lists that are missing in Jira, and — if the connector reaches another Atlassian site — say "Jira unreachable" instead of guessing.
 
 Read-only: the agent must **never** create, move, rename or delete anything in Figma — `use_figma` scripts only read and `return` data.
 
@@ -65,6 +72,7 @@ Jira is the truth; the week runs Sun–Thu.
 3. **Backend module** — which module, what works now (from Jira Done + repo), what spills to next week.
 4. **Design** — tickets done and verified in Figma (the daily check, summarised for the week); what the front end can now build; screens `figma-approved` this week.
 5. **HTML / PO** — prototype and docs changed this week (git log); readiness of the **next** module: each of the 5 gates ✓/✗ with what's missing.
+   **Project picture:** from `docs/08-delivery/project-picture.md` — gaps overdue or due next week, gaps that look done (evidence in Jira/repo) but are still open, and new gaps you found that the table lacks (suggest ID, owner, due). Say if `last_analysis` is older than 7 days.
 6. **Decisions** — closed this week; due next week; overdue.
 7. **Risks** — top 3 re-scored with reason; new risks.
 8. **Next week** — proposed sprint scope from the Jira backlog (P0/P1/P2 with estimates vs capacity at 80%), and what must be true by Sunday.

@@ -123,10 +123,10 @@ function payState(total, tenders) {
 function completeSale(order, tenders, opts) {
   var tt = totals(order), ps = payState(tt.total, tenders);
   S.invoiceSeq += 1;
-  var no = POS_DATA.tenant.id + "-" + POS_DATA.branch.id + "-" + POS_DATA.register.id + "-" + ("00000" + S.invoiceSeq).slice(-6); // D-27
+  var no = POS_DATA.tenant.id + "-" + POS_DATA.branch.id + "-" + ("00000" + S.invoiceSeq).slice(-6); // one series per branch, given by the branch server (D-27 revised, ADR-001)
   var inv = {
     id: uid("I"), no: no, orderNo: order.no, orderType: order.type, ts: Date.now(),
-    userId: S.user.id, shiftId: S.shift.id, lines: JSON.parse(JSON.stringify(order.lines)),
+    userId: S.user.id, shiftId: S.shift.id, registerId: POS_DATA.register.id, lines: JSON.parse(JSON.stringify(order.lines)),
     discount: order.discount, totals: tt, tenders: tenders, changeSYP: ps.change, rate: rate(),
     status: "paid", syncState: S.online ? "pending" : "offline"
   };

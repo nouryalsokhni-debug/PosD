@@ -2,6 +2,7 @@
 window.COVERAGE = [
 {
 "id": "GEN-01",
+"module": "M1",
 "domain": "General & Platform",
 "title": "Multi-tenant system",
 "detail": "Each client's data is fully isolated from every other client's, and more than one client can run on the same instance",
@@ -23,6 +24,7 @@ window.COVERAGE = [
 },
 {
 "id": "GEN-02",
+"module": "M1",
 "domain": "General & Platform",
 "title": "Support for multiple branches under a single client",
 "detail": "Adding a new branch is an administrative action requiring no code change",
@@ -40,6 +42,7 @@ window.COVERAGE = [
 },
 {
 "id": "GEN-03",
+"module": "M1",
 "domain": "General & Platform",
 "title": "Bilingual interface with switching",
 "detail": "Arabic and English, switched from inside the interface without restarting",
@@ -61,6 +64,7 @@ window.COVERAGE = [
 },
 {
 "id": "GEN-05",
+"module": "M1",
 "domain": "General & Platform",
 "title": "Measurable ease of use",
 "detail": "A typical sale completed in three taps maximum, and a new employee trained within thirty minutes",
@@ -78,6 +82,7 @@ window.COVERAGE = [
 },
 {
 "id": "POS-01",
+"module": "M2",
 "domain": "Sales",
 "title": "Order-at-counter sale, pay first",
 "detail": "The order is paid for before preparation",
@@ -95,6 +100,7 @@ window.COVERAGE = [
 },
 {
 "id": "POS-01-01",
+"module": "M2",
 "domain": "Sales",
 "title": "Order-at-counter sale, pay later",
 "detail": "The order is paid for after preparation",
@@ -116,6 +122,7 @@ window.COVERAGE = [
 },
 {
 "id": "POS-02",
+"module": "M2",
 "domain": "Sales",
 "title": "Daily random order number",
 "detail": "Four digits",
@@ -137,6 +144,7 @@ window.COVERAGE = [
 },
 {
 "id": "POS-02",
+"module": "M2",
 "domain": "Sales",
 "title": "Sequential invoice number",
 "detail": "JV:20260800001 — not shown when printing; hidden from the customer",
@@ -158,6 +166,7 @@ window.COVERAGE = [
 },
 {
 "id": "POS-03",
+"module": "M2",
 "domain": "Sales",
 "title": "Edit the order cart before payment",
 "detail": "Add, remove and change quantity",
@@ -175,6 +184,7 @@ window.COVERAGE = [
 },
 {
 "id": "POS-04",
+"module": "M2",
 "domain": "Sales",
 "title": "Select item options at the point of sale",
 "detail": "Size and sugar level, with size affecting the price",
@@ -192,6 +202,7 @@ window.COVERAGE = [
 },
 {
 "id": "POS-05",
+"module": "M2",
 "domain": "Sales",
 "title": "Split the bill between more than one customer",
 "detail": "Split by amount or by item",
@@ -213,6 +224,7 @@ window.COVERAGE = [
 },
 {
 "id": "POS-06",
+"module": "M2",
 "domain": "Sales",
 "title": "Park an order and resume it",
 "detail": "To serve another customer without cancelling the first order",
@@ -230,6 +242,7 @@ window.COVERAGE = [
 },
 {
 "id": "POS-07",
+"module": "M2",
 "domain": "Sales",
 "title": "Flag the order: dine-in or takeaway",
 "detail": "Appears on the preparation screen and in the reports",
@@ -251,6 +264,7 @@ window.COVERAGE = [
 },
 {
 "id": "POS-08",
+"module": "M2",
 "domain": "Sales",
 "title": "Table service and opening a tab on a table",
 "detail": "Pay-after-consumption model",
@@ -268,6 +282,7 @@ window.COVERAGE = [
 },
 {
 "id": "POS-09",
+"module": "M2",
 "domain": "Sales",
 "title": "Find an item by name or barcode",
 "detail": "",
@@ -289,6 +304,7 @@ window.COVERAGE = [
 },
 {
 "id": "POS-10",
+"module": "M2",
 "domain": "Sales",
 "title": "Void an invoice after payment, with a mandatory reason",
 "detail": "The operation is permission-restricted and logged; two methods together — via QR and via a free-form random return",
@@ -306,6 +322,7 @@ window.COVERAGE = [
 },
 {
 "id": "CAT-01",
+"module": "M1",
 "domain": "Items & Menu",
 "title": "Central catalogue reflected across all branches or selected branches, presenting only specific items per client",
 "detail": "Editing is done by central administration only",
@@ -327,6 +344,7 @@ window.COVERAGE = [
 },
 {
 "id": "CAT-02",
+"module": "M1",
 "domain": "Items & Menu",
 "title": "Item name in two languages",
 "detail": "On screen and on the invoice",
@@ -344,6 +362,7 @@ window.COVERAGE = [
 },
 {
 "id": "CAT-03",
+"module": "M1",
 "domain": "Items & Menu",
 "title": "Categorise items into categories (more than one level)",
 "detail": "",
@@ -361,6 +380,7 @@ window.COVERAGE = [
 },
 {
 "id": "CAT-04",
+"module": "M1",
 "domain": "Items & Menu",
 "title": "Item options/attributes with or without a price effect",
 "detail": "Size changes the price; sugar level does not",
@@ -382,6 +402,7 @@ window.COVERAGE = [
 },
 {
 "id": "CAT-05",
+"module": "M1",
 "domain": "Items & Menu",
 "title": "Item images on the cashier screen (multiple images per variant)",
 "detail": "Serves the ease-of-use requirement for a low-experience employee",
@@ -403,6 +424,7 @@ window.COVERAGE = [
 },
 {
 "id": "CAT-06",
+"module": "M1",
 "domain": "Items & Menu",
 "title": "Temporarily suspend an item at branch level",
 "detail": "When an ingredient runs out",
@@ -420,6 +442,7 @@ window.COVERAGE = [
 },
 {
 "id": "CAT-07",
+"module": "M1",
 "domain": "Items & Menu",
 "title": "Ability to import the catalogue via Excel",
 "detail": "",
@@ -437,6 +460,7 @@ window.COVERAGE = [
 },
 {
 "id": "PRC-01",
+"module": "M4",
 "domain": "Pricing & Promotions",
 "title": "One price across all branches, with a structure that allows a price per branch",
 "detail": "The current value is uniform; the structure supports variation in future",
@@ -454,6 +478,7 @@ window.COVERAGE = [
 },
 {
 "id": "PRC-02",
+"module": "M4",
 "domain": "Pricing & Promotions",
 "title": "Price changes restricted to central administration",
 "detail": "",
@@ -475,6 +500,7 @@ window.COVERAGE = [
 },
 {
 "id": "PRC-03",
+"module": "M4",
 "domain": "Pricing & Promotions",
 "title": "Historical log of price changes",
 "detail": "Who changed it, when, and the previous value",
@@ -492,6 +518,7 @@ window.COVERAGE = [
 },
 {
 "id": "PRC-04",
+"module": "M4",
 "domain": "Pricing & Promotions",
 "title": "Combo offers — centrally only",
 "detail": "A group of items at a single price",
@@ -513,6 +540,7 @@ window.COVERAGE = [
 },
 {
 "id": "PRC-05",
+"module": "M4",
 "domain": "Pricing & Promotions",
 "title": "Offer of the day — centrally only",
 "detail": "A discount on an item or a category within a time window",
@@ -534,6 +562,7 @@ window.COVERAGE = [
 },
 {
 "id": "PRC-06",
+"module": "M4",
 "domain": "Pricing & Promotions",
 "title": "Discount for a defined customer segment — centrally only",
 "detail": "Mall-staff discount at a configurable percentage, tied to proof of identity",
@@ -551,6 +580,7 @@ window.COVERAGE = [
 },
 {
 "id": "PRC-07",
+"module": "M4",
 "domain": "Pricing & Promotions",
 "title": "Points-based loyalty programme — centrally only",
 "detail": "Accumulating and redeeming points",
@@ -568,6 +598,7 @@ window.COVERAGE = [
 },
 {
 "id": "PRC-08",
+"module": "M4",
 "domain": "Pricing & Promotions",
 "title": "Manual discount and its limits, configured centrally only",
 "detail": "Who holds the permission, and the discount ceiling",
@@ -589,6 +620,7 @@ window.COVERAGE = [
 },
 {
 "id": "PRC-09",
+"module": "M4",
 "domain": "Pricing & Promotions",
 "title": "Displayed prices are tax-inclusive",
 "detail": "Tax is extracted for reporting, not added at payment",
@@ -606,6 +638,7 @@ window.COVERAGE = [
 },
 {
 "id": "PRC-10",
+"module": "M4",
 "domain": "Pricing & Promotions",
 "title": "The branch can set a custom price (discount) on a specific item in the cart, with a time window",
 "detail": "",
@@ -623,6 +656,7 @@ window.COVERAGE = [
 },
 {
 "id": "PRC-11",
+"module": "M4",
 "domain": "Pricing & Promotions",
 "title": "(Empty row in the source — requirement text missing)",
 "detail": "",
@@ -635,6 +669,7 @@ window.COVERAGE = [
 },
 {
 "id": "PAY-01",
+"module": "M2",
 "domain": "Payment & Currencies",
 "title": "Multiple payment methods, enableable per branch",
 "detail": "",
@@ -656,6 +691,7 @@ window.COVERAGE = [
 },
 {
 "id": "PAY-02",
+"module": "M2",
 "domain": "Payment & Currencies",
 "title": "Cash in Syrian pounds",
 "detail": "",
@@ -673,6 +709,7 @@ window.COVERAGE = [
 },
 {
 "id": "PAY-03",
+"module": "M2",
 "domain": "Payment & Currencies",
 "title": "Cash in US dollars as a second currency",
 "detail": "Automatic conversion and display of the amount in both currencies",
@@ -690,6 +727,7 @@ window.COVERAGE = [
 },
 {
 "id": "PAY-04",
+"module": "M2",
 "domain": "Payment & Currencies",
 "title": "Central daily exchange rate",
 "detail": "Entered centrally, applies to all branches, and is fixed onto the invoice at the time of sale",
@@ -711,6 +749,7 @@ window.COVERAGE = [
 },
 {
 "id": "PAY-05",
+"module": "M2",
 "domain": "Payment & Currencies",
 "title": "Exchange-difference report",
 "detail": "",
@@ -728,6 +767,7 @@ window.COVERAGE = [
 },
 {
 "id": "PAY-06",
+"module": "M2",
 "domain": "Payment & Currencies",
 "title": "Card payment via the payment terminal",
 "detail": "Linking the terminal to the system to avoid entering the amount manually twice",
@@ -749,6 +789,7 @@ window.COVERAGE = [
 },
 {
 "id": "PAY-07",
+"module": "M2",
 "domain": "Payment & Currencies",
 "title": "Syriatel Cash",
 "detail": "",
@@ -766,6 +807,7 @@ window.COVERAGE = [
 },
 {
 "id": "PAY-08",
+"module": "M2",
 "domain": "Payment & Currencies",
 "title": "Sham Cash",
 "detail": "",
@@ -783,6 +825,7 @@ window.COVERAGE = [
 },
 {
 "id": "PAY-09",
+"module": "M2",
 "domain": "Payment & Currencies",
 "title": "Mixed payment on a single invoice",
 "detail": "More than one payment method for the same invoice",
@@ -800,6 +843,7 @@ window.COVERAGE = [
 },
 {
 "id": "PAY-10",
+"module": "M2",
 "domain": "Payment & Currencies",
 "title": "Rounding rule for the final amount",
 "detail": "",
@@ -817,6 +861,7 @@ window.COVERAGE = [
 },
 {
 "id": "PAY-11",
+"module": "M2",
 "domain": "Payment & Currencies",
 "title": "Tips and deferred/credit sales disabled",
 "detail": "The structure exists but both features are switched off",
@@ -834,6 +879,7 @@ window.COVERAGE = [
 },
 {
 "id": "PAY-12",
+"module": "M2",
 "domain": "Payment & Currencies",
 "title": "Cash refund to the customer with a mandatory reason",
 "detail": "Logged under the employee's name",
@@ -851,6 +897,7 @@ window.COVERAGE = [
 },
 {
 "id": "CSH-01",
+"module": "M3",
 "domain": "Cash Drawer & Shifts",
 "title": "Open a shift with an opening float",
 "detail": "Per currency separately",
@@ -872,6 +919,7 @@ window.COVERAGE = [
 },
 {
 "id": "CSH-02",
+"module": "M3",
 "domain": "Cash Drawer & Shifts",
 "title": "Close a shift with a physical cash count",
 "detail": "Entering the actual amount for each currency",
@@ -893,6 +941,7 @@ window.COVERAGE = [
 },
 {
 "id": "CSH-03",
+"module": "M3",
 "domain": "Cash Drawer & Shifts",
 "title": "Calculate the variance between expected and actual",
 "detail": "Displayed and recorded",
@@ -914,6 +963,7 @@ window.COVERAGE = [
 },
 {
 "id": "CSH-04",
+"module": "M3",
 "domain": "Cash Drawer & Shifts",
 "title": "Variance-handling procedure",
 "detail": "Permitted threshold, approving authority, and the consequence of exceeding it",
@@ -935,6 +985,7 @@ window.COVERAGE = [
 },
 {
 "id": "CSH-05",
+"module": "M3",
 "domain": "Cash Drawer & Shifts",
 "title": "Prevent cash withdrawals during the day",
 "detail": "",
@@ -952,6 +1003,7 @@ window.COVERAGE = [
 },
 {
 "id": "CSH-06",
+"module": "M3",
 "domain": "Cash Drawer & Shifts",
 "title": "Open the cash drawer without a sale",
 "detail": "Permission-restricted and logged with the reason",
@@ -973,6 +1025,7 @@ window.COVERAGE = [
 },
 {
 "id": "CSH-07",
+"module": "M3",
 "domain": "Cash Drawer & Shifts",
 "title": "Shift report at close",
 "detail": "Displayed and printable",
@@ -994,6 +1047,7 @@ window.COVERAGE = [
 },
 {
 "id": "CSH-08",
+"module": "M3",
 "domain": "Cash Drawer & Shifts",
 "title": "Number of POS terminals in the branch",
 "detail": "Running more than one cashier against the same stock and the same orders",
@@ -1015,6 +1069,7 @@ window.COVERAGE = [
 },
 {
 "id": "KDS-01",
+"module": "M2",
 "domain": "Kitchen Display (KDS)",
 "title": "Order display screen in the preparation area",
 "detail": "Replaces paper and calling out orders verbally",
@@ -1032,6 +1087,7 @@ window.COVERAGE = [
 },
 {
 "id": "KDS-02",
+"module": "M2",
 "domain": "Kitchen Display (KDS)",
 "title": "The order arrives as soon as payment is confirmed",
 "detail": "",
@@ -1049,6 +1105,7 @@ window.COVERAGE = [
 },
 {
 "id": "KDS-03",
+"module": "M2",
 "domain": "Kitchen Display (KDS)",
 "title": "Order states: new, in preparation, ready",
 "detail": "",
@@ -1066,6 +1123,7 @@ window.COVERAGE = [
 },
 {
 "id": "KDS-04",
+"module": "M2",
 "domain": "Kitchen Display (KDS)",
 "title": "Route items to different preparation stations",
 "detail": "Coffee, kitchen, juices",
@@ -1087,6 +1145,7 @@ window.COVERAGE = [
 },
 {
 "id": "KDS-05",
+"module": "M2",
 "domain": "Kitchen Display (KDS)",
 "title": "Order waiting-time indicator",
 "detail": "",
@@ -1108,6 +1167,7 @@ window.COVERAGE = [
 },
 {
 "id": "KDS-06",
+"module": "M2",
 "domain": "Kitchen Display (KDS)",
 "title": "Announce the number of the ready order",
 "detail": "",
@@ -1125,6 +1185,7 @@ window.COVERAGE = [
 },
 {
 "id": "USR-01",
+"module": "M1",
 "domain": "Users & Permissions",
 "title": "Predefined roles",
 "detail": "Cashier, barista, branch manager, accountant, owner",
@@ -1142,6 +1203,7 @@ window.COVERAGE = [
 },
 {
 "id": "USR-02",
+"module": "M1",
 "domain": "Users & Permissions",
 "title": "Editable permissions matrix",
 "detail": "Every sensitive operation is tied to a role",
@@ -1159,6 +1221,7 @@ window.COVERAGE = [
 },
 {
 "id": "USR-03",
+"module": "M1",
 "domain": "Users & Permissions",
 "title": "Employee login by card",
 "detail": "An alternative to a password, to speed up work",
@@ -1180,6 +1243,7 @@ window.COVERAGE = [
 },
 {
 "id": "USR-04",
+"module": "M1",
 "domain": "Users & Permissions",
 "title": "Record the employee's name on every sensitive operation",
 "detail": "Voids, discounts, refunds and drawer openings",
@@ -1201,6 +1265,7 @@ window.COVERAGE = [
 },
 {
 "id": "USR-05",
+"module": "M1",
 "domain": "Users & Permissions",
 "title": "Tamper-proof audit log",
 "detail": "No entry can be deleted or modified after it is created",
@@ -1222,6 +1287,7 @@ window.COVERAGE = [
 },
 {
 "id": "USR-06",
+"module": "M1",
 "domain": "Users & Permissions",
 "title": "Assign an employee to more than one branch",
 "detail": "",
@@ -1239,6 +1305,7 @@ window.COVERAGE = [
 },
 {
 "id": "USR-07",
+"module": "M1",
 "domain": "Users & Permissions",
 "title": "Employee consumption and hospitality",
 "detail": "Recorded at zero price within a daily limit",
@@ -1260,6 +1327,7 @@ window.COVERAGE = [
 },
 {
 "id": "FIS-01",
+"module": "M2",
 "domain": "Invoicing & Compliance",
 "title": "Record every sale regardless of printing",
 "detail": "Printing on request only, but the accounting entry is always created",
@@ -1281,6 +1349,7 @@ window.COVERAGE = [
 },
 {
 "id": "FIS-02",
+"module": "M2",
 "domain": "Invoicing & Compliance",
 "title": "Invoice content",
 "detail": "Name and logo, tax ID, address and phone, sequential number, date and time, cashier name, order number",
@@ -1302,6 +1371,7 @@ window.COVERAGE = [
 },
 {
 "id": "FIS-03",
+"module": "M2",
 "domain": "Invoicing & Compliance",
 "title": "Gapless sequential numbering per branch",
 "detail": "A gap in the sequence is an indicator of tampering",
@@ -1323,6 +1393,7 @@ window.COVERAGE = [
 },
 {
 "id": "FIS-04",
+"module": "M2",
 "domain": "Invoicing & Compliance",
 "title": "Configurable tax rate at the individual product level",
 "detail": "At item and category level",
@@ -1340,6 +1411,7 @@ window.COVERAGE = [
 },
 {
 "id": "FIS-05",
+"module": "M2",
 "domain": "Invoicing & Compliance",
 "title": "Readiness for e-invoicing",
 "detail": "Every invoice stored in a transmittable structure, with a sequence and signature that prevent retroactive modification",
@@ -1357,6 +1429,7 @@ window.COVERAGE = [
 },
 {
 "id": "FIS-06",
+"module": "M2",
 "domain": "Invoicing & Compliance",
 "title": "Invoice issued to an organisation or company",
 "detail": "The organisation's details and tax ID",
@@ -1378,6 +1451,7 @@ window.COVERAGE = [
 },
 {
 "id": "FIS-07",
+"module": "M2",
 "domain": "Invoicing & Compliance",
 "title": "Reprint a previous invoice",
 "detail": "Marked as a copy",
@@ -1395,6 +1469,7 @@ window.COVERAGE = [
 },
 {
 "id": "FIS-08",
+"module": "M2",
 "domain": "Invoicing & Compliance",
 "title": "Archive and retrieve invoices",
 "detail": "By number, date or amount",
@@ -1416,6 +1491,7 @@ window.COVERAGE = [
 },
 {
 "id": "STK-01",
+"module": "M4",
 "domain": "Inventory",
 "title": "Stock tracking from first launch",
 "detail": "",
@@ -1433,6 +1509,7 @@ window.COVERAGE = [
 },
 {
 "id": "STK-02",
+"module": "M4",
 "domain": "Inventory",
 "title": "Define the stock-deduction level",
 "detail": "By finished item, or by ingredients according to a recipe per item",
@@ -1450,6 +1527,7 @@ window.COVERAGE = [
 },
 {
 "id": "STK-03",
+"module": "M4",
 "domain": "Inventory",
 "title": "Deduct stock automatically at the point of sale",
 "detail": "",
@@ -1471,6 +1549,7 @@ window.COVERAGE = [
 },
 {
 "id": "STK-04",
+"module": "M4",
 "domain": "Inventory",
 "title": "Record goods received from central",
 "detail": "",
@@ -1488,6 +1567,7 @@ window.COVERAGE = [
 },
 {
 "id": "STK-05",
+"module": "M4",
 "domain": "Inventory",
 "title": "Record spoilage and waste with a reason",
 "detail": "",
@@ -1505,6 +1585,7 @@ window.COVERAGE = [
 },
 {
 "id": "STK-06",
+"module": "M4",
 "domain": "Inventory",
 "title": "Periodic stocktake and variance reconciliation",
 "detail": "",
@@ -1522,6 +1603,7 @@ window.COVERAGE = [
 },
 {
 "id": "STK-07",
+"module": "M4",
 "domain": "Inventory",
 "title": "Alert on reaching the reorder threshold, at central level",
 "detail": "",
@@ -1539,6 +1621,7 @@ window.COVERAGE = [
 },
 {
 "id": "STK-08",
+"module": "M4",
 "domain": "Inventory",
 "title": "Central warehouse, inter-branch transfers and minimum-level alerts",
 "detail": "",
@@ -1556,6 +1639,7 @@ window.COVERAGE = [
 },
 {
 "id": "STK-09",
+"module": "M4",
 "domain": "Inventory",
 "title": "Purchasing from suppliers, centrally (within procurement)",
 "detail": "",
@@ -1573,6 +1657,7 @@ window.COVERAGE = [
 },
 {
 "id": "STK-10",
+"module": "M4",
 "domain": "Inventory",
 "title": "Item cost and profit margin",
 "detail": "",
@@ -1590,6 +1675,7 @@ window.COVERAGE = [
 },
 {
 "id": "RPT-01",
+"module": "M4",
 "domain": "Reports",
 "title": "Today's sales in total",
 "detail": "",
@@ -1607,6 +1693,7 @@ window.COVERAGE = [
 },
 {
 "id": "RPT-02",
+"module": "M4",
 "domain": "Reports",
 "title": "Sales by item and best sellers",
 "detail": "",
@@ -1624,6 +1711,7 @@ window.COVERAGE = [
 },
 {
 "id": "RPT-03",
+"module": "M4",
 "domain": "Reports",
 "title": "Sales by shift and by employee",
 "detail": "",
@@ -1641,6 +1729,7 @@ window.COVERAGE = [
 },
 {
 "id": "RPT-04",
+"module": "M4",
 "domain": "Reports",
 "title": "Cash movement and cash-drawer variances",
 "detail": "",
@@ -1662,6 +1751,7 @@ window.COVERAGE = [
 },
 {
 "id": "RPT-05",
+"module": "M4",
 "domain": "Reports",
 "title": "Discounts and voids with the name of the person who performed them",
 "detail": "",
@@ -1679,6 +1769,7 @@ window.COVERAGE = [
 },
 {
 "id": "RPT-06",
+"module": "M4",
 "domain": "Reports",
 "title": "Comparison between branches",
 "detail": "",
@@ -1700,6 +1791,7 @@ window.COVERAGE = [
 },
 {
 "id": "RPT-07",
+"module": "M4",
 "domain": "Reports",
 "title": "Sales by hour of day",
 "detail": "",
@@ -1717,6 +1809,7 @@ window.COVERAGE = [
 },
 {
 "id": "RPT-08",
+"module": "M4",
 "domain": "Reports",
 "title": "View reports inside the system",
 "detail": "For the owner and the accountant",
@@ -1738,6 +1831,7 @@ window.COVERAGE = [
 },
 {
 "id": "RPT-09",
+"module": "M4",
 "domain": "Reports",
 "title": "Export reports to Excel",
 "detail": "",
@@ -1755,6 +1849,7 @@ window.COVERAGE = [
 },
 {
 "id": "OFF-01",
+"module": "M2",
 "domain": "Offline Operation",
 "title": "Sell and print the invoice offline",
 "detail": "With no dependency on the network",
@@ -1772,6 +1867,7 @@ window.COVERAGE = [
 },
 {
 "id": "OFF-02",
+"module": "M2",
 "domain": "Offline Operation",
 "title": "Send the order to preparation offline",
 "detail": "Over the local network",
@@ -1789,6 +1885,7 @@ window.COVERAGE = [
 },
 {
 "id": "OFF-03",
+"module": "M2",
 "domain": "Offline Operation",
 "title": "Close the shift and count the cash drawer offline",
 "detail": "",
@@ -1806,6 +1903,7 @@ window.COVERAGE = [
 },
 {
 "id": "OFF-04",
+"module": "M2",
 "domain": "Offline Operation",
 "title": "Branch reports available offline",
 "detail": "",
@@ -1827,6 +1925,7 @@ window.COVERAGE = [
 },
 {
 "id": "OFF-05",
+"module": "M2",
 "domain": "Offline Operation",
 "title": "Automatic sync when the connection returns",
 "detail": "Without any action from the employee",
@@ -1844,6 +1943,7 @@ window.COVERAGE = [
 },
 {
 "id": "OFF-06",
+"module": "M2",
 "domain": "Offline Operation",
 "title": "Sync conflict-resolution rules",
 "detail": "When the same data is modified from two sources",
@@ -1865,6 +1965,7 @@ window.COVERAGE = [
 },
 {
 "id": "OFF-07",
+"module": "M2",
 "domain": "Offline Operation",
 "title": "Connection status and last-sync indicator",
 "detail": "Visible to the employee",
@@ -1886,6 +1987,7 @@ window.COVERAGE = [
 },
 {
 "id": "OFF-08",
+"module": "M2",
 "domain": "Offline Operation",
 "title": "Safe resume after a power cut",
 "detail": "Without losing the order in progress",
@@ -1903,6 +2005,7 @@ window.COVERAGE = [
 },
 {
 "id": "OFF-09",
+"module": "M2",
 "domain": "Offline Operation",
 "title": "Local data retention period",
 "detail": "Sufficient for the longest expected outage",
@@ -1924,6 +2027,7 @@ window.COVERAGE = [
 },
 {
 "id": "HW-01",
+"module": "M3",
 "domain": "Hardware",
 "title": "Runs on tablet, desktop computer and touch screen",
 "detail": "The same interface adapts to the size",
@@ -1941,6 +2045,7 @@ window.COVERAGE = [
 },
 {
 "id": "HW-02",
+"module": "M3",
 "domain": "Hardware",
 "title": "Thermal receipt printer",
 "detail": "",
@@ -1962,6 +2067,7 @@ window.COVERAGE = [
 },
 {
 "id": "HW-03",
+"module": "M3",
 "domain": "Hardware",
 "title": "Cash drawer opened from the system",
 "detail": "",
@@ -1983,6 +2089,7 @@ window.COVERAGE = [
 },
 {
 "id": "HW-04",
+"module": "M3",
 "domain": "Hardware",
 "title": "Barcode reader",
 "detail": "",
@@ -2004,6 +2111,7 @@ window.COVERAGE = [
 },
 {
 "id": "HW-05",
+"module": "M3",
 "domain": "Hardware",
 "title": "Customer-facing display",
 "detail": "Shows the items and the amount",
@@ -2025,6 +2133,7 @@ window.COVERAGE = [
 },
 {
 "id": "HW-06",
+"module": "M3",
 "domain": "Hardware",
 "title": "Support for the card payment terminal",
 "detail": "",
@@ -2042,6 +2151,7 @@ window.COVERAGE = [
 },
 {
 "id": "HW-07",
+"module": "M3",
 "domain": "Hardware",
 "title": "Approved hardware list",
 "detail": "The client buys the hardware himself from a list we approve",
@@ -2063,6 +2173,7 @@ window.COVERAGE = [
 },
 {
 "id": "NH-07",
+"module": "—",
 "domain": "Nice to Have",
 "title": "Central administration can watch every POS terminal live and trace everything happening on it (screen mirroring)",
 "detail": "Live view and activity tracing per terminal",
