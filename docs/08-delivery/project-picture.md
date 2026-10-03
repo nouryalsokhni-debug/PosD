@@ -9,23 +9,23 @@ related: ../../prototype/requirements.html, module-readiness.md, sprint-01.md, r
 
 # Project picture — what's missing
 
-One page that says what the project still lacks to have a clear, full picture for 10 Nov. **Update it at every analysis session**, then run `python prototype/tools/build-coverage.py` — the dashboard `prototype/requirements.html` (tab *Project picture*) reads the three tables below. Keep the table columns as they are.
+One page that says what the project still lacks to have a clear, full picture for 10 Nov. **Update it at every analysis session**, then run `python prototype/tools/build-coverage.py` — the dashboard `prototype/requirements.html` (tab *Project picture*) reads the tables below, and the questions in [open-questions](open-questions.md). Keep the table columns as they are.
 
 ## Area health
 Health: `green` = nothing blocks · `amber` = gaps with a plan · `red` = gaps that block a gate or a module.
 
 | Area | Health | Summary |
 |---|---|---|
-| Plan & scope | amber | Plan, sprints and gates set; the 10-Nov scope cut is still only proposed and 8 requirements are TBD |
-| Decisions | red | 21 open + 8 proposed of 36; stack (D-35) and Module 1 answers (D-36) decided on 3 Oct; all 9 group-A client decisions still open |
-| Team | red | Backend developer not confirmed by name; no front-end developer or QA; client technical contact unknown |
-| Architecture | amber | Stack accepted (ADR-001: till → branch server → cloud); hosting, two offline edge cases and non-functional requirements still open |
-| HTML prototype | green | All 111 requirements shown; Module 1 screens corrected against the stack and the designer's questions (branch server, series per branch, people, menu); cashier fixes for Module 2 listed |
-| Design (Figma) | amber | Library fixed, Day 13 cashier screens done; till sizes still missing; Module 1 screens need the Day 14 changes; 0 screens approved |
+| Plan & scope | red | Client decided: everything on the launch list must work on opening day (D-21). No cut — the build order and capacity are now the main risk |
+| Decisions | amber | 9 client and management decisions closed on 3 Oct (scope, ownership, tax, rounding, mixed payment, refunds, stations, offline, invoice numbers). Still open: stock level, card and wallet refunds, card payment, staff meals |
+| Team | amber | Backend developer chosen and invited (name to record). The till app is built by Quantara, but no front-end developer is named; no QA; client technical contact unknown |
+| Architecture | amber | Stack accepted (ADR-001). The till is an iPad, so the till technology changes: ADR-002 proposed (web app on iPad, whole-branch offline, head office offline) — tech lead to accept. Hosting and non-functional requirements open |
+| HTML prototype | green | All 111 requirements shown; Module 1 corrected; the client's answers applied (three sections, two stations, new Syrian pound, tax as a head-office setting). Cashier logic fixes for Module 2 listed |
+| Design (Figma) | amber | Library fixed, cashier part 1–2 drawn — but at desktop sizes; the till is an iPad, so till screens need iPad sizes. Module 1 screens need the Day 14 changes; 0 screens approved |
 | Backend | amber | Module 1 passes all 5 gates and its Jira tickets match the handoff v2 (POSD-97…100, 108); developer not named; Modules 2–5 have no handoff |
 | Testing | red | No test strategy, UAT plan or test cases (offline, sync, printing are the riskiest) |
-| Go-live & operations | red | Hardware not chosen; no install, data-load, training or support plan |
-| Commercial | amber | IP agreement (D-22) unsigned; pricing (D-32) proposed — not needed for 10 Nov |
+| Go-live & operations | red | Hardware changes with the answers: iPads, branch server, network and UPS — models and counts not chosen; no install, data-load, training or support plan |
+| Commercial | green | Quantara owns the software; Electro Café is the first subscriber (D-22). Pricing (D-32) proposed — not needed for 10 Nov |
 
 ## Module gates
 Each module passes 5 gates before the backend starts it ([module-readiness](module-readiness.md)). Values: `yes` · `no` · `part`.
@@ -33,10 +33,21 @@ Each module passes 5 gates before the backend starts it ([module-readiness](modu
 | Module | Backend sprint | HTML | Flows | Handoff | Decisions | Stack |
 |---|---|---|---|---|---|---|
 | M1 Platform core | Sprint 2 · 4–8 Oct | yes | yes | yes | yes | yes |
-| M2 Sale | Sprint 3 · 11–15 Oct | part | yes | no | no | part |
-| M3 Shift & money | Sprint 4 · 18–22 Oct | part | yes | no | no | part |
-| M4 Back office | Sprint 5 · 25–29 Oct | yes | part | no | no | yes |
+| M2 Sale | Sprint 3 · 11–15 Oct | part | yes | no | part | part |
+| M3 Shift & money | Sprint 4 · 18–22 Oct | part | yes | no | part | part |
+| M4 Back office | Sprint 5 · 25–29 Oct | yes | part | no | part | yes |
 | M5 Quantara minimum | Sprint 5 · 25–29 Oct | yes | part | no | yes | yes |
+
+## Build process
+Where each module stands from specification to live. Values: `done` · `doing` · `todo`. *Front end* = the back-office screens for M1, M4, M5 and the iPad till app for M2, M3.
+
+| Module | Specification | Design | Backend | Front end | Tested | Live |
+|---|---|---|---|---|---|---|
+| M1 Platform core | done | doing | todo | todo | todo | todo |
+| M2 Sale | doing | doing | todo | todo | todo | todo |
+| M3 Shift & money | doing | doing | todo | todo | todo | todo |
+| M4 Back office | doing | todo | todo | todo | todo | todo |
+| M5 Quantara minimum | doing | doing | todo | todo | todo | todo |
 
 ## Gaps
 Status: `open` · `doing` · `done`. Due = the date it stops being fine. Blocks = what waits for it.
@@ -44,22 +55,22 @@ Status: `open` · `doing` · `done`. Due = the date it stops being fine. Blocks 
 | ID | Area | Gap | Fix | Owner | Due | Status | Blocks |
 |---|---|---|---|---|---|---|---|
 | G-01 | Architecture | Stack not accepted — ADR-001 | Accepted 3 Oct from the tech lead's recommendation (D-35); POSD-104 stays open only for the developer's review | Tech lead + PO | 2026-10-01 | done | — |
-| G-02 | Team | Backend developer not confirmed by name | Management confirms who builds Module 1; developer reviews the handoff v2 | Management | 2026-10-04 | open | M1 |
-| G-03 | Decisions | Group A decisions all open (D-01, D-08, D-09, D-14, D-15, D-20, D-21, D-22, D-24) | Client meeting before Thu; accept written assumptions for the rest | PO + client owner | 2026-10-01 | open | M2, M4 |
-| G-04 | Plan & scope | 10-Nov scope cut still proposed (66 IN · 14 MIN · 23 LATER · 8 TBD) | PO accepts the cut with the client owner; decide the 8 TBD rows | PO + client owner | 2026-10-01 | open | M2–M5 |
+| G-02 | Team | Backend developer chosen and invited; the name is not recorded and the tickets are unassigned | PO records the name, assigns POSD-97…100 and 108; developer reads the handoff v2.1 (POSD-104) | PO | 2026-10-04 | doing | M1 |
+| G-03 | Decisions | Group A client decisions: 3 closed on 3 Oct (D-14, D-21, D-22). Still open: D-01 stock level, D-08 branches in 2 years, D-20 technical contact, D-24 warehouse; D-09 and D-15 proposed | Next client check-in | PO + client owner | 2026-10-08 | doing | M4 |
+| G-04 | Plan & scope | Everything on the launch list must work on opening day (D-21) — 105 launch items, one backend developer, no till developer yet | Agree the build order with the client (Q-29); ask management for more hands; weekly burn-up check | PO + management | 2026-10-08 | open | G2 feature complete |
 | G-05 | Plan & scope | PRC-11 is an empty row carried from the client spec | Ask the client what it was, or delete it | PO | 2026-10-01 | open | — |
-| G-06 | Commercial | IP ownership not in writing (D-22) | Management signs the IP agreement with Electro Café | Management | 2026-10-01 | open | Contract |
+| G-06 | Commercial | IP ownership | Decided 3 Oct: Quantara owns the software (D-22); the signed paper is handled outside this plan | Management | 2026-10-01 | done | — |
 | G-07 | Team | Client technical contact unknown (D-20) | Owner names one person for site, hardware and UAT | Client owner | 2026-10-01 | open | Hardware, UAT |
 | G-08 | Design (Figma) | References page and Quantara shell were missing | Restored on Day 12 (checked 3 Oct) | Designer | 2026-10-04 | done | — |
 | G-09 | Architecture | No non-functional requirements: security (auth, PIN hashing, tenant isolation tests), backups & restore, performance (sale time), availability, data retention, supported devices | PO + tech lead write `docs/02-requirements/non-functional.md` | PO + tech lead | 2026-10-08 | open | M2 |
 | G-10 | Architecture | ADR-001 #2–#5: where the till runs, local storage, sync model, registers offline together | Decided in ADR-001 (Electron till, branch server, event log) | Tech lead | 2026-10-08 | done | — |
 | G-11 | Backend | Module 2 (Sale) handoff doc missing | PO writes `module-02-sale.md` (POSD-105) | PO | 2026-10-08 | open | M2 |
-| G-12 | Decisions | Decisions for the Sale module: D-10 mixed payment, D-11 rounding, D-14 stations, D-29 change/card | Decide, or accept the prototype's written assumption | PO + client owner | 2026-10-08 | open | M2 |
-| G-13 | Team | No front-end developer — Figma screens have nobody to build them; the cashier app is what goes live | Management staffs a front-end developer | Management | 2026-10-08 | open | Front end |
+| G-12 | Decisions | Decisions for the Sale module: D-10, D-11, D-14, D-03, D-05 closed on 3 Oct. Left: card payment and change in USD (D-29), card and wallet refunds (D-40) | PO + tech lead settle D-29 as "card recorded only"; client answers D-40 | PO + client owner | 2026-10-08 | doing | M2 |
+| G-13 | Team | The till app is built by Quantara for iPad (D-37), but no front-end developer is named | Management names the developer; start no later than Sprint 3 (Q-25) | Management | 2026-10-08 | open | The till app |
 | G-14 | Team | No QA | Management names QA (can be part-time) from Sprint 3 | Management | 2026-10-08 | open | Testing |
 | G-15 | Testing | No test strategy, UAT plan or test cases; offline, sync and printing need real-outage tests | QA + PO write `docs/08-delivery/test-plan.md` and UAT script | QA + PO | 2026-10-15 | open | G3 UAT |
-| G-16 | Design (Figma) | Cashier: Sale and Payment still only at 1440×900 — the till sizes 1280×800 and 1366×768 are missing (everything else from Day 12–13 is done; POSD-106 In Review) | First item of [Day 14](day-14.md) — POSD-109 | Designer | 2026-10-06 | doing | Front end |
-| G-17 | Go-live & operations | Hardware not chosen or ordered; card terminal waits for D-29 | Client tech contact picks from the approved list; order by 15 Oct | Client tech + PO | 2026-10-15 | open | Install |
+| G-16 | Design (Figma) | Till screens are drawn at 1440×900 and 1366×768; the till is an iPad (D-37) | Redraw Sale and Payment at 1180×820 first, check at 1080×810; then the Day 13 screens ([Day 14](day-14.md) — POSD-109) | Designer | 2026-10-08 | open | The till app |
+| G-17 | Go-live & operations | Hardware not chosen or ordered: iPads (model, count), branch server, access point, switch, printers, UPS (hours), scanner | Client picks the iPad model and count (Q-24) and the UPS hours (Q-31); PO writes the list; order by 15 Oct | Client + PO | 2026-10-15 | open | Install |
 | G-18 | Architecture | Printing decided (ESC/POS from the branch server, drawer through the printer); not yet proven on the chosen printer | Tech lead spikes on the chosen printer | Tech lead | 2026-10-15 | doing | M3 |
 | G-19 | Backend | Module 3 handoff missing; step 2 E–F (mixed payment, shift close) not yet in HTML | PO: HTML E–F + `module-03-shift-money.md` | PO | 2026-10-15 | open | M3 |
 | G-20 | Design (Figma) | Module 1 HQ screens and cashier part 1–2 drawn; other HQ and branch screens not started; 0 screens `figma-approved` | PO approves Module 1 screens after Day 14; designer continues back-office essentials | Designer + PO | 2026-10-22 | doing | Front end |
@@ -78,9 +89,12 @@ Status: `open` · `doing` · `done`. Due = the date it stops being fine. Blocks 
 | G-33 | Backend | Jira was not updated for the stack | Done 3 Oct: POSD-96…100 rewritten, POSD-108 (sync skeleton) and POSD-109 (Day 14) created, comments on POSD-104…107 | PO | 2026-10-04 | done | — |
 | G-34 | Design (Figma) | Module 1 screens in Figma differ from the answered rules: series per register, no branch server, no person status or back-office access, no item option prices | [Day 14](day-14.md) — POSD-109 | Designer | 2026-10-08 | open | Front end |
 | G-35 | Architecture | Cloud hosting provider, region, backups and restore test not chosen (ADR-001 a) | Tech lead proposes; PO accepts | Tech lead | 2026-10-08 | open | First deploy |
-| G-36 | Architecture | Two offline cases open: a till that can't reach the branch server; a wallet payment when the line drops (ADR-001 b, c) | Tech lead + PO decide; write into the Module 2 handoff | Tech lead + PO | 2026-10-08 | open | M2 |
-| G-37 | Go-live & operations | Hardware list lacks the branch server (mini-PC) and UPS for each branch | Add to the approved hardware list (HW-07) and the order | Tech lead + PO | 2026-10-15 | open | Install |
+| G-36 | Architecture | A till that can't reach the branch server; a wallet payment when the line drops | Wallet: answered by the client (reference number + "Was this payment received?"). Till without server: recommended in ADR-002 — tech lead confirms | Tech lead + PO | 2026-10-08 | doing | M2 |
+| G-37 | Go-live & operations | Hardware list lacks the branch server, network kit and UPS | Folded into G-17 | Tech lead + PO | 2026-10-15 | done | — |
 | G-38 | Plan & scope | The stack document counts 124 requirements; the repo and the source workbook have 111 | PO checks with the tech lead which list was used | PO | 2026-10-08 | open | — |
 | G-39 | HTML prototype | Cashier logic errors found by the designer: order number not daily, refund can over-refund, first print marked COPY, till ignores HQ's payment methods, sync pills unclear | Fix in `pos.html` with the Module 2 handoff (POSD-105) | PO | 2026-10-08 | open | M2 |
-| G-40 | Decisions | Client to confirm two Module 1 points: permission defaults for Owner and HQ manager; staff card stock | Ask in the next client check-in | PO + client owner | 2026-10-15 | open | — |
+| G-40 | Decisions | Two Module 1 points for the client: staff card confirmed (8-digit number); Owner and head-office manager permissions still to confirm (Q-09) | Ask in the next client check-in | PO + client owner | 2026-10-15 | doing | — |
 | G-41 | Plan & scope | Arabic word for "register": glossary says "نقطة البيع", the panel says "جهاز البيع", Figma "الجهاز" | PO picks one; update glossary, HTML, Figma | PO | 2026-10-08 | open | — |
+| G-42 | Architecture | The till is an iPad: Electron (ADR-001 #2) is out, and an installed web app with HTTPS inside the branch is unproven | Tech lead accepts ADR-002 (Q-28) and runs the first-week spike on a real iPad | Tech lead | 2026-10-08 | open | M2 · the till app |
+| G-43 | HTML prototype | The cashier prototype is not yet checked at iPad sizes and with touch only | PO tests `pos.html` at 1180×820 and 1080×810 with the Module 2 fixes (POSD-105) | PO | 2026-10-08 | open | M2 |
+| G-44 | Decisions | New questions from the 3 Oct answers: card and wallet refunds (D-40), beans sold in packs with no ticket (Q-27), which small notes are in use (Q-30) | Client and accountant answer; tracked in [open-questions](open-questions.md) | PO + client | 2026-10-15 | open | M2, M3 |

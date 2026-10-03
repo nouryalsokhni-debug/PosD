@@ -175,7 +175,7 @@
             { key: "c", label: t("col.category"), render: function (it) { var sub = o.subcategories.filter(function (s) { return s.id === o.item_meta[it.id].subcategory_id; })[0]; return I18n.pick(Store.category(tn, it.category_id), "name") + (sub ? " › " + I18n.pick(sub, "name") : ""); } },
             { key: "o", label: t("ops.col.options"), render: function (it) { var ids = o.item_meta[it.id].options; return ids.length ? ids.map(function (g) { return I18n.pick(o.option_groups.filter(function (x) { return x.id === g; })[0], "name"); }).join(", ") : h("span", { class: "muted" }, "—"); } },
             { key: "bc", label: t("ops.col.barcode"), render: function (it) { return o.item_meta[it.id].barcode ? h("code", { dir: "ltr" }, o.item_meta[it.id].barcode) : h("span", { class: "muted" }, "—"); } },
-            { key: "tax", label: t("ops.col.tax"), render: function () { return Decision("D-03"); } },
+            { key: "tax", label: t("ops.col.tax"), render: function () { var r = o.till_rules; return r.tax_on ? h("span", { dir: "ltr" }, I18n.number(r.tax_rate) + "%") : h("span", { class: "muted" }, t("ops.till.tax_off")); } },
             { key: "sold", label: t("m1.menu.col_sold"), render: function (it) { var sa = it.sold_at || "all"; return sa === "all" ? t("m1.menu.sold_all") : sa.map(function (id) { return branchName(tn, id); }).join(", "); } },
             { key: "p", label: t("col.price"), align: "end", render: function (it) { return X.money(tn, it.price); } },
             { key: "e", label: "", render: function (it) { return UI.Button({ label: t("ops.edit"), size: "sm", variant: "ghost", onClick: function () { itemDialog(tn, it); } }); } }
@@ -264,7 +264,7 @@
           d.sold_all ? h("p", { class: "muted" }, t("ops.menu.sold_at_help")) : h("div", { class: "checks" }, tn.branches.map(function (b) {
             return UI.Checkbox({ id: "it-sold-" + b.id, label: I18n.pick(b, "name"), checked: d.sold.indexOf(b.id) > -1, onChange: function (v) { d.sold = d.sold.filter(function (x) { return x !== b.id; }); if (v) d.sold.push(b.id); } }); })),
           err.sold ? h("p", { class: "form-row__error", role: "alert" }, err.sold) : null),
-        h("p", { class: "muted" }, t("ops.menu.tax_note"), " ", Decision("D-03")));
+        h("p", { class: "muted" }, t("ops.menu.tax_note")));
     }
     draw();
     UI.Dialog({ title: it ? t("ops.menu.edit_item") : t("ops.menu.add_item"), wide: true, body: body, actions: [{ label: t("flow.cancel"), variant: "ghost" }, { label: t("ops.save"), variant: "primary", onClick: function (close) {
@@ -341,11 +341,11 @@
   function importPanel(tn) {
     var o = ops(tn), hq = Store.hq(tn), st = X.state("ops-import:" + tn.id, { step: 0 });
     var sample = [
-      { row: 2, name_en: "Mocha", name_ar: "موكا", category: "hot", price: 26000, ok: true },
-      { row: 3, name_en: "Flat white", name_ar: "فلات وايت", category: "hot", price: 24000, ok: true },
-      { row: 4, name_en: "Latte", name_ar: "لاتيه", category: "hot", price: 23000, ok: true, update: true },
-      { row: 5, name_en: "Cookie", name_ar: "", category: "pastry", price: 9000, ok: false, error: "ops.menu.err_ar" },
-      { row: 6, name_en: "Smoothie", name_ar: "سموذي", category: "juices", price: 28000, ok: false, error: "ops.menu.err_cat" }
+      { row: 2, name_en: "Mocha", name_ar: "موكا", category: "drink", price: 260, ok: true },
+      { row: 3, name_en: "Flat white", name_ar: "فلات وايت", category: "drink", price: 240, ok: true },
+      { row: 4, name_en: "Latte", name_ar: "لاتيه", category: "drink", price: 230, ok: true, update: true },
+      { row: 5, name_en: "Cookie", name_ar: "", category: "eat", price: 90, ok: false, error: "ops.menu.err_ar" },
+      { row: 6, name_en: "Smoothie", name_ar: "سموذي", category: "juices", price: 280, ok: false, error: "ops.menu.err_cat" }
     ];
     var steps = [t("ops.menu.imp_s1"), t("ops.menu.imp_s2"), t("ops.menu.imp_s3")];
     var stepper = h("ol", { class: "stepper" }, steps.map(function (s, i) { return h("li", { class: "stepper__step stepper__step--" + (i < st.step ? "done" : i === st.step ? "current" : "todo") }, h("span", { class: "stepper__dot" }, i < st.step ? UI.icon("check") : I18n.number(i + 1)), h("span", { class: "stepper__label" }, s)); }));
@@ -417,7 +417,7 @@
           ], o.price_history.slice().sort(function (a, b) { return a.at < b.at ? 1 : -1; })));
       } },
       { id: "tax", label: t("ops.promo.tax"), render: function () {
-        return h("div", { class: "stack" }, UI.Banner({ tone: "info", title: t("ops.promo.tax_title"), body: t("ops.promo.tax_body") }), h("p", null, Decision("D-03"), " ", req("PRC-09 · FIS-04")));
+        return h("div", { class: "stack" }, UI.Banner({ tone: "info", title: t("ops.promo.tax_title"), body: t("ops.promo.tax_body") }), h("p", null, req("PRC-09 · FIS-04")));
       } }
     ];
     return P.RecordPage({
@@ -476,7 +476,7 @@
         }) },
         { title: t("ops.pay.rules"), rows: [
           { key: "mixed", type: "toggle", tag: tag, label: t("ops.pay.mixed"), help: t("ops.pay.mixed_help"), note: Decision(rules.mixed_decision) },
-          { key: "rate", locked: true, tag: tag, label: t("nav.hq_exchange"), help: t("ops.pay.rate_help"), note: Decision(rules.rounding_decision), format: function (v) { return h("a", { href: "#/hq/" + tn.id + "/exchange-rate" }, "1 USD = " + I18n.number(v) + " " + tn.currency); } }
+          { key: "rate", locked: true, tag: tag, label: t("nav.hq_exchange"), help: t("ops.pay.rate_help"), note: rules.rounding_decision ? Decision(rules.rounding_decision) : null, format: function (v) { return h("a", { href: "#/hq/" + tn.id + "/exchange-rate" }, "1 USD = " + I18n.number(v) + " " + tn.currency); } }
         ] },
         { title: t("ops.pay.modules"), rows: [
           { key: "tips", locked: true, tag: q, label: t("module.tips"), help: t("ops.pay.modules_help"), format: function (v) { return v ? t("settings.on") : t("settings.off"); } },
@@ -502,7 +502,7 @@
       load: function () {
         var d = { variance: r.variance_limit, no_withdrawals: r.no_cash_withdrawals, drawer_reason: r.drawer_needs_reason, pay_later: !!r.pay_later, split: !!r.split_bill, dine_in: r.dine_in !== false,
           order_no: r.order_number, inv_bilingual: r.invoice_bilingual, inv_rate: r.invoice_show_rate, inv_cashier: r.invoice_show_cashier, footer_en: r.invoice_footer_en, footer_ar: r.invoice_footer_ar,
-          company: r.company_invoice, reprint: r.reprint !== false, kds: r.kds_mode, wait_alert: r.wait_alert || 8, call_numbers: r.call_numbers !== false, retention: r.retention_days, meal: r.staff_meal_daily_limit,
+          company: r.company_invoice, tax_on: !!r.tax_on, tax_rate: r.tax_rate || 0, tax_included: r.tax_included !== false, tax_number: tn.settings.tax_number || "", reprint: r.reprint !== false, kds: r.kds_mode, wait_alert: r.wait_alert || 8, call_numbers: r.call_numbers !== false, retention: r.retention_days, meal: r.staff_meal_daily_limit,
           login: r.login_method || "pin", registers: Store.registerCount(tn), numbering: "", record_all: "", archive: "", conflicts: "", einvoice: "" };
         cur.forEach(function (c) { d["float_" + c] = r.opening_float[c]; });
         return d;
@@ -511,8 +511,9 @@
         cur.forEach(function (c) { r.opening_float[c] = Number(d["float_" + c]); });
         Object.assign(r, { variance_limit: Number(d.variance), no_cash_withdrawals: d.no_withdrawals, drawer_needs_reason: d.drawer_reason, pay_later: d.pay_later, split_bill: d.split, dine_in: d.dine_in,
           order_number: d.order_no, invoice_bilingual: d.inv_bilingual, invoice_show_rate: d.inv_rate, invoice_show_cashier: d.inv_cashier, invoice_footer_en: d.footer_en, invoice_footer_ar: d.footer_ar,
-          company_invoice: d.company, reprint: d.reprint, kds_mode: d.kds, wait_alert: Number(d.wait_alert), call_numbers: d.call_numbers, retention_days: Number(d.retention), staff_meal_daily_limit: Number(d.meal), login_method: d.login,
+          company_invoice: d.company, tax_on: d.tax_on, tax_rate: Number(d.tax_rate) || 0, tax_included: d.tax_included, reprint: d.reprint, kds_mode: d.kds, wait_alert: Number(d.wait_alert), call_numbers: d.call_numbers, retention_days: Number(d.retention), staff_meal_daily_limit: Number(d.meal), login_method: d.login,
           updated_by: X.hqMeId(tn), updated_at: Store.now() });
+        tn.settings.tax_number = d.tax_number;
       },
       groups: [
         { title: t("ops.till.g_shift"), rows: cur.map(function (c) { return { key: "float_" + c, type: "number", dir: "ltr", tag: tag, label: t("ops.till.float") + " · " + c, help: t("ops.till.float_help") + " (CSH-01)", note: Decision(r.opening_float_decision), format: function (v) { return I18n.money(v, c); } }; }).concat([
@@ -540,11 +541,17 @@
           { key: "archive", locked: true, tag: g, label: t("ops.till.archive"), help: t("ops.till.archive_help") + " (FIS-08)", format: function () { return t("hq.settings.always_on"); } },
           { key: "einvoice", locked: true, tag: g, label: t("hq.settings.einvoice"), help: t("ops.till.einvoice_help") + " (FIS-05)", format: function () { return t("ops.till.ready"); } }
         ] },
+        { title: t("ops.till.g_tax"), rows: [
+          { key: "tax_on", type: "toggle", tag: tag, label: t("ops.till.tax_on"), help: t("ops.till.tax_on_help") + " (FIS-04 · PRC-09)" },
+          { key: "tax_rate", type: "number", dir: "ltr", min: 0, tag: tag, label: t("ops.till.tax_rate"), help: t("ops.till.tax_rate_help"), format: function (v) { return I18n.number(v) + "%"; } },
+          { key: "tax_included", type: "toggle", tag: tag, label: t("ops.till.tax_included"), help: t("ops.till.tax_included_help") },
+          { key: "tax_number", type: "text", dir: "ltr", tag: tag, label: t("ops.till.tax_number"), help: t("ops.till.tax_number_help") }
+        ] },
         { title: t("ops.till.g_prep"), rows: [
           { key: "kds", type: "select", tag: tag, label: t("ops.till.kds"), help: t("ops.till.kds_help") + " (KDS-01 · KDS-02)", options: function () { return ["printed_ticket", "screen", "both"].map(function (x) { return { value: x, label: t("ops.till.kds." + x) }; }); }, format: function (v) { return t("ops.till.kds." + v); } },
           { key: "wait_alert", type: "number", dir: "ltr", tag: tag, label: t("ops.till.wait_alert"), help: t("ops.till.wait_alert_help") + " (KDS-05)", format: function (v) { return t("ops.minutes", { n: I18n.number(v) }); } },
           { key: "call_numbers", type: "toggle", tag: tag, label: t("ops.till.call_numbers"), help: t("ops.till.call_numbers_help") + " (KDS-06)" },
-          { key: "stations", locked: true, tag: tag, label: t("ops.till.stations"), help: t("ops.till.stations_help") + " (KDS-04)", note: Decision(r.stations_decision), format: function () { return r.prep_stations.map(function (s) { return I18n.pick(s, "name"); }).join(" · "); } }
+          { key: "stations", locked: true, tag: tag, label: t("ops.till.stations"), help: t("ops.till.stations_help") + " (KDS-04)", format: function () { return r.prep_stations.map(function (s) { return I18n.pick(s, "name"); }).join(" · "); } }
         ] },
         { title: t("ops.till.g_offline"), rows: [
           { key: "retention", type: "number", dir: "ltr", tag: tag, label: t("ops.till.retention"), help: t("ops.till.retention_help") + " (OFF-09)", note: Decision(r.retention_decision), format: function (v) { return t("ops.days", { n: I18n.number(v) }); } },

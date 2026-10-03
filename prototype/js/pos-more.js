@@ -13,7 +13,7 @@ function cardLogin() {
 /* ---------- KDS-01…06: kitchen view (orders arrive once paid, by station, with waiting time) ---------- */
 function stationOf(itemId) {
   var it = item(itemId);
-  return POS_DATA.stations.filter(function (s) { return s.cats.indexOf(it.cat) > -1; })[0] || POS_DATA.stations[0];
+  return POS_DATA.stations.filter(function (s) { return s.cats.indexOf(it.cat) > -1; })[0] || null; // null = no preparation (e.g. packed beans)
 }
 function viewKitchen() {
   var st = UI.station || "all", now = Date.now(), alert = POS_DATA.settings.waitAlertMin;
@@ -21,7 +21,7 @@ function viewKitchen() {
     .map(function (c) { return '<button class="btn' + (st === c.id ? " sel" : "") + '" data-act="station" data-arg="' + c.id + '">' + esc(c.label) + "</button>"; }).join("");
   var list = S.orders.filter(function (o) { return o.status === "preparing"; });
   var cards = list.map(function (o) {
-    var lines = o.order.lines.filter(function (l) { return st === "all" || stationOf(l.itemId).id === st; });
+    var lines = o.order.lines.filter(function (l) { var so = stationOf(l.itemId); return so && (st === "all" || so.id === st); });
     if (!lines.length) return "";
     var since = o.startedAt || o.createdAt || o.order.createdAt || now, mins = Math.max(0, Math.floor((now - since) / 60000)), late = mins >= alert;
     return '<div class="kcard' + (late ? " late" : "") + (o.startedAt ? "" : " new") + '"><div class="row between"><span class="n num">#' + o.no + "</span><span>" + esc(o.type === "dinein" ? t("dineIn") : t("takeaway")) + "</span></div>" +
@@ -30,7 +30,7 @@ function viewKitchen() {
       '<div class="row">' + (o.startedAt ? "" : '<button class="btn" data-act="startPrep" data-arg="' + o.id + '">' + esc(t("start")) + "</button>") + '<button class="btn primary" data-act="ready" data-arg="' + o.id + '">' + esc(t("markReady")) + "</button></div></div>";
   }).join("");
   return '<div class="page"><div class="row between"><h2>' + esc(t("kitchen")) + ' <span class="tag">KDS-01…06</span></h2><div class="row">' + chips + "</div></div>" +
-    '<p class="muted small">' + esc(POS_LANG === "ar" ? "تصل الطلبات لحظة تأكيد الدفع؛ يصبح الطلب أحمر بعد " + alert + " دقائق." : "Orders arrive the moment payment is confirmed; an order turns red after " + alert + " minutes.") + " " + assume("D-14") + "</p>" +
+    '<p class="muted small">' + esc(POS_LANG === "ar" ? "تصل الطلبات لحظة تأكيد الدفع؛ يصبح الطلب أحمر بعد " + alert + " دقائق." : "Orders arrive the moment payment is confirmed; an order turns red after " + alert + " minutes.") + "</p>" +
     '<div class="kgrid">' + (cards || '<div class="empty">—</div>') + "</div></div>";
 }
 

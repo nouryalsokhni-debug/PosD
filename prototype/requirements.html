@@ -51,6 +51,8 @@
     a { color: var(--accent); } .links a { display: inline-block; margin-inline-end: 10px; }
     .n10 { font-family: "IBM Plex Mono", monospace; font-size: 12px; }
     .gates td:not(:first-child):not(:nth-child(2)) { text-align: center; }
+    #build td:nth-child(2) { text-align: center; }
+    .answered { background: var(--pos-bg); color: var(--pos); } .assumed { background: var(--warn-bg); color: var(--warn); } .todo { background: var(--neu-bg); color: var(--neu); }
     .note { background: var(--surface); border: 1px dashed #cfc9bf; border-radius: 10px; padding: 10px 14px; font-size: 13px; color: var(--ink2); margin-top: 18px; }
   </style>
 </head>
@@ -58,7 +60,7 @@
   <header>
     <div>
       <h1>Quantara · Project picture</h1>
-      <p class="sub">What the project still lacks for a clear, full picture before <b>Tue 10 Nov 2026</b>, and where every requirement stands. Internal PO tool — English only.</p>
+      <p class="sub">Where the build stands, which questions are open, and what the project still lacks before <b>Tue 10 Nov 2026</b>, and where every requirement stands. Internal PO tool — English only.</p>
     </div>
     <p class="sub" id="stamp"></p>
   </header>
@@ -73,6 +75,17 @@
     <div class="areas" id="areas"></div>
     <h2>Module gates — can the backend start?</h2>
     <div class="tablewrap"><table class="gates"><thead><tr><th>Module</th><th>Backend sprint</th><th>HTML</th><th>Flows</th><th>Handoff</th><th>Decisions</th><th>Stack</th></tr></thead><tbody id="gates"></tbody></table></div>
+    <h2>Build process — from specification to live</h2>
+    <div class="tablewrap"><table class="gates"><thead><tr><th>Module</th><th>Specification</th><th>Design</th><th>Backend</th><th>Front end</th><th>Tested</th><th>Live</th></tr></thead><tbody id="build"></tbody></table></div>
+    <h2>Open questions</h2>
+    <div class="bar">
+      <label>Search <input id="qq" type="search" placeholder="Question, answer or ID"></label>
+      <label>Status <select id="qstatus"><option value="">Not answered</option><option value="all">All</option><option>open</option><option>assumed</option><option>answered</option></select></label>
+      <label>Who <select id="qgroup"><option value="">Anyone</option><option>management</option><option>client</option><option>accountant</option><option>team</option></select></label>
+      <label>Sprint <select id="qsprint"><option value="">Any</option><option>1</option><option>2</option><option>3</option></select></label>
+      <span class="muted" id="qcount"></span>
+    </div>
+    <div class="tablewrap"><table><thead><tr><th>ID</th><th>Sprint</th><th>Question</th><th>Who answers</th><th>Needed by</th><th>Status</th><th>Answer, or what we assume</th></tr></thead><tbody id="questions"></tbody></table></div>
     <h2>What's missing</h2>
     <div class="bar">
       <label>Search <input id="gq" type="search" placeholder="Gap, fix, owner or ID"></label>
@@ -82,7 +95,7 @@
       <span class="muted" id="gcount"></span>
     </div>
     <div class="tablewrap"><table><thead><tr><th>ID</th><th>Area</th><th>Gap</th><th>Fix</th><th>Owner</th><th>Due</th><th>Status</th><th>Blocks</th></tr></thead><tbody id="gaps"></tbody></table></div>
-    <p class="note">Source: <code>docs/08-delivery/project-picture.md</code> (edited at each analysis session) plus live counts from the requirements, the decision log and the screen registry. Regenerate with <code>python prototype/tools/build-coverage.py</code>.</p>
+    <p class="note">Sources: <code>docs/08-delivery/project-picture.md</code> and <code>docs/08-delivery/open-questions.md</code> (edited at each analysis session) plus live counts from the requirements, the decision log and the screen registry. Regenerate with <code>python prototype/tools/build-coverage.py</code>.</p>
   </section>
 
   <section id="reqs" class="wrap" hidden>
@@ -123,6 +136,7 @@
     var reqWorks = C.req_state.works || 0, dec = C.decisions, scr = C.screens, scrTotal = Object.keys(scr).reduce(function (a, k) { return a + scr[k]; }, 0);
     $("kpis").innerHTML = [
       ["Open gaps", notDone.length, late + " overdue · " + soon + " due within 7 days"],
+      ["Open questions", P.questions.filter(function (x) { return x.Status === "open"; }).length + " / " + P.questions.length, P.questions.filter(function (x) { return x.Status === "assumed"; }).length + " on an assumption · " + P.questions.filter(function (x) { return x.Status === "answered"; }).length + " answered"],
       ["Red areas", P.areas.filter(function (a) { return a.Health === "red"; }).length + " / " + P.areas.length, "Block a gate or a module"],
       ["Decisions still open", (dec.open || 0) + (dec.proposed || 0) + " / " + ((dec.open || 0) + (dec.proposed || 0) + (dec.decided || 0)), (dec.open || 0) + " open · " + (dec.proposed || 0) + " proposed · " + (dec.decided || 0) + " decided"],
       ["Screens in Figma", (scr["figma-wip"] || 0) + (scr["figma-approved"] || 0) + " / " + scrTotal, (scr["figma-approved"] || 0) + " approved · " + (scr["figma-wip"] || 0) + " in progress"],
@@ -141,6 +155,31 @@
     $("gates").innerHTML = P.modules.map(function (m) {
       return "<tr><td><b>" + esc(m.Module) + '</b></td><td class="muted">' + esc(m["Backend sprint"]) + "</td>" + ["HTML", "Flows", "Handoff", "Decisions", "Stack"].map(function (k) { var v = m[k]; return '<td><span class="b ' + esc(v) + '">' + (GATE[v] || esc(v)) + "</span></td>"; }).join("") + "</tr>";
     }).join("");
+
+    /* build process: one row per module, one cell per stage */
+    $("build").innerHTML = P.build.map(function (m) {
+      return "<tr><td><b>" + esc(m.Module) + "</b></td>" + ["Specification", "Design", "Backend", "Front end", "Tested", "Live"].map(function (k) { var v = m[k]; return '<td><span class="b ' + esc(v) + '">' + esc(v) + "</span></td>"; }).join("") + "</tr>";
+    }).join("");
+
+    /* open questions (docs/08-delivery/open-questions.md) */
+    var qf = { q: "", status: "", group: "", sprint: "" };
+    function drawQuestions() {
+      var q = qf.q.toLowerCase();
+      var list = P.questions.filter(function (x) {
+        var st = qf.status === "" ? x.Status !== "answered" : qf.status === "all" ? true : x.Status === qf.status;
+        return st && (!qf.group || x.Group === qf.group) && (!qf.sprint || x.Sprint === qf.sprint) && (!q || (x.ID + " " + x.Question + " " + x.Answer + " " + x["Who answers"]).toLowerCase().indexOf(q) > -1);
+      }).sort(function (a, b) { return a["Needed by"] < b["Needed by"] ? -1 : a["Needed by"] > b["Needed by"] ? 1 : a.ID < b.ID ? -1 : 1; });
+      $("qcount").textContent = list.length + " of " + P.questions.length;
+      $("questions").innerHTML = list.map(function (x) {
+        var isLate = x.Status === "open" && days(x["Needed by"]) < 0;
+        return '<tr class="' + (isLate ? "late" : "") + '"><td><code>' + esc(x.ID) + '</code></td><td class="muted">' + esc(x.Sprint) + "</td><td><b>" + md(x.Question) + "</b></td><td>" + esc(x["Who answers"]) + '</td><td style="white-space:nowrap">' + (x.Status === "answered" ? esc(x["Needed by"]) : dueText(x["Needed by"])) + '</td><td><span class="b ' + esc(x.Status) + '">' + esc(x.Status) + "</span></td><td>" + md(x.Answer) + "</td></tr>";
+      }).join("") || '<tr><td colspan="7" class="muted">Nothing matches.</td></tr>';
+    }
+    $("qq").addEventListener("input", function (e) { qf.q = e.target.value; drawQuestions(); });
+    $("qstatus").addEventListener("change", function (e) { qf.status = e.target.value; drawQuestions(); });
+    $("qgroup").addEventListener("change", function (e) { qf.group = e.target.value; drawQuestions(); });
+    $("qsprint").addEventListener("change", function (e) { qf.sprint = e.target.value; drawQuestions(); });
+    drawQuestions();
 
     var areasList = []; P.gaps.forEach(function (x) { if (areasList.indexOf(x.Area) < 0) areasList.push(x.Area); });
     $("garea").innerHTML = '<option value="">Any</option>' + areasList.map(function (a) { return "<option>" + esc(a) + "</option>"; }).join("");

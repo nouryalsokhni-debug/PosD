@@ -159,7 +159,7 @@ function orderPane() {
     sums = '<div class="sums"><div class="r"><span>' + esc(t("subtotal")) + '</span><span class="num">' + syp(tt.subtotal) + "</span></div>";
     tt.promoLines.forEach(function (p) { sums += '<div class="r promo"><span>' + esc(nm(p.promo)) + (p.times > 1 ? " ×" + p.times : "") + '</span><span class="num">' + neg(p.amount) + "</span></div>"; });
     if (o.discount) sums += '<div class="r promo"><span>' + esc(t("manualDiscount")) + " (" + (o.discount.kind === "pct" ? o.discount.value + "%" : syp(o.discount.value)) + ") · " + esc(userName(o.discount.by)) + ' <button class="linkbtn danger" data-act="dropDiscount">×</button></span><span class="num">' + neg(tt.manual) + "</span></div>";
-    if (tt.rounding) sums += '<div class="r muted small"><span>' + esc(t("rounding")) + " " + assume(POS_DATA.settings.rounding.decision) + '</span><span class="num"><bdi dir="ltr">' + (tt.rounding > 0 ? "+" : "−") + fmt(Math.abs(tt.rounding)) + "</bdi></span></div>";
+    if (tt.rounding) sums += '<div class="r muted small"><span>' + esc(t("rounding")) + '</span><span class="num"><bdi dir="ltr">' + (tt.rounding > 0 ? "+" : "−") + fmt(Math.abs(tt.rounding)) + "</bdi></span></div>";
     sums += '<div class="r tot"><span>' + esc(t("total")) + '</span><span class="num">' + syp(tt.total) + '</span></div><div class="r muted small"><span></span><span class="num">≈ ' + usd(tt.usd) + "</span></div></div>";
   }
   var has = o && o.lines.length;
@@ -272,7 +272,7 @@ function viewPayment() {
   var remainingInCur = m.currency === "USD" ? ps.remaining / rate() : ps.remaining;
   var quick = [];
   if (m.currency === "USD") { var e = Math.ceil(remainingInCur * 100) / 100; quick = [e, Math.ceil(remainingInCur), Math.ceil(remainingInCur / 5) * 5, Math.ceil(remainingInCur / 10) * 10]; }
-  else { quick = [remainingInCur]; if (m.cash) quick = quick.concat([Math.ceil(remainingInCur / 10000) * 10000, Math.ceil(remainingInCur / 50000) * 50000, Math.ceil(remainingInCur / 100000) * 100000]); }
+  else { quick = [remainingInCur]; if (m.cash) quick = quick.concat([Math.ceil(remainingInCur / 50) * 50, Math.ceil(remainingInCur / 100) * 100, Math.ceil(remainingInCur / 500) * 500]); }
   quick = quick.filter(function (v, i, a) { return v > 0 && a.indexOf(v) === i; });
   var quickH = quick.map(function (v, i) { return '<button class="btn num" data-act="quick" data-arg="' + v + '">' + (i === 0 ? esc(t("exact")) + " · " : "") + (m.currency === "USD" ? usd(v) : fmt(v)) + "</button>"; }).join("");
   var right = '<div class="panel"><h3>' + esc(t("method")) + "</h3>" + (!S.online ? '<div class="tag assume" style="margin-bottom:8px">' + esc(t("needsConnection")) + "</div>" : "") + '<div class="methods">' + methods + "</div>" +

@@ -2,7 +2,7 @@
 title: Module 1 handoff — Platform core (backend)
 status: approved
 owner: PO + backend developer
-version: 2.0
+version: 2.1
 last_updated: 2026-10-03
 related: adr/ADR-001-offline-first-multi-tenant.md, ../../clients/electro-cafe/seed.md, ../03-flows/FLOW-07-platform-setup.md, ../04-design/designer-questions.md, ../08-delivery/module-readiness.md
 ---
@@ -10,8 +10,9 @@ related: adr/ADR-001-offline-first-multi-tenant.md, ../../clients/electro-cafe/s
 # Module 1 — Platform core (v2)
 
 **What it is:** the data every other module stands on — who the tenant is, where it sells, the branch server and tills in each branch, who works there and what they may do, and what it sells.
-**Stack (ADR-001, accepted):** Node.js + TypeScript (Fastify) · PostgreSQL with Row-Level Security · three tiers: till → branch server → cloud. Module 1 is mostly **cloud** tier, plus the branch server's enrolment and its "sync down" feed.
+**Stack (ADR-001, accepted; till per ADR-002, proposed):** Node.js + TypeScript (Fastify) · PostgreSQL with Row-Level Security · three tiers: till → branch server → cloud. Module 1 is mostly **cloud** tier, plus the branch server's enrolment and its "sync down" feed.
 **Reference:** behaviour and fields — `prototype/index.html`; steps — [FLOW-07](../03-flows/FLOW-07-platform-setup.md); seed — [Electro Café seed](../../clients/electro-cafe/seed.md); looks — Figma (Tenant HQ page).
+**v2.1 (3 Oct, after the client and management answers):** money is in the new Syrian pound, integers, no decimals · tax is a tenant setting (`tenant.settings.tax`: on, rate, included, tax number) · all till roles may sell by default · seed has three sections and 18 items · the till is an iPad web app (ADR-002, proposed), so the sync-down feed is read by the branch server only.
 **v2 changes (3 Oct):** branch server entity · invoice series per branch (D-27 revised) · panel sign-in, status and PIN rules for people · branch record, code and register actions · menu: sub-category, sold-at set, item option prices, image · one sync-down feed. Source: the stack decision and the designer's 26 questions ([answers](../04-design/designer-questions.md)).
 
 ## Screens to open in the prototype
@@ -38,7 +39,7 @@ Every row carries `tenant_id` except Quantara-owned ones. Bilingual names `name_
 | `user` | id, name_en/ar, role, branch_ids[] (empty = all / head office), **status (invited · active · disabled)**, **email or phone + password_hash (panel access, optional)**, invite_token_hash, pin_hash, **pin_must_change**, card_hash, sign_in (pin · card · card_or_pin) | Cloud · HQ | USR-01, USR-03, USR-06 |
 | `role_permission` | role, action, allowed, updated_by, updated_at | Cloud · HQ (defaults from Quantara) | USR-01, USR-02 |
 | `category` | id, parent_id (two levels), name_en/ar, sort | Cloud · HQ | CAT-01, CAT-02 |
-| `item` | id, category_id, name_en/ar, price (SYP integer), barcode (one per item), image_key, active, sold_at: all or branch_ids[], updated_by, updated_at | Cloud · HQ | CAT-01…05, POS-09, PRC-01 |
+| `item` | id, category_id, name_en/ar, price (integer, in the tenant's currency; new Syrian pound for Electro Café), barcode (one per item), image_key, active, sold_at: all or branch_ids[], updated_by, updated_at | Cloud · HQ | CAT-01…05, POS-09, PRC-01 |
 | `option_group` / `option_choice` | id, name_en/ar, required, price_delta (default) | Cloud · HQ | CAT-04, POS-04 |
 | `item_option` | item_id, group_id, **price overrides per choice** (optional) | Cloud · HQ | CAT-04 |
 | `branch_override` | id, branch_id, item_id, kind (pause · discount), value, starts_at, ends_at, by | **Branch** creates, sent up as an event | CAT-06, PRC-10, D-26 |
@@ -80,7 +81,7 @@ Roles (6) and actions (21) with defaults: `ACTIONS`, `ROLE_DEFAULTS` in `prototy
 ## Still to settle (does not block the start)
 - Cloud hosting provider and backups (ADR-001 a).
 - Token lifetimes: panel session; branch-server credential rotation.
-- Matrix defaults P7 (Owner can't sell or close a shift; HQ manager can't manage people) — keep spec v1 defaults until the client confirms.
+- Matrix defaults for the Owner and the HQ manager (Q-09) — keep spec v1 defaults until the client confirms. All till roles sell (D-38).
 - Image storage sizes for the till grid.
 
 ## Not in Module 1

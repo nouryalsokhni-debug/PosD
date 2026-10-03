@@ -1,12 +1,14 @@
 ---
 title: Scope for 10 Nov — proposal
-status: proposed
+status: living
 owner: PO
-last_updated: 2026-09-28
+last_updated: 2026-10-03
 decide_in: scope-cut session, Wed 30 Sep (D-21)
 ---
 
-# Scope for 10 Nov — proposal
+# Scope for 10 Nov — build order
+
+> **Decided 3 Oct (D-21): everything on the launch list must work on opening day.** There is no cut. The IN / MIN / LATER split below is now the **order we build in**: IN first, MIN next, LATER last — so that if time runs out, what slips is what matters least. Capacity is the top risk (R-01); the order is still to be agreed with the client (Q-29).
 
 The *Nov-10* column in [requirements.md](requirements.md) is filled with a **proposal**. The PO and the client owner confirm or change it on Wed 30 Sep (D-21). Nothing here is decided yet.
 

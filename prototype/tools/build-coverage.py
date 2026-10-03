@@ -1,4 +1,4 @@
-"""Rebuilds js/coverage-data.js and js/project-data.js (the Project picture dashboard in requirements.html).
+"""Rebuilds js/coverage-data.js and js/project-data.js (the Project picture dashboard in requirements.html: areas, module gates, build process, gaps, open questions).
 js/coverage-data.js: every requirement in docs/02-requirements/requirements.md mapped to where the prototype shows it.
 Run from anywhere:  python prototype/tools/build-coverage.py   (edit the map M below when a screen changes)."""
 import os
@@ -134,8 +134,11 @@ for line in open(os.path.join(DOCS,'06-decisions','decision-log.md'),encoding='u
     m=re.match(r'^\| (D-\d+) \|(?:[^|]*\|){4} (open|proposed|decided) \|',line)
     if m: dec[m.group(2)]+=1
 scr=Counter(re.findall(r'\| (todo|html-draft|figma-wip|figma-approved|in-dev|done) \|',open(os.path.join(DOCS,'04-design','screen-registry.md'),encoding='utf-8').read()))
+oq=md_tables(os.path.join(DOCS,'08-delivery','open-questions.md')).get('Questions',[])
 project={"last_analysis":meta.get('last_analysis',''),"areas":pp.get('Area health',[]),"modules":pp.get('Module gates',[]),"gaps":pp.get('Gaps',[]),
+  "build":pp.get('Build process',[]),"questions":oq,
   "counts":{"requirements":len(rows),"req_state":dict(Counter(r["state"] for r in rows)),"nov10":dict(Counter(r["nov10"] for r in rows)),"decisions":dict(dec),"screens":dict(scr)}}
-assert project["areas"] and project["gaps"] and project["modules"], "project-picture.md tables not found"
+assert project["areas"] and project["gaps"] and project["modules"] and project["build"], "project-picture.md tables not found"
+assert project["questions"], "open-questions.md table not found"
 open(os.path.join(ROOT,'js','project-data.js'),'w',encoding='utf-8').write("/* Generated from docs/08-delivery/project-picture.md + live counts (requirements, decision log, screen registry). Regenerate: python prototype/tools/build-coverage.py */\nwindow.PROJECT = "+json.dumps(project,ensure_ascii=False,indent=0)+";\n")
-print("project:",len(project["gaps"]),"gaps ·",dict(dec),"·",dict(scr))
+print("project:",len(project["gaps"]),"gaps ·",dict(dec),"·",dict(scr),"·",len(oq),"questions",dict(Counter(q["Status"] for q in oq)))

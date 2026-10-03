@@ -2,7 +2,7 @@
 title: Electro Café — client configuration
 status: draft
 owner: PO
-last_updated: 2026-09-28
+last_updated: 2026-10-03
 client: electro-cafe
 ---
 
@@ -20,6 +20,11 @@ Only this client's **values**. Product behaviour lives in `docs/`. Anything *Awa
 | Service model | Additional services | Takeaway only | Confirmed | Q10 |
 | Service model | Opening hours | Undefined | Awaiting decision | Q11 |
 | Menu | Number of items | 20 to 50 | Confirmed | Q13 |
+| Menu | Sections | To eat (with soups), To drink, Our beans (D-38) | Confirmed 3 Oct | — |
+| Menu | Preparation stations | Two: drinks bar, food counter (D-14) | Confirmed 3 Oct | — |
+| Users | Who may sell | Every staff member, everything, at the same time (D-38) | Confirmed 3 Oct | — |
+| Scope | Opening day | Everything on the launch list must work (D-21) | Confirmed 3 Oct | — |
+| Commercial | Ownership | Quantara owns the software; Electro Café is the first subscriber (D-22) | Confirmed 3 Oct | — |
 | Menu | Item options | Size (affects the price) and sugar level (does not) | Confirmed | Q15 |
 | Menu | Menu and invoice language | Arabic and English | Confirmed | Q19 |
 | Pricing | Price policy across branches | One uniform price | Confirmed | Q16 |
@@ -28,13 +33,13 @@ Only this client's **values**. Product behaviour lives in `docs/`. Anything *Awa
 | Pricing | Mall-staff discount percentage | Undefined | Awaiting decision | Q17 |
 | Pricing | Manual discount ceiling and permission | Undefined | Awaiting decision | Q38 |
 | Pricing | Tax included in the price | Yes, the price is tax-inclusive | Confirmed | Q53 |
-| Pricing | Tax rate | Undefined | Awaiting decision | Q52 |
+| Pricing | Tax rate | Set by the business at head office; no fixed rate (D-03). Value still to enter | Confirmed 3 Oct | Q52 |
 | Payment | Payment methods | Cash SYP, cash USD, card, Syriatel Cash, Sham Cash | Confirmed | Q23 |
 | Payment | Primary and secondary currency | Syrian pound / US dollar | Confirmed | Q23 |
 | Payment | Source of the exchange rate | Central administration, daily | Confirmed | Q25 |
-| Payment | Mixed payment | Undefined | Awaiting decision | Q26 |
+| Payment | Mixed payment | Yes — several methods and currencies on one bill (D-10) | Confirmed 3 Oct | Q26 |
 | Payment | Bill splitting | Enabled | Confirmed | Q27 |
-| Payment | Rounding rule | Undefined | Awaiting decision | Q29 |
+| Payment | Rounding rule | New Syrian pound; nearest step, 5 by default, set at head office (D-11) | Confirmed 3 Oct | Q29 |
 | Payment | Tips / deferred sales | Disabled / disabled | Confirmed | Q28, Q30 |
 | Cash drawer | Opening float | Enabled — amount undefined | Awaiting decision | Q33 |
 | Cash drawer | Who performs the cash count | Branch manager | Confirmed | Q34 |
@@ -43,11 +48,11 @@ Only this client's **values**. Product behaviour lives in `docs/`. Anything *Awa
 | Cash drawer | Number of POS terminals in the branch | Undefined | Awaiting decision | Q31 |
 | Cash drawer | Number of shifts | Undefined | Awaiting decision | Q32 |
 | Users | Active roles | Cashier, barista, branch manager, accountant, owner | Confirmed | Q37 |
-| Users | Login method | Employee card | Confirmed | Q40 |
+| Users | Login method | Employee card with a printed 8-digit number, or PIN | Confirmed 3 Oct | Q40 |
 | Users | Recording the operator's name | Mandatory on every void and discount | Confirmed | Q39 |
 | Users | Remove an item before payment | Cashier | Confirmed | Q38 |
 | Users | Void an invoice after payment | Branch manager | Confirmed | Q38 |
-| Users | Cash refund | Cashier | Confirmed | Q38 |
+| Users | Cash refund | Manager's PIN and a reason, in the currency the customer paid (D-05). Card and wallet refunds open (D-40) | Confirmed 3 Oct | Q38 |
 | Users | Open the cash drawer without a sale | Branch manager | Confirmed | Q38 |
 | Users | Close the shift | Cashier | Confirmed | Q38 |
 | Users | Change an item price | Administration | Confirmed | Q38 |
@@ -68,9 +73,9 @@ Only this client's **values**. Product behaviour lives in `docs/`. Anything *Awa
 | Mall | Mall's percentage of sales | Entirely undefined | Awaiting decision | Q43 to Q49 |
 | Mall | Mall management's visibility | Undefined | Awaiting decision | Q49 |
 | Infrastructure | Internet status | Fixed line, intermittent | Confirmed | Q67 |
-| Infrastructure | Power cuts | Undefined — a backup power unit is present | Awaiting decision | Q68, Q69 |
+| Infrastructure | Power cuts | Warn after 4 hours offline; sell up to 7 days; the whole branch works together offline (D-12, D-39). UPS hours open (Q-31) | Confirmed 3 Oct | Q68, Q69 |
 | Infrastructure | What must work offline | Selling, printing, preparation, shift close and reports | Confirmed | Q70 |
-| Infrastructure | Hardware | Tablet, desktop, touch screen, printer, drawer, barcode, customer display, payment terminal | Confirmed | Q65 |
+| Infrastructure | Hardware | **iPad tills** (D-37), branch server (mini-PC), network printers, cash drawer, barcode scanner, customer display, UPS. iPad model and count open (Q-24) | Confirmed 3 Oct | Q65 |
 | Infrastructure | Hardware ownership | Purchased by the client | Confirmed | Q66 |
 | Operations | Staff experience | Low | Confirmed | Q72 |
 | Operations | Interface language | Arabic and English with switching | Confirmed | Q73 |

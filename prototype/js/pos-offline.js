@@ -84,7 +84,7 @@ function showSyncReport() {
 function demoHqChange() {
   var latte = item("i03"), cake = item("i11");
   S.hqPending = [
-    { kind: "price", itemId: latte.id, from: latte.price, to: latte.price + 3000, at: simNow() - 40 * 60000, by: "HQ manager" },
+    { kind: "price", itemId: latte.id, from: latte.price, to: latte.price + 30, at: simNow() - 40 * 60000, by: "HQ manager" },
     { kind: "pause", itemId: cake.id, at: simNow() - 25 * 60000, by: "HQ manager" }
   ];
   log("hqChangeWaiting", S.hqPending.length + " changes waiting at HQ");

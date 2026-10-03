@@ -12,3 +12,5 @@
 - After changing a screen: update its row in `docs/04-design/screen-registry.md` and rerun `python prototype/tools/build-coverage.py`.
 - Sample data: Electro Café follows `clients/electro-cafe/seed.md` in **both** `js/data.js` and `js/pos-data.js` (same names, prices, option prices, staff). Change the seed doc and both files together.
 - Invoice numbers are per branch (`Store.invoiceSeries(tn, b)` → `EC-MAIN`); never add the register to the number.
+- Electro Café amounts are in the new Syrian pound (Latte 220, not 22,000); rounding step 5. Menu sections are the top-level categories (To drink, To eat, Our beans); an item with no station (packed beans) prints no kitchen ticket.
+- The till is an iPad: check `pos.html` at 1180×820 and 1080×810, touch only.

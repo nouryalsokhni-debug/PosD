@@ -27,7 +27,7 @@ function paperHead() {
     pCenter(esc(nm(POS_DATA.branch)) + " · " + esc(nm(POS_DATA.register))) +
     pCenter(esc(POS_LANG === "ar" ? r.addressAr : r.address)) +
     pCenter('<span class="ltr">' + esc(r.phone) + "</span>") +
-    pCenter(esc(t("taxId")) + ": " + esc(r.taxId.value) + ' <span class="pmuted">(' + esc(t("assumption")) + " · " + r.taxId.decision + ")</span>");
+    (r.taxId ? pCenter(esc(t("taxId")) + ": " + esc(r.taxId)) : "");
 }
 function offlineMark(x) { return x.syncState !== "offline" ? "" : pCenter("⚠ " + esc(t("pOffline")), "pbox"); }
 
@@ -55,6 +55,8 @@ function paperReceipt(inv, opts) {
   if (inv.totals.manual) h += pRow(esc(t("manualDiscount")), "−" + fmt(inv.totals.manual));
   if (inv.totals.rounding) h += pRow(esc(t("rounding")), (inv.totals.rounding > 0 ? "+" : "−") + fmt(Math.abs(inv.totals.rounding)));
   h += pRow("<b>" + esc(t("total")) + "</b>", "<b>" + fmt(inv.totals.total) + " " + esc(t("pSyp")) + "</b>", "ptotal");
+  var tx = POS_DATA.settings.tax; // set by the tenant at HQ (D-03); prices include it
+  if (tx && tx.on && tx.ratePct > 0 && tx.included) h += pRow(esc(t("pTaxIncluded", { r: tx.ratePct })), fmt(Math.round(inv.totals.total * tx.ratePct / (100 + tx.ratePct))));
   h += pRow("", "≈ " + usd(inv.totals.usd));
   h += pLine();
   inv.tenders.forEach(function (x) { h += pRow(esc(t(x.method)) + (x.ref ? ' <span class="pmuted">#' + esc(x.ref) + "</span>" : ""), x.currency === "USD" ? usd(x.amount) : fmt(x.amount)); });
@@ -67,10 +69,10 @@ function paperReceipt(inv, opts) {
   return paper(h);
 }
 
-/* ---------- A2 · kitchen ticket, one per preparation station (KDS-04 · waits for D-14) ---------- */
+/* ---------- A2 · kitchen ticket, one per preparation station (KDS-04; an item with no station, e.g. packed beans, prints no ticket) ---------- */
 function kitchenTickets(o) {
   var by = {};
-  o.order.lines.forEach(function (l) { var s = stationOf(l.itemId); (by[s.id] = by[s.id] || { st: s, lines: [] }).lines.push(l); });
+  o.order.lines.forEach(function (l) { var s = stationOf(l.itemId); if (!s) return; (by[s.id] = by[s.id] || { st: s, lines: [] }).lines.push(l); });
   return Object.keys(by).map(function (k) { return { station: k, html: paperKitchen(o, by[k].st, by[k].lines) }; });
 }
 function paperKitchen(o, st, lines, opts) {
@@ -123,7 +125,7 @@ function jobHtml(j) {
   if (j.kind === "shift") return j.report ? paperShift(j.report) : "";
   var o = S.orders.filter(function (x) { return x.id === j.ref; })[0]; if (!o) return "";
   var tk = kitchenTickets(o).filter(function (x) { return x.station === j.station; })[0];
-  return tk ? (j.failedAt ? paperKitchen(o, stationById(j.station), o.order.lines.filter(function (l) { return stationOf(l.itemId).id === j.station; }), { late: j.failedAt }) : tk.html) : "";
+  return tk ? (j.failedAt ? paperKitchen(o, stationById(j.station), o.order.lines.filter(function (l) { var so = stationOf(l.itemId); return so && so.id === j.station; }), { late: j.failedAt }) : tk.html) : "";
 }
 function invById(id) { return S.invoices.filter(function (i) { return i.id === id; })[0]; }
 function stationById(id) { return POS_DATA.stations.filter(function (s) { return s.id === id; })[0]; }
@@ -235,7 +237,7 @@ var PRINT_H = {
 
 /* ---------- strings ---------- */
 Object.assign(POS_I18N.en, {
-  taxId: "Tax ID", pDate: "Date", pOrderNo: "Order number", pSyp: "SYP", pCompanyInvoice: "Company invoice",
+  taxId: "Tax ID", pTaxIncluded: "Includes tax {r}%", pDate: "Date", pOrderNo: "Order number", pSyp: "SYP", pCompanyInvoice: "Company invoice",
   pOffline: "Issued offline — not synced yet", pUnpaid: "NOT PAID — pay at hand-over", pLate: "Late print · ordered {t}",
   pRefundSlip: "Refund slip", pApprovedBy: "Approved by", pSignature: "Signature: ____________", pOpened: "Opened", pClosed: "Closed",
   pReceipt: "Receipt", pKitchenTicket: "Kitchen ticket", pRetried: "printed after a failure",
@@ -250,7 +252,7 @@ Object.assign(POS_I18N.en, {
   pBrowserPrint: "Print (80 mm)", pBack: "Printer is back. {n} waiting to print — open To print.", printReceipt: "Print receipt", pPrinters: "Printers", pRateFrom: "Last known rate from {d} (offline)", pOrderNoTicket: "Order confirmed · kitchen ticket not printed — read it out", pOnRequest: "The receipt prints when the customer asks; the invoice is saved either way."
 });
 Object.assign(POS_I18N.ar, {
-  taxId: "الرقم الضريبي", pDate: "التاريخ", pOrderNo: "رقم الطلب", pSyp: "ل.س", pCompanyInvoice: "فاتورة شركة",
+  taxId: "الرقم الضريبي", pTaxIncluded: "يشمل ضريبة {r}%", pDate: "التاريخ", pOrderNo: "رقم الطلب", pSyp: "ل.س", pCompanyInvoice: "فاتورة شركة",
   pOffline: "صدرت دون اتصال — لم تُزامن بعد", pUnpaid: "غير مدفوع — الدفع عند التسليم", pLate: "طباعة متأخرة · الطلب {t}",
   pRefundSlip: "إيصال إرجاع", pApprovedBy: "بموافقة", pSignature: "التوقيع: ____________", pOpened: "الفتح", pClosed: "الإغلاق",
   pReceipt: "الإيصال", pKitchenTicket: "قسيمة المطبخ", pRetried: "طُبعت بعد تعذّر",

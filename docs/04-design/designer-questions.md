@@ -8,6 +8,8 @@ related: figma-map.md, ../05-architecture/module-01-platform-core.md, ../05-arch
 
 # Designer questions and answers
 
+**Update 3 Oct (evening):** the till is an **iPad** (D-37), so till screens are drawn at iPad sizes; menu sections are **To eat, To drink, Our beans**; prices are in the **new Syrian pound**.
+
 60 questions the designer left in Figma ("For the PO" notes, file POS Product).
 
 - **Module 1 (26)** — **answered on 3 Oct** (D-36). The answers are in the HTML, in the [Module 1 handoff v2](../05-architecture/module-01-platform-core.md) and beside each note in Figma ("PO answers" frames). Design changes they cause are [Day 14](../08-delivery/day-14.md).
@@ -19,7 +21,7 @@ Source of the answers: the flows and ownership rules first, then the stack ([ADR
 ## Branches and registers — note `114:1888` (Module 1)
 | # | Question (short) | Answer | In HTML | Status |
 |---|---|---|---|---|
-| B1 | Which sample data is the seed? | **One seed set:** Electro Café = 1 branch (`MAIN`), 2 registers, 7 people, 15 items — [seed](../../clients/electro-cafe/seed.md). Figma may keep its 3-branch demo, labelled "sample". | ✓ panel and till share it | answered |
+| B1 | Which sample data is the seed? | **One seed set:** Electro Café = 1 branch (`MAIN`), 2 registers, 7 people, 18 items in three sections — [seed](../../clients/electro-cafe/seed.md). Figma may keep its 3-branch demo, labelled "sample". | ✓ panel and till share it | answered |
 | B2 | No branch record: edit, pause, close? | **Edit** name, city, code · **Pause / resume** (no new shifts; open shifts can close; nothing deleted). No close or delete in Module 1. | ✓ | answered |
 | B3 | Branch code: generated or chosen? | **HQ chooses** (2–4 letters or digits, unique in the tenant). **Locked after the first invoice.** | ✓ | answered |
 | B4 | Registers: rename, move, retire? | **Rename** and **retire** (history kept, frees a plan slot, refused while a shift is open). **No move.** | ✓ | answered |
@@ -65,11 +67,11 @@ Source of the answers: the flows and ownership rules first, then the stack ([ADR
 | C3 | "Required" with a preselected default | Keep a default (speed at the counter); "Required" means it can't be left empty. HQ sets the default per group later. | proposed |
 | C4 | Order number | **Daily number per branch**, starts at 1 each business day, shown as 3 digits; given by the branch server (POS-02). The prototype's random number is a bug to fix. | proposed |
 | C5 | Invoice number visible? | Format is now `EC-MAIN-000001` (D-27 revised). **On the receipt: yes** (FIS-03). On the customer display: no — the customer sees the order number. | proposed · accountant confirms the format |
-| C6 | Change rounding; change in USD | Change is given in **SYP only**, on the 500 step. Which way to round is the client's call. | client (D-11, D-29) |
+| C6 | Change rounding; change in USD | Amounts are in the **new Syrian pound**; totals round to the nearest step (5 by default, a head-office setting). Change is given in SYP only. | answered (D-11) · change in USD still D-29 |
 | C7 | Card on the till but off at HQ | The till shows only the methods HQ switched on. The prototype till must read the same setting. | proposed |
 | C8 | Wallet reference state | Drawn on Day 12 (03b). | answered |
 | C9 | "Set by HQ" marker on the till | **No.** The cashier can't change these values, so the marker adds nothing. Only the rate shows "today's rate · time". | proposed |
-| C10 | No tax line; tax ID "—" | Hide both until D-03 is decided. | client (D-03) |
+| C10 | No tax line; tax ID "—" | Tax is a head-office setting. The receipt shows a tax line only when the business switched tax on, and the tax number only when one is entered. | answered (D-03) |
 | C11 | What goes behind "More" | Keep Hold and Discount visible; Split, Staff meal, Clear behind More. | proposed · check in UAT |
 | C12 | Paid screen content | Total, payments, change, order number. "Sent to preparation" only in pay-first mode. | proposed |
 | C13 | Digits in Arabic | **Latin digits everywhere** (prices, numbers, dates). | proposed |
@@ -90,10 +92,10 @@ Source of the answers: the flows and ownership rules first, then the stack ([ADR
 | K10 | Invoices: search, filter, paging | Current shift + **search by invoice or order number**. No paging at go-live. | proposed |
 | K11 | Key facts beside the paper | **OK.** | proposed |
 | K12 | Cancel reasons; which manager | A short **reasons list** + "Other"; **any manager's PIN** (the name is recorded). Arabic "رجوع" for dismiss. | proposed |
-| K13 | Refund rules; over-refund bug | Refund the **net amount paid** (payments minus change), in SYP cash unless the payment was USD with no change. Card and wallet payments are refunded through the provider, recorded with a reference — never from the drawer. Confirm before refunding. The slip shows the amount refunded. The prototype's over-refund is a bug to fix. | client (D-05) |
+| K13 | Refund rules; over-refund bug | Refund the **net amount paid** (payments minus change), in SYP cash unless the payment was USD with no change. Card and wallet payments are refunded through the provider, recorded with a reference — never from the drawer. Confirm before refunding. The slip shows the amount refunded. The prototype's over-refund is a bug to fix. | answered for cash (D-05): manager's PIN, a reason, same currency as paid · card and wallet open (D-40) |
 | K14 | "Awaiting refund" status | **Yes.** | proposed |
 | K15 | First print marked COPY | The **first** print is the original; every later one is COPY. | proposed |
-| K16 | "Tax ID: —" | Hide the line until there is a tax ID. Company tax number: "الرقم الضريبي للشركة". | client (D-03) |
+| K16 | "Tax ID: —" | Hidden until the business enters a tax number at head office. Company tax number: "الرقم الضريبي للشركة". | answered (D-03) |
 | K17 | Sync pills | With the branch server there are two facts: **till ↔ branch server** (Connected / Not connected) and **branch ↔ Quantara** (Online / Offline, "n sales waiting"). Count **sales only**. | proposed |
 | K18 | Retention 2 days; rate after sync | Warn when fewer than 2 days of the 7 are left. The sync report shows the **new rate** when it changed. | proposed · D-12 |
 | K19 | No ✕ on "Was this payment received?" | **Confirmed** — the cashier must answer. "No" returns to payment with the order intact; the customer is asked to pay. | proposed |

@@ -23,6 +23,8 @@ New term? Add it here **before** using it anywhere.
 | Back-office access | دخول لوحة الإدارة | Sign-in to the panel by email or phone + password, through an invite |
 | Temporary PIN | رمز مؤقت | 4-digit PIN shown once to HQ; the person changes it at the first till sign-in |
 | Retire (a register) | إخراج من الخدمة | The register can't open new shifts; its history stays |
+| Section | القسم | A top-level menu category shown as a tab on the till (for Electro Café: To eat, To drink, Our beans) |
+| Branch view | عرض الفرع | The branch's own back office, served by the branch server; works with no internet (ADR-002) |
 | Customer display | شاشة الزبون | Screen facing the customer |
 | Tenant HQ / back office | لوحة التحكم المركزية / الإدارة المركزية | The tenant's head office. "Central" in the client spec = tenant HQ, **never** Quantara |
 | Operator control panel | لوحة تحكم المشغّل | Quantara staff panel across all tenants |

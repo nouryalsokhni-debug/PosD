@@ -5,6 +5,7 @@ owner: Tech lead + PO
 last_updated: 2026-10-03
 accepted: 2026-10-03 (PO, from the tech lead's "Recommended Tech Stack" of 19 Sep — original in source/POS_Platform_Recommended_Tech_Stack_v1.docx)
 supersedes: the "proposed" version of 28 Sep
+superseded_in_part_by: ADR-002 (proposed) — decision #2, the till: an iPad web app instead of Electron (D-37)
 ---
 
 # ADR-001 — Offline-first, multi-tenant foundation & stack

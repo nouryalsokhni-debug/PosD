@@ -214,38 +214,40 @@ window.QuantaraData.hq = {
     ],
     // Business rules HQ owns (§5 of the specs) that were not on the Day 4 tenant record.
     rules: { manual_discount_cap_percent: 10, updated_by: "ec-u-owner", updated_at: "2026-09-01T09:00:00Z" },
-    exchange_rate: { base: "USD", quote: "SYP", rate: 13000, round_to: 500, updated_by: "ec-u-hq", updated_at: "2026-09-23T07:42:00Z" },
+    exchange_rate: { base: "USD", quote: "SYP", rate: 130, round_to: 5, updated_by: "ec-u-hq", updated_at: "2026-09-23T07:42:00Z" },
     modules: {
       tips:          { on: true,  branches: ["ec-main"], updated_by: "ec-u-owner", updated_at: "2026-09-02T10:00:00Z" },
       table_service: { on: false, branches: [],          updated_by: "ec-u-owner", updated_at: "2026-09-02T10:00:00Z" },
       loyalty:       { on: false, branches: [],          updated_by: "ec-u-owner", updated_at: "2026-09-02T10:00:00Z" }
     },
     categories: [
-      { id: "hot",   name_en: "Hot drinks",  name_ar: "مشروبات ساخنة" },
-      { id: "cold",  name_en: "Cold drinks", name_ar: "مشروبات باردة" },
-      { id: "sweet", name_en: "Sweets",      name_ar: "حلويات" },
-      { id: "snack", name_en: "Snacks",      name_ar: "سناكات" }
+      { id: "drink", name_en: "To drink",  name_ar: "للشرب" },
+      { id: "eat",   name_en: "To eat",    name_ar: "للأكل" },
+      { id: "beans", name_en: "Our beans", name_ar: "بنّنا" }
     ],
     items: [
-      { id: "ec-espresso", category_id: "hot", name_en: "Espresso", name_ar: "إسبريسو", price: 15000, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
-      { id: "ec-cappuccino", category_id: "hot", name_en: "Cappuccino", name_ar: "كابتشينو", price: 20000, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
-      { id: "ec-latte", category_id: "hot", name_en: "Latte", name_ar: "لاتيه", price: 22000, updated_by: "ec-u-hq", updated_at: "2026-09-23T07:42:00Z" },
-      { id: "ec-turkish", category_id: "hot", name_en: "Turkish coffee", name_ar: "قهوة تركية", price: 12000, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
-      { id: "ec-tea", category_id: "hot", name_en: "Black tea", name_ar: "شاي أسود", price: 8000, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
-      { id: "ec-iced", category_id: "cold", name_en: "Iced coffee", name_ar: "قهوة مثلجة", price: 25000, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
-      { id: "ec-lemonade", category_id: "cold", name_en: "Lemon mint", name_ar: "ليمون ونعناع", price: 18000, updated_by: "ec-u-owner", updated_at: "2026-09-05T08:00:00Z" },
-      { id: "ec-water", category_id: "cold", name_en: "Water", name_ar: "مياه", price: 5000, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
-      { id: "ec-frappe", category_id: "cold", name_en: "Frappé", name_ar: "فرابيه", price: 28000, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
-      { id: "ec-brownie", category_id: "sweet", name_en: "Brownie", name_ar: "براوني", price: 16000, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
-      { id: "ec-cheesecake", category_id: "sweet", name_en: "Cheesecake", name_ar: "تشيز كيك", price: 30000, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
-      { id: "ec-croissant", category_id: "sweet", name_en: "Croissant", name_ar: "كرواسان", price: 14000, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
-      { id: "ec-cake", category_id: "sweet", name_en: "Cake slice", name_ar: "قطعة كيك", price: 20000, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
-      { id: "ec-club", category_id: "snack", name_en: "Club sandwich", name_ar: "كلوب ساندويش", price: 40000, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
-      { id: "ec-chips", category_id: "snack", name_en: "Chips", name_ar: "شيبس", price: 8000, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" }
+      { id: "ec-espresso", category_id: "drink", name_en: "Espresso", name_ar: "إسبريسو", price: 150, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
+      { id: "ec-cappuccino", category_id: "drink", name_en: "Cappuccino", name_ar: "كابتشينو", price: 200, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
+      { id: "ec-latte", category_id: "drink", name_en: "Latte", name_ar: "لاتيه", price: 220, updated_by: "ec-u-hq", updated_at: "2026-09-23T07:42:00Z" },
+      { id: "ec-turkish", category_id: "drink", name_en: "Turkish coffee", name_ar: "قهوة تركية", price: 120, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
+      { id: "ec-tea", category_id: "drink", name_en: "Black tea", name_ar: "شاي أسود", price: 80, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
+      { id: "ec-iced", category_id: "drink", name_en: "Iced coffee", name_ar: "قهوة مثلجة", price: 250, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
+      { id: "ec-lemonade", category_id: "drink", name_en: "Lemon mint", name_ar: "ليمون ونعناع", price: 180, updated_by: "ec-u-owner", updated_at: "2026-09-05T08:00:00Z" },
+      { id: "ec-water", category_id: "drink", name_en: "Water", name_ar: "مياه", price: 50, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
+      { id: "ec-frappe", category_id: "drink", name_en: "Frappé", name_ar: "فرابيه", price: 280, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
+      { id: "ec-brownie", category_id: "eat", name_en: "Brownie", name_ar: "براوني", price: 160, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
+      { id: "ec-cheesecake", category_id: "eat", name_en: "Cheesecake", name_ar: "تشيز كيك", price: 300, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
+      { id: "ec-croissant", category_id: "eat", name_en: "Croissant", name_ar: "كرواسان", price: 140, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
+      { id: "ec-club", category_id: "eat", name_en: "Club sandwich", name_ar: "كلوب ساندويش", price: 400, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
+      { id: "ec-chips", category_id: "eat", name_en: "Chips", name_ar: "شيبس", price: 80, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
+      { id: "ec-cake", category_id: "eat", name_en: "Cake slice", name_ar: "قطعة كيك", price: 200, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
+      { id: "ec-soup", category_id: "eat", name_en: "Lentil soup", name_ar: "شوربة عدس", price: 180, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
+      { id: "ec-beans-house", category_id: "beans", name_en: "House blend beans 250 g", name_ar: "بنّ الخلطة الخاصة 250 غ", price: 1200, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" },
+      { id: "ec-beans-espresso", category_id: "beans", name_en: "Espresso roast beans 250 g", name_ar: "بنّ إسبريسو 250 غ", price: 1350, updated_by: "ec-u-hq", updated_at: "2026-09-10T08:00:00Z" }
     ],
     // HQ offers: HQ-owned, apply to the branches listed ("all" = every branch).
     offers: [
-      { id: "ec-of-1", name_en: "Morning pair: coffee + croissant", name_ar: "ثنائي الصباح: قهوة + كرواسان", kind: "bundle", value: 30000,
+      { id: "ec-of-1", name_en: "Morning pair: coffee + croissant", name_ar: "ثنائي الصباح: قهوة + كرواسان", kind: "bundle", value: 300,
         branches: "all", starts_at: "2026-09-15", ends_at: "2026-10-15", updated_by: "ec-u-owner", updated_at: "2026-09-14T12:00:00Z" }
     ],
     // Branch-owned records. PRC-10 (time-limited item discount) and CAT-06 (pause).
@@ -258,17 +260,17 @@ window.QuantaraData.hq = {
     feed: {
       "ec-main-1": [
         { at: "2026-09-23T05:02:00Z", kind: "shift_open",  by: "ec-u-c1" },
-        { at: "2026-09-23T05:20:00Z", kind: "order", no: 1041, amount: 37000 },
-        { at: "2026-09-23T05:48:00Z", kind: "order", no: 1042, amount: 22000 },
-        { at: "2026-09-23T06:31:00Z", kind: "order", no: 1043, amount: 58000 },
-        { at: "2026-09-23T07:12:00Z", kind: "refund", no: 1042, amount: 22000, by: "ec-u-bm" },
+        { at: "2026-09-23T05:20:00Z", kind: "order", no: 1041, amount: 370 },
+        { at: "2026-09-23T05:48:00Z", kind: "order", no: 1042, amount: 220 },
+        { at: "2026-09-23T06:31:00Z", kind: "order", no: 1043, amount: 580 },
+        { at: "2026-09-23T07:12:00Z", kind: "refund", no: 1042, amount: 220, by: "ec-u-bm" },
         { at: "2026-09-23T07:55:00Z", kind: "item_paused", item_id: "ec-croissant", by: "ec-u-bm" },
-        { at: "2026-09-23T08:20:00Z", kind: "order", no: 1044, amount: 43000 },
-        { at: "2026-09-23T08:42:00Z", kind: "order", no: 1045, amount: 30000 }
+        { at: "2026-09-23T08:20:00Z", kind: "order", no: 1044, amount: 430 },
+        { at: "2026-09-23T08:42:00Z", kind: "order", no: 1045, amount: 300 }
       ],
       "ec-main-2": [
         { at: "2026-09-22T15:00:00Z", kind: "shift_open",  by: "ec-u-c2" },
-        { at: "2026-09-22T20:40:00Z", kind: "order", no: 877, amount: 40000 },
+        { at: "2026-09-22T20:40:00Z", kind: "order", no: 877, amount: 400 },
         { at: "2026-09-22T21:05:00Z", kind: "shift_close", by: "ec-u-c2" },
         { at: "2026-09-22T21:10:00Z", kind: "offline" }
       ]
@@ -350,7 +352,7 @@ window.QuantaraData.support_access = [
 window.QuantaraData.audit_log = [
   { at: "2026-06-01T08:00:00Z", tenant_id: "electro-cafe", actor: "staff-omar", kind: "requested", request_id: "sa-088" },
   { at: "2026-06-01T08:05:00Z", tenant_id: "electro-cafe", actor: "ec-u-owner", kind: "approved", request_id: "sa-088" },
-  { at: "2026-06-01T09:30:00Z", tenant_id: "electro-cafe", actor: "staff-omar", kind: "action", text_en: "Imported 15 catalogue items", text_ar: "استورد 15 صنفًا إلى القائمة" },
+  { at: "2026-06-01T09:30:00Z", tenant_id: "electro-cafe", actor: "staff-omar", kind: "action", text_en: "Imported 18 catalogue items", text_ar: "استورد 18 صنفًا إلى القائمة" },
   { at: "2026-06-01T12:40:00Z", tenant_id: "electro-cafe", actor: "staff-omar", kind: "ended", request_id: "sa-088" },
   { at: "2026-09-23T08:30:00Z", tenant_id: "electro-cafe", actor: "staff-rana", kind: "requested", request_id: "sa-101" },
   { at: "2026-09-23T06:00:00Z", tenant_id: "sample-cedar-grill", actor: "staff-lina", kind: "requested", request_id: "sa-120" },

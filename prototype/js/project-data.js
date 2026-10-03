@@ -4,33 +4,33 @@ window.PROJECT = {
 "areas": [
 {
 "Area": "Plan & scope",
-"Health": "amber",
-"Summary": "Plan, sprints and gates set; the 10-Nov scope cut is still only proposed and 8 requirements are TBD"
+"Health": "red",
+"Summary": "Client decided: everything on the launch list must work on opening day (D-21). No cut — the build order and capacity are now the main risk"
 },
 {
 "Area": "Decisions",
-"Health": "red",
-"Summary": "21 open + 8 proposed of 36; stack (D-35) and Module 1 answers (D-36) decided on 3 Oct; all 9 group-A client decisions still open"
+"Health": "amber",
+"Summary": "9 client and management decisions closed on 3 Oct (scope, ownership, tax, rounding, mixed payment, refunds, stations, offline, invoice numbers). Still open: stock level, card and wallet refunds, card payment, staff meals"
 },
 {
 "Area": "Team",
-"Health": "red",
-"Summary": "Backend developer not confirmed by name; no front-end developer or QA; client technical contact unknown"
+"Health": "amber",
+"Summary": "Backend developer chosen and invited (name to record). The till app is built by Quantara, but no front-end developer is named; no QA; client technical contact unknown"
 },
 {
 "Area": "Architecture",
 "Health": "amber",
-"Summary": "Stack accepted (ADR-001: till → branch server → cloud); hosting, two offline edge cases and non-functional requirements still open"
+"Summary": "Stack accepted (ADR-001). The till is an iPad, so the till technology changes: ADR-002 proposed (web app on iPad, whole-branch offline, head office offline) — tech lead to accept. Hosting and non-functional requirements open"
 },
 {
 "Area": "HTML prototype",
 "Health": "green",
-"Summary": "All 111 requirements shown; Module 1 screens corrected against the stack and the designer's questions (branch server, series per branch, people, menu); cashier fixes for Module 2 listed"
+"Summary": "All 111 requirements shown; Module 1 corrected; the client's answers applied (three sections, two stations, new Syrian pound, tax as a head-office setting). Cashier logic fixes for Module 2 listed"
 },
 {
 "Area": "Design (Figma)",
 "Health": "amber",
-"Summary": "Library fixed, Day 13 cashier screens done; till sizes still missing; Module 1 screens need the Day 14 changes; 0 screens approved"
+"Summary": "Library fixed, cashier part 1–2 drawn — but at desktop sizes; the till is an iPad, so till screens need iPad sizes. Module 1 screens need the Day 14 changes; 0 screens approved"
 },
 {
 "Area": "Backend",
@@ -45,12 +45,12 @@ window.PROJECT = {
 {
 "Area": "Go-live & operations",
 "Health": "red",
-"Summary": "Hardware not chosen; no install, data-load, training or support plan"
+"Summary": "Hardware changes with the answers: iPads, branch server, network and UPS — models and counts not chosen; no install, data-load, training or support plan"
 },
 {
 "Area": "Commercial",
-"Health": "amber",
-"Summary": "IP agreement (D-22) unsigned; pricing (D-32) proposed — not needed for 10 Nov"
+"Health": "green",
+"Summary": "Quantara owns the software; Electro Café is the first subscriber (D-22). Pricing (D-32) proposed — not needed for 10 Nov"
 }
 ],
 "modules": [
@@ -69,7 +69,7 @@ window.PROJECT = {
 "HTML": "part",
 "Flows": "yes",
 "Handoff": "no",
-"Decisions": "no",
+"Decisions": "part",
 "Stack": "part"
 },
 {
@@ -78,7 +78,7 @@ window.PROJECT = {
 "HTML": "part",
 "Flows": "yes",
 "Handoff": "no",
-"Decisions": "no",
+"Decisions": "part",
 "Stack": "part"
 },
 {
@@ -87,7 +87,7 @@ window.PROJECT = {
 "HTML": "yes",
 "Flows": "part",
 "Handoff": "no",
-"Decisions": "no",
+"Decisions": "part",
 "Stack": "yes"
 },
 {
@@ -114,32 +114,32 @@ window.PROJECT = {
 {
 "ID": "G-02",
 "Area": "Team",
-"Gap": "Backend developer not confirmed by name",
-"Fix": "Management confirms who builds Module 1; developer reviews the handoff v2",
-"Owner": "Management",
+"Gap": "Backend developer chosen and invited; the name is not recorded and the tickets are unassigned",
+"Fix": "PO records the name, assigns POSD-97…100 and 108; developer reads the handoff v2.1 (POSD-104)",
+"Owner": "PO",
 "Due": "2026-10-04",
-"Status": "open",
+"Status": "doing",
 "Blocks": "M1"
 },
 {
 "ID": "G-03",
 "Area": "Decisions",
-"Gap": "Group A decisions all open (D-01, D-08, D-09, D-14, D-15, D-20, D-21, D-22, D-24)",
-"Fix": "Client meeting before Thu; accept written assumptions for the rest",
+"Gap": "Group A client decisions: 3 closed on 3 Oct (D-14, D-21, D-22). Still open: D-01 stock level, D-08 branches in 2 years, D-20 technical contact, D-24 warehouse; D-09 and D-15 proposed",
+"Fix": "Next client check-in",
 "Owner": "PO + client owner",
-"Due": "2026-10-01",
-"Status": "open",
-"Blocks": "M2, M4"
+"Due": "2026-10-08",
+"Status": "doing",
+"Blocks": "M4"
 },
 {
 "ID": "G-04",
 "Area": "Plan & scope",
-"Gap": "10-Nov scope cut still proposed (66 IN · 14 MIN · 23 LATER · 8 TBD)",
-"Fix": "PO accepts the cut with the client owner; decide the 8 TBD rows",
-"Owner": "PO + client owner",
-"Due": "2026-10-01",
+"Gap": "Everything on the launch list must work on opening day (D-21) — 105 launch items, one backend developer, no till developer yet",
+"Fix": "Agree the build order with the client (Q-29); ask management for more hands; weekly burn-up check",
+"Owner": "PO + management",
+"Due": "2026-10-08",
 "Status": "open",
-"Blocks": "M2–M5"
+"Blocks": "G2 feature complete"
 },
 {
 "ID": "G-05",
@@ -154,12 +154,12 @@ window.PROJECT = {
 {
 "ID": "G-06",
 "Area": "Commercial",
-"Gap": "IP ownership not in writing (D-22)",
-"Fix": "Management signs the IP agreement with Electro Café",
+"Gap": "IP ownership",
+"Fix": "Decided 3 Oct: Quantara owns the software (D-22); the signed paper is handled outside this plan",
 "Owner": "Management",
 "Due": "2026-10-01",
-"Status": "open",
-"Blocks": "Contract"
+"Status": "done",
+"Blocks": "—"
 },
 {
 "ID": "G-07",
@@ -214,22 +214,22 @@ window.PROJECT = {
 {
 "ID": "G-12",
 "Area": "Decisions",
-"Gap": "Decisions for the Sale module: D-10 mixed payment, D-11 rounding, D-14 stations, D-29 change/card",
-"Fix": "Decide, or accept the prototype's written assumption",
+"Gap": "Decisions for the Sale module: D-10, D-11, D-14, D-03, D-05 closed on 3 Oct. Left: card payment and change in USD (D-29), card and wallet refunds (D-40)",
+"Fix": "PO + tech lead settle D-29 as \"card recorded only\"; client answers D-40",
 "Owner": "PO + client owner",
 "Due": "2026-10-08",
-"Status": "open",
+"Status": "doing",
 "Blocks": "M2"
 },
 {
 "ID": "G-13",
 "Area": "Team",
-"Gap": "No front-end developer — Figma screens have nobody to build them; the cashier app is what goes live",
-"Fix": "Management staffs a front-end developer",
+"Gap": "The till app is built by Quantara for iPad (D-37), but no front-end developer is named",
+"Fix": "Management names the developer; start no later than Sprint 3 (Q-25)",
 "Owner": "Management",
 "Due": "2026-10-08",
 "Status": "open",
-"Blocks": "Front end"
+"Blocks": "The till app"
 },
 {
 "ID": "G-14",
@@ -254,19 +254,19 @@ window.PROJECT = {
 {
 "ID": "G-16",
 "Area": "Design (Figma)",
-"Gap": "Cashier: Sale and Payment still only at 1440×900 — the till sizes 1280×800 and 1366×768 are missing (everything else from Day 12–13 is done; POSD-106 In Review)",
-"Fix": "First item of [Day 14](day-14.md) — POSD-109",
+"Gap": "Till screens are drawn at 1440×900 and 1366×768; the till is an iPad (D-37)",
+"Fix": "Redraw Sale and Payment at 1180×820 first, check at 1080×810; then the Day 13 screens ([Day 14](day-14.md) — POSD-109)",
 "Owner": "Designer",
-"Due": "2026-10-06",
-"Status": "doing",
-"Blocks": "Front end"
+"Due": "2026-10-08",
+"Status": "open",
+"Blocks": "The till app"
 },
 {
 "ID": "G-17",
 "Area": "Go-live & operations",
-"Gap": "Hardware not chosen or ordered; card terminal waits for D-29",
-"Fix": "Client tech contact picks from the approved list; order by 15 Oct",
-"Owner": "Client tech + PO",
+"Gap": "Hardware not chosen or ordered: iPads (model, count), branch server, access point, switch, printers, UPS (hours), scanner",
+"Fix": "Client picks the iPad model and count (Q-24) and the UPS hours (Q-31); PO writes the list; order by 15 Oct",
+"Owner": "Client + PO",
 "Due": "2026-10-15",
 "Status": "open",
 "Blocks": "Install"
@@ -454,22 +454,22 @@ window.PROJECT = {
 {
 "ID": "G-36",
 "Area": "Architecture",
-"Gap": "Two offline cases open: a till that can't reach the branch server; a wallet payment when the line drops (ADR-001 b, c)",
-"Fix": "Tech lead + PO decide; write into the Module 2 handoff",
+"Gap": "A till that can't reach the branch server; a wallet payment when the line drops",
+"Fix": "Wallet: answered by the client (reference number + \"Was this payment received?\"). Till without server: recommended in ADR-002 — tech lead confirms",
 "Owner": "Tech lead + PO",
 "Due": "2026-10-08",
-"Status": "open",
+"Status": "doing",
 "Blocks": "M2"
 },
 {
 "ID": "G-37",
 "Area": "Go-live & operations",
-"Gap": "Hardware list lacks the branch server (mini-PC) and UPS for each branch",
-"Fix": "Add to the approved hardware list (HW-07) and the order",
+"Gap": "Hardware list lacks the branch server, network kit and UPS",
+"Fix": "Folded into G-17",
 "Owner": "Tech lead + PO",
 "Due": "2026-10-15",
-"Status": "open",
-"Blocks": "Install"
+"Status": "done",
+"Blocks": "—"
 },
 {
 "ID": "G-38",
@@ -494,11 +494,11 @@ window.PROJECT = {
 {
 "ID": "G-40",
 "Area": "Decisions",
-"Gap": "Client to confirm two Module 1 points: permission defaults for Owner and HQ manager; staff card stock",
+"Gap": "Two Module 1 points for the client: staff card confirmed (8-digit number); Owner and head-office manager permissions still to confirm (Q-09)",
 "Fix": "Ask in the next client check-in",
 "Owner": "PO + client owner",
 "Due": "2026-10-15",
-"Status": "open",
+"Status": "doing",
 "Blocks": "—"
 },
 {
@@ -510,6 +510,395 @@ window.PROJECT = {
 "Due": "2026-10-08",
 "Status": "open",
 "Blocks": "—"
+},
+{
+"ID": "G-42",
+"Area": "Architecture",
+"Gap": "The till is an iPad: Electron (ADR-001 #2) is out, and an installed web app with HTTPS inside the branch is unproven",
+"Fix": "Tech lead accepts ADR-002 (Q-28) and runs the first-week spike on a real iPad",
+"Owner": "Tech lead",
+"Due": "2026-10-08",
+"Status": "open",
+"Blocks": "M2 · the till app"
+},
+{
+"ID": "G-43",
+"Area": "HTML prototype",
+"Gap": "The cashier prototype is not yet checked at iPad sizes and with touch only",
+"Fix": "PO tests `pos.html` at 1180×820 and 1080×810 with the Module 2 fixes (POSD-105)",
+"Owner": "PO",
+"Due": "2026-10-08",
+"Status": "open",
+"Blocks": "M2"
+},
+{
+"ID": "G-44",
+"Area": "Decisions",
+"Gap": "New questions from the 3 Oct answers: card and wallet refunds (D-40), beans sold in packs with no ticket (Q-27), which small notes are in use (Q-30)",
+"Fix": "Client and accountant answer; tracked in [open-questions](open-questions.md)",
+"Owner": "PO + client",
+"Due": "2026-10-15",
+"Status": "open",
+"Blocks": "M2, M3"
+}
+],
+"build": [
+{
+"Module": "M1 Platform core",
+"Specification": "done",
+"Design": "doing",
+"Backend": "todo",
+"Front end": "todo",
+"Tested": "todo",
+"Live": "todo"
+},
+{
+"Module": "M2 Sale",
+"Specification": "doing",
+"Design": "doing",
+"Backend": "todo",
+"Front end": "todo",
+"Tested": "todo",
+"Live": "todo"
+},
+{
+"Module": "M3 Shift & money",
+"Specification": "doing",
+"Design": "doing",
+"Backend": "todo",
+"Front end": "todo",
+"Tested": "todo",
+"Live": "todo"
+},
+{
+"Module": "M4 Back office",
+"Specification": "doing",
+"Design": "todo",
+"Backend": "todo",
+"Front end": "todo",
+"Tested": "todo",
+"Live": "todo"
+},
+{
+"Module": "M5 Quantara minimum",
+"Specification": "doing",
+"Design": "doing",
+"Backend": "todo",
+"Front end": "todo",
+"Tested": "todo",
+"Live": "todo"
+}
+],
+"questions": [
+{
+"ID": "Q-01",
+"Sprint": "1",
+"Group": "management",
+"Question": "Who is the backend developer?",
+"Who answers": "Management",
+"Needed by": "2026-10-04",
+"Status": "answered",
+"Answer": "Chosen and invited (3 Oct). Left: record the name, assign POSD-97…100 and 108, and the developer reads the handoff (POSD-104)"
+},
+{
+"ID": "Q-02",
+"Sprint": "1",
+"Group": "team",
+"Question": "Does the PO confirm the calls of 3 Oct: stack accepted, invoice series per branch, the 26 Module 1 answers?",
+"Who answers": "PO",
+"Needed by": "2026-10-04",
+"Status": "assumed",
+"Answer": "Treated as confirmed: the PO worked on from them and pushed them. Say so if any should change"
+},
+{
+"ID": "Q-03",
+"Sprint": "1",
+"Group": "team",
+"Question": "When will Sale and Payment be drawn at the till sizes?",
+"Who answers": "Designer",
+"Needed by": "2026-10-08",
+"Status": "open",
+"Answer": "Changed by D-37: the till is an iPad. Draw at 1180 × 820 and check at 1080 × 810, once the model is known (Q-24)"
+},
+{
+"ID": "Q-04",
+"Sprint": "1",
+"Group": "management",
+"Question": "Who owns the product?",
+"Who answers": "Management",
+"Needed by": "2026-10-08",
+"Status": "answered",
+"Answer": "Quantara (Sankari) owns the SaaS software. Electro Café is the first café using it (D-22)"
+},
+{
+"ID": "Q-05",
+"Sprint": "2",
+"Group": "team",
+"Question": "Where does the code live?",
+"Who answers": "Tech lead + PO",
+"Needed by": "2026-10-04",
+"Status": "answered",
+"Answer": "Not in PosD — PosD is the specifications only (PO, 3 Oct). The tech lead names the code repository"
+},
+{
+"ID": "Q-06",
+"Sprint": "2",
+"Group": "team",
+"Question": "Which hosting provider is reachable and allowed from Syria?",
+"Who answers": "Tech lead",
+"Needed by": "2026-10-06",
+"Status": "open",
+"Answer": "Recommended: shortlist two, test from the café's line; staging on any single server meanwhile"
+},
+{
+"ID": "Q-07",
+"Sprint": "2",
+"Group": "team",
+"Question": "How are invites sent (email service, SMS in Syria)?",
+"Who answers": "Tech lead",
+"Needed by": "2026-10-06",
+"Status": "open",
+"Answer": "Recommended: email; otherwise show the invite link once for head office to pass on. SMS after go-live"
+},
+{
+"ID": "Q-08",
+"Sprint": "2",
+"Group": "team",
+"Question": "Sprint 2 is one day over capacity. What spills?",
+"Who answers": "PO",
+"Needed by": "2026-10-06",
+"Status": "open",
+"Answer": "Recommended: finish the catalogue; from the sync skeleton do enrolment and heartbeat; drop the audit log"
+},
+{
+"ID": "Q-09",
+"Sprint": "2",
+"Group": "client",
+"Question": "Should the Owner sell at the till, and the head-office manager add and disable staff?",
+"Who answers": "Client owner",
+"Needed by": "2026-10-08",
+"Status": "assumed",
+"Answer": "The client said every staff member can sell everything (D-38), so all till roles sell. Owner and head-office manager stay as in the spec until confirmed"
+},
+{
+"ID": "Q-10",
+"Sprint": "2",
+"Group": "client",
+"Question": "Which staff card?",
+"Who answers": "Client admin",
+"Needed by": "2026-10-08",
+"Status": "answered",
+"Answer": "A printed 8-digit number, scanned or typed"
+},
+{
+"ID": "Q-11",
+"Sprint": "2",
+"Group": "accountant",
+"Question": "Which invoice number format for a business with 5 branches and one head office?",
+"Who answers": "PO (research)",
+"Needed by": "2026-10-08",
+"Status": "answered",
+"Answer": "One gapless series per branch, `EC-MAIN-000001`, given by the branch server; head office checks each series for gaps (D-27)"
+},
+{
+"ID": "Q-12",
+"Sprint": "3",
+"Group": "client",
+"Question": "Can one bill be paid with several methods or currencies?",
+"Who answers": "Client owner",
+"Needed by": "2026-10-08",
+"Status": "answered",
+"Answer": "Yes (D-10)"
+},
+{
+"ID": "Q-13",
+"Sprint": "3",
+"Group": "accountant",
+"Question": "How is the final amount rounded?",
+"Who answers": "Accountant",
+"Needed by": "2026-10-08",
+"Status": "answered",
+"Answer": "In the new Syrian pound (1 new = 100 old, since 1 Jan 2026). Round to the nearest step; the step is a head-office setting, 5 by default (D-11)"
+},
+{
+"ID": "Q-14",
+"Sprint": "3",
+"Group": "accountant",
+"Question": "Is sales tax applied, and at what rate?",
+"Who answers": "Accountant",
+"Needed by": "2026-10-08",
+"Status": "answered",
+"Answer": "Each business sets its own tax at head office: on or off, the rate, included in prices or added. Quantara fixes no rate (D-03)"
+},
+{
+"ID": "Q-15",
+"Sprint": "3",
+"Group": "team",
+"Question": "Is card payment available at launch, and how does the terminal connect?",
+"Who answers": "PO + tech lead",
+"Needed by": "2026-10-08",
+"Status": "open",
+"Answer": "Recommended: card as a recorded method only; no link to the bank terminal for 10 Nov"
+},
+{
+"ID": "Q-16",
+"Sprint": "3",
+"Group": "client",
+"Question": "How many preparation stations, and which items go where?",
+"Who answers": "Client admin",
+"Needed by": "2026-10-08",
+"Status": "answered",
+"Answer": "Two: drinks bar (To drink) and food counter (To eat, with soups). Sections: To eat, To drink, Our beans (D-14, D-38)"
+},
+{
+"ID": "Q-17",
+"Sprint": "3",
+"Group": "team",
+"Question": "What happens when a till cannot reach the branch server?",
+"Who answers": "Tech lead + PO",
+"Needed by": "2026-10-08",
+"Status": "open",
+"Answer": "Recommended in ADR-002: it cannot complete a sale; it shows the state and retries"
+},
+{
+"ID": "Q-18",
+"Sprint": "3",
+"Group": "client",
+"Question": "A wallet payment when the internet drops: what does the cashier do?",
+"Who answers": "Client owner",
+"Needed by": "2026-10-08",
+"Status": "answered",
+"Answer": "As recommended: the cashier types the wallet's reference number; after a power cut the till asks \"Was this payment received?\""
+},
+{
+"ID": "Q-19",
+"Sprint": "3",
+"Group": "client",
+"Question": "Refund rules",
+"Who answers": "Client owner",
+"Needed by": "2026-10-08",
+"Status": "answered",
+"Answer": "Cash refund with the manager's PIN and a reason, in the same currency the customer paid (D-05). Card and wallet: see Q-26"
+},
+{
+"ID": "Q-20",
+"Sprint": "3",
+"Group": "client",
+"Question": "How long may a branch run offline?",
+"Who answers": "Client admin",
+"Needed by": "2026-10-08",
+"Status": "answered",
+"Answer": "Warn after 4 hours; keep selling up to 7 days. The whole branch works together offline; head office too if possible (D-12, D-39)"
+},
+{
+"ID": "Q-21",
+"Sprint": "3",
+"Group": "management",
+"Question": "Who builds the cashier app?",
+"Who answers": "Management",
+"Needed by": "2026-10-08",
+"Status": "answered",
+"Answer": "Quantara builds it; the till is an iPad (D-37). See Q-25 for the person"
+},
+{
+"ID": "Q-22",
+"Sprint": "3",
+"Group": "team",
+"Question": "Module 2 handoff and cashier fixes ready by 8 Oct?",
+"Who answers": "PO",
+"Needed by": "2026-10-08",
+"Status": "open",
+"Answer": "Recommended order: fix the prototype's logic errors, write the handoff, accept assumptions in writing (POSD-105)"
+},
+{
+"ID": "Q-23",
+"Sprint": "3",
+"Group": "client",
+"Question": "What must work on opening day?",
+"Who answers": "Client owner",
+"Needed by": "2026-10-08",
+"Status": "answered",
+"Answer": "Everything on the launch list (D-21). The proposed cut becomes the build order — see Q-29"
+},
+{
+"ID": "Q-24",
+"Sprint": "2",
+"Group": "client",
+"Question": "Which iPad model, and how many per branch?",
+"Who answers": "Client + PO",
+"Needed by": "2026-10-06",
+"Status": "open",
+"Answer": "Needed for screen sizes and the hardware order. We design for 1180 × 820 until answered"
+},
+{
+"ID": "Q-25",
+"Sprint": "2",
+"Group": "management",
+"Question": "Who is the front-end developer for the iPad till, and when do they start?",
+"Who answers": "Management",
+"Needed by": "2026-10-08",
+"Status": "open",
+"Answer": "The backend for Sale starts on 11 Oct; the till app must start no later"
+},
+{
+"ID": "Q-26",
+"Sprint": "3",
+"Group": "client",
+"Question": "How is a card or wallet payment refunded?",
+"Who answers": "Client owner",
+"Needed by": "2026-10-15",
+"Status": "open",
+"Answer": "Kept open by the client (D-40). Until answered: not from the drawer; recorded as \"to return through the provider\""
+},
+{
+"ID": "Q-27",
+"Sprint": "3",
+"Group": "client",
+"Question": "\"Our beans\": sold in fixed packs with no preparation ticket?",
+"Who answers": "Client admin",
+"Needed by": "2026-10-08",
+"Status": "assumed",
+"Answer": "Yes: fixed packs, a price per pack, no ticket; the cashier hands them over"
+},
+{
+"ID": "Q-28",
+"Sprint": "2",
+"Group": "team",
+"Question": "Does the tech lead accept ADR-002: the till as a web app on iPad, HTTPS in the branch, head office offline in two steps?",
+"Who answers": "Tech lead",
+"Needed by": "2026-10-06",
+"Status": "open",
+"Answer": "Recommended: web app now, native shell later; head office: branch view now, offline queue after go-live"
+},
+{
+"ID": "Q-29",
+"Sprint": "3",
+"Group": "client",
+"Question": "Everything must work on opening day: in which order do we build, so the least important slips if time runs out?",
+"Who answers": "PO + client owner",
+"Needed by": "2026-10-08",
+"Status": "open",
+"Answer": "Recommended: the earlier cut as the order — 66 items first, 14 in a simple form next, 23 last"
+},
+{
+"ID": "Q-30",
+"Sprint": "3",
+"Group": "accountant",
+"Question": "Which notes are in daily use (is there a 5 or a 1)?",
+"Who answers": "Accountant",
+"Needed by": "2026-10-15",
+"Status": "assumed",
+"Answer": "Step 5 works with the 10 and 25 notes. Head office can change the step"
+},
+{
+"ID": "Q-31",
+"Sprint": "3",
+"Group": "client",
+"Question": "How many hours must the branch run through a power cut?",
+"Who answers": "Client admin",
+"Needed by": "2026-10-15",
+"Status": "open",
+"Answer": "Sizes the UPS for the branch server, network and printers"
 }
 ],
 "counts": {
@@ -529,9 +918,9 @@ window.PROJECT = {
 "TBD": 8
 },
 "decisions": {
-"open": 21,
-"proposed": 8,
-"decided": 7
+"decided": 19,
+"open": 16,
+"proposed": 5
 },
 "screens": {
 "html-draft": 45,

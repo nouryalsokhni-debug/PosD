@@ -2,7 +2,7 @@
 title: Quantara POS — Master Plan
 status: living
 owner: PO
-version: 1.4
+version: 1.5
 last_updated: 2026-10-03
 mirror: Google Doc "Quantara POS — Master Plan" (humans edit there; PO syncs each approved version here)
 ---
@@ -21,12 +21,12 @@ mirror: Google Doc "Quantara POS — Master Plan" (humans edit there; PO syncs e
 - A second tenant could be onboarded without code changes (GEN-01, GEN-02).
 
 ## 2b. How it is built (ADR-001)
-Three tiers: **till** (Electron + React) → **branch server** (a mini-PC in each branch: stock, orders, shifts, invoice numbers, printing) → **Quantara cloud** (menu, prices, people, reports). The branch sells with no internet; it syncs when the line is back.
+Three tiers: **till** (an iPad; web app proposed in ADR-002) → **branch server** (a mini-PC in each branch: stock, orders, shifts, invoice numbers, printing) → **Quantara cloud** (menu, prices, people, reports). The branch sells with no internet; it syncs when the line is back.
 
 ## 3. Scope
 - **Master list:** [requirements](02-requirements/requirements.md) — 111 requirements (87 Must, 105 Launch).
 - **Excluded:** [out-of-scope](02-requirements/out-of-scope.md) — tables, QR ordering, reservations, loyalty, mall-% module, deferred sales.
-- **10-Nov cut:** 105 "Launch" items do **not** fit 6 weeks. A proposal is in the *Nov-10* column (66 IN · 14 MIN · 23 LATER · 8 TBD) — see [scope-nov10](02-requirements/scope-nov10.md). Confirmed in the **scope-cut session (Wed 30 Sep)**, driven by D-21.
+- **10 Nov scope (D-21, decided 3 Oct): everything on the launch list must work on opening day.** No cut. The *Nov-10* column (66 IN · 14 MIN · 23 LATER · 8 TBD) is now the **build order** — see [scope-nov10](02-requirements/scope-nov10.md). This is the plan's biggest risk (R-01).
 - **Three surfaces**, in priority order:
   1. **Cashier app** (+ customer display, prep tickets) — must be complete.
   2. **Tenant back office** — essentials only (catalogue, prices, exchange rate, users, shift & sales reports).
@@ -55,7 +55,7 @@ Sprints are **1 week, Sun–Thu**, named as in Jira. The backend builds **one mo
 | Product Owner | Sankari DT (PO) | Scope, priorities, decisions, this plan |
 | Designer | Mariam Kabbani | Figma, screen registry |
 | Tech lead | wrote the recommended stack (name to record) | ADR-001, hosting, sync design |
-| Developers | 1 backend developer (name to confirm); front end TBD | Build, module handoffs |
+| Developers | 1 backend developer (chosen and invited 3 Oct; name to record); the iPad till app is built by Quantara — developer to name | Build, module handoffs |
 | QA | TBD | Test cases, UAT support |
 | Client owner | Electro Café owner | Business decisions |
 | Client technical contact | TBD (D-20) | Site, hardware, UAT |
@@ -70,12 +70,12 @@ Sprints are **1 week, Sun–Thu**, named as in Jira. The backend builds **one mo
 
 ## 7. Top risks
 Full list: [risk register](08-delivery/risk-register.md).
-1. Scope too large for 6 weeks → scope cut on 30 Sep, weekly re-check.
+1. Everything on the launch list by opening day (D-21) with a small team → fixed build order, weekly burn-up, more developers.
 2. Open decisions block build → owners & dates in [decision log](06-decisions/decision-log.md).
 3. Offline sync bugs (duplicates, conflicts, double printing) → offline behaviour settled in HTML before M2 (Sprint 3); tested with real cuts.
 4. Local payment integrations (Syriatel Cash, Sham Cash, cards) → spike at the start of M2 (Sprint 3); manual-record fallback.
 5. One backend developer, and the stack adds a branch-server tier → one module per sprint, strict P0/P1/P2; sync designed before Module 2.
-6. IP ownership not in writing (D-22) → sign before G1.
+6. The till is an iPad web app that is not yet proven offline (ADR-002) → spike in the first backend week.
 
 ## 8. Key links
 - Requirements · Decision log · Screen registry · Delivery plan · Risk register · PO playbook (all in `docs/`)
@@ -86,6 +86,7 @@ Full list: [risk register](08-delivery/risk-register.md).
 | Version | Date | Change |
 |---|---|---|
 | 1.4 | 3 Oct 2026 | Stack accepted (ADR-001, D-35): till → branch server → cloud; Module 1 ready for the backend (handoff v2, D-36); invoice series per branch (D-27 revised) |
+| 1.5 | 3 Oct 2026 | Answers from management, client and accountant: iPad till built by Quantara (D-37), everything on opening day (D-21), Quantara owns the software (D-22), tax, rounding in the new Syrian pound, refunds, stations, offline scope; ADR-002 proposed |
 | 1.0 | 28 Sep 2026 | First version |
 | 1.3 | 1 Oct 2026 | Sprint 1 kept open until the PO closes it (D-34 updated) |
 | 1.2 | 28 Sep 2026 | Sprint 1 ends Thu 1 Oct (was Fri 2 Oct); it closes on "backend has a good start", not on finished design (D-34) |

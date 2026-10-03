@@ -4,6 +4,7 @@ Read this first. It tells you where the truth lives and the rules for changing i
 
 ## What this is
 - **Quantara** — a multi-tenant POS SaaS for restaurants & cafés (tenant → branch → register).
+- **The till is an iPad** (D-37); ADR-002 (proposed) makes it a web app served by the branch server. Money is in the **new Syrian pound** (1 new = 100 old).
 - **Three technical tiers** (ADR-001, accepted): till → **branch server** (one per branch; owns stock, orders, shifts, invoice numbers, printing) → cloud. Invoice series is per branch: `EC-MAIN-000001`.
 - **First client / design partner:** Electro Café (Syria). Go-live target: **Tue 10 Nov 2026**.
 - **Current phase:** design + HTML; backend starts Sun 4 Oct with Module 1 Platform core — ready since 3 Oct (see `docs/08-delivery/module-readiness.md`, handoff `docs/05-architecture/module-01-platform-core.md`).
@@ -32,6 +33,7 @@ Read this first. It tells you where the truth lives and the rules for changing i
 | Architecture | `docs/05-architecture/adr/` + module handoffs `docs/05-architecture/module-NN-*.md` | code comments |
 | When the backend may start a module | `docs/08-delivery/module-readiness.md` | chat |
 | What the project still lacks (gaps, owners, dates) | `docs/08-delivery/project-picture.md` → dashboard `prototype/requirements.html` | memory |
+| Open questions and their answers | `docs/08-delivery/open-questions.md` → the same dashboard | chat |
 
 If two sources disagree: follow the table, then **flag the conflict** to the PO — never silently pick one.
 

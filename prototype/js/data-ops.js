@@ -35,21 +35,26 @@
         { id: "sham",     kind: "wallet", currency: "SYP", on: true, needs_ref: true }
       ],
       mix: [["cash_syp", 62], ["cash_usd", 14], ["syriatel", 13], ["sham", 11]],
-      base_rate: 13000, float: { SYP: 200000, USD: 0 }, variance_limit: 5000,
+      base_rate: 130, float: { SYP: 2000, USD: 0 }, variance_limit: 50, meal_limit: 300,
       suppliers: [
         { id: "sup-roastery", name_en: "[Coffee roastery]", name_ar: "[محمصة القهوة]", phone: "—" },
         { id: "sup-bakery",   name_en: "[Bakery]",          name_ar: "[المخبز]",       phone: "—" },
         { id: "sup-dairy",    name_en: "[Dairy]",           name_ar: "[الألبان]",      phone: "—" }
       ],
-      item_supplier: { "ec-espresso": "sup-roastery", "ec-cappuccino": "sup-roastery", "ec-latte": "sup-dairy", "ec-turkish": "sup-roastery", "ec-tea": "sup-roastery", "ec-iced": "sup-roastery", "ec-lemonade": "sup-dairy", "ec-water": "sup-dairy", "ec-frappe": "sup-dairy",
-        "ec-brownie": "sup-bakery", "ec-cheesecake": "sup-bakery", "ec-croissant": "sup-bakery", "ec-cake": "sup-bakery", "ec-club": "sup-bakery", "ec-chips": "sup-bakery" },
+      item_supplier: { "ec-espresso": "sup-roastery", "ec-cappuccino": "sup-roastery", "ec-latte": "sup-dairy", "ec-turkish": "sup-roastery", "ec-tea": "sup-roastery", "ec-iced": "sup-roastery", "ec-lemonade": "sup-dairy", "ec-water": "sup-dairy", "ec-frappe": "sup-dairy", "ec-brownie": "sup-bakery", "ec-cheesecake": "sup-bakery", "ec-croissant": "sup-bakery", "ec-club": "sup-bakery", "ec-chips": "sup-bakery", "ec-cake": "sup-bakery", "ec-soup": "sup-bakery", "ec-beans-house": "sup-roastery", "ec-beans-espresso": "sup-roastery" },
+      // Two levels: the three sections are the top-level categories (data.js); these sit under them.
       subcategories: [
-        { id: "hot-coffee", parent_id: "hot", name_en: "Coffee", name_ar: "قهوة" },
-        { id: "hot-tea",    parent_id: "hot", name_en: "Tea",    name_ar: "شاي" }
+        { id: "hot",   parent_id: "drink", name_en: "Hot drinks",  name_ar: "مشروبات ساخنة" },
+        { id: "cold",  parent_id: "drink", name_en: "Cold drinks", name_ar: "مشروبات باردة" },
+        { id: "sweet", parent_id: "eat",   name_en: "Sweets",      name_ar: "حلويات" },
+        { id: "snack", parent_id: "eat",   name_en: "Snacks",      name_ar: "سناكات" },
+        { id: "soup",  parent_id: "eat",   name_en: "Soups",       name_ar: "شوربات" }
       ],
-      item_sub: { "ec-espresso": "hot-coffee", "ec-cappuccino": "hot-coffee", "ec-latte": "hot-coffee", "ec-turkish": "hot-coffee", "ec-tea": "hot-tea" },
+      item_sub: { "ec-espresso": "hot", "ec-cappuccino": "hot", "ec-latte": "hot", "ec-turkish": "hot", "ec-tea": "hot", "ec-iced": "cold", "ec-lemonade": "cold", "ec-water": "cold", "ec-frappe": "cold", "ec-brownie": "sweet", "ec-cheesecake": "sweet", "ec-croissant": "sweet", "ec-club": "snack", "ec-chips": "snack", "ec-cake": "sweet", "ec-soup": "soup" },
       options: { "ec-espresso": ["size", "sugar"], "ec-cappuccino": ["size", "sugar", "milk"], "ec-latte": ["size", "sugar", "milk"], "ec-turkish": ["sugar"], "ec-tea": ["sugar"], "ec-iced": ["size", "sugar", "milk"], "ec-lemonade": ["size", "sugar"], "ec-frappe": ["size", "sugar"] },
-      barcodes: { "ec-water": "6210001000038", "ec-brownie": "6210001000045", "ec-croissant": "6210001000014", "ec-cake": "6210001000021", "ec-chips": "6210001000052" }
+      barcodes: { "ec-water": "6210001000038", "ec-brownie": "6210001000045", "ec-croissant": "6210001000014", "ec-chips": "6210001000052", "ec-cake": "6210001000021", "ec-beans-house": "6210001000069", "ec-beans-espresso": "6210001000076" },
+      // D-14 decided 3 Oct: two stations. "Our beans" are sold packed and need no preparation ticket.
+      stations: [ { id: "bar", name_en: "Drinks bar", name_ar: "بار المشروبات", categories: ["drink"] }, { id: "kitchen", name_en: "Food counter", name_ar: "ركن المأكولات", categories: ["eat"] } ]
     },
     "sample-cedar-grill": {
       seed: 7, orders_per_day: 34, open_utc: 8, close_utc: 21,
@@ -58,20 +63,20 @@
         { id: "card",     kind: "card", currency: "SAR", on: true }
       ],
       mix: [["cash_sar", 35], ["card", 65]],
-      base_rate: 3.75, float: { SAR: 500 }, variance_limit: 20,
+      base_rate: 3.75, float: { SAR: 500 }, variance_limit: 20, meal_limit: 30,
       suppliers: [ { id: "sup-meat", name_en: "Sample butcher", name_ar: "ملحمة (عينة)", phone: "—" } ],
       item_supplier: { "cg-shish": "sup-meat", "cg-kofta": "sup-meat", "cg-hummus": "sup-meat" },
-      subcategories: [], item_sub: {}, options: {}, barcodes: {}
+      subcategories: [], item_sub: {}, options: {}, barcodes: {}, stations: [ { id: "kitchen", name_en: "Kitchen", name_ar: "المطبخ", categories: [] } ]
     }
   };
 
   var OPTION_GROUPS = [
     { id: "size",  name_en: "Size",  name_ar: "الحجم", price_effect: true,
-      choices: [ { id: "s", name_en: "Small", name_ar: "صغير", delta: 0 }, { id: "m", name_en: "Medium", name_ar: "وسط", delta: 4000 }, { id: "l", name_en: "Large", name_ar: "كبير", delta: 7000 } ] },
+      choices: [ { id: "s", name_en: "Small", name_ar: "صغير", delta: 0 }, { id: "m", name_en: "Medium", name_ar: "وسط", delta: 40 }, { id: "l", name_en: "Large", name_ar: "كبير", delta: 70 } ] },
     { id: "sugar", name_en: "Sugar", name_ar: "السكر", price_effect: false,
       choices: [ { id: "none", name_en: "None", name_ar: "بدون", delta: 0 }, { id: "low", name_en: "Light", name_ar: "قليل", delta: 0 }, { id: "med", name_en: "Medium", name_ar: "وسط", delta: 0 }, { id: "high", name_en: "Sweet", name_ar: "زيادة", delta: 0 } ] },
     { id: "milk",  name_en: "Milk",  name_ar: "الحليب", price_effect: true,
-      choices: [ { id: "full", name_en: "Full fat", name_ar: "كامل الدسم", delta: 0 }, { id: "oat", name_en: "Oat", name_ar: "شوفان", delta: 5000 } ] }
+      choices: [ { id: "full", name_en: "Full fat", name_ar: "كامل الدسم", delta: 0 }, { id: "oat", name_en: "Oat", name_ar: "شوفان", delta: 50 } ] }
   ];
 
   /* The permission matrix: every sensitive action bound to roles (USR-01, USR-02). Defaults = approved split in client spec v1 §2. */
@@ -104,7 +109,7 @@
     accountant:     { sell: 0, remove_line: 0, hold_order: 0, manual_discount: 0, void_invoice: 0, cash_refund: 0, open_drawer: 0, close_shift: 0, count_cash: 0, approve_variance: 1, staff_meal: 0, pause_item: 0, branch_discount: 0, record_waste: 0, stock_count: 0, receive_goods: 0, change_price: 0, edit_catalogue: 0, set_rate: 0, view_reports: 1, manage_people: 0 },
     branch_manager: { sell: 1, remove_line: 1, hold_order: 1, manual_discount: 1, void_invoice: 1, cash_refund: 1, open_drawer: 1, close_shift: 1, count_cash: 1, approve_variance: 1, staff_meal: 1, pause_item: 1, branch_discount: 1, record_waste: 1, stock_count: 1, receive_goods: 1, change_price: 0, edit_catalogue: 0, set_rate: 0, view_reports: 1, manage_people: 0 },
     cashier:        { sell: 1, remove_line: 1, hold_order: 1, manual_discount: 0, void_invoice: 0, cash_refund: 1, open_drawer: 0, close_shift: 1, count_cash: 0, approve_variance: 0, staff_meal: 0, pause_item: 0, branch_discount: 0, record_waste: 0, stock_count: 0, receive_goods: 0, change_price: 0, edit_catalogue: 0, set_rate: 0, view_reports: 0, manage_people: 0 },
-    barista:        { sell: 0, remove_line: 0, hold_order: 0, manual_discount: 0, void_invoice: 0, cash_refund: 0, open_drawer: 0, close_shift: 0, count_cash: 0, approve_variance: 0, staff_meal: 0, pause_item: 0, branch_discount: 0, record_waste: 1, stock_count: 0, receive_goods: 0, change_price: 0, edit_catalogue: 0, set_rate: 0, view_reports: 0, manage_people: 0 }
+    barista:        { sell: 1, remove_line: 1, hold_order: 1, manual_discount: 0, void_invoice: 0, cash_refund: 0, open_drawer: 0, close_shift: 0, count_cash: 0, approve_variance: 0, staff_meal: 0, pause_item: 0, branch_discount: 0, record_waste: 1, stock_count: 0, receive_goods: 0, change_price: 0, edit_catalogue: 0, set_rate: 0, view_reports: 0, manage_people: 0 }
   };
 
   function build(tn) {
@@ -122,15 +127,15 @@
         variance_limit: P.variance_limit, variance_decision: "D-06",
         no_cash_withdrawals: true, drawer_needs_reason: true,
         mixed_payment: true, mixed_decision: "D-10",
-        rounding_decision: "D-11", round_to: hq.exchange_rate ? hq.exchange_rate.round_to : 1,
+        rounding_decision: null, round_to: hq.exchange_rate ? hq.exchange_rate.round_to : 1,
         order_number: "daily_random", registers_share_orders: true,
         retention_days: 3, retention_decision: "D-12",
-        kds_mode: "printed_ticket", prep_stations: [ { id: "bar", name_en: "Coffee bar", name_ar: "بار القهوة", categories: ["hot", "cold"] }, { id: "pastry", name_en: "Pastry counter", name_ar: "ركن الحلويات", categories: ["sweet", "snack"] } ], stations_decision: "D-14",
+        kds_mode: "printed_ticket", prep_stations: P.stations, stations_decision: null,
         invoice_bilingual: true, invoice_show_rate: true, invoice_show_cashier: true, invoice_footer_en: "Thank you", invoice_footer_ar: "شكراً لزيارتكم",
         company_invoice: false, company_decision: "D-18",
-        tax_rate: null, tax_decision: "D-03", tax_included: true,
+        tax_on: false, tax_rate: 0, tax_included: true, // D-03 decided 3 Oct: tax is a tenant setting made at HQ; Quantara fixes no rate
         segment_discount: { name_en: "Mall staff", name_ar: "موظفو المول", percent: 10, proof_en: "Staff card shown at the till", proof_ar: "إبراز بطاقة الموظف عند الكاشير", decision: "D-17" },
-        staff_meal_daily_limit: 30000, staff_meal_decision: "D-16",
+        staff_meal_daily_limit: P.meal_limit, staff_meal_decision: "D-16",
         updated_by: hq.users[0].id, updated_at: "2026-09-01T09:00:00Z"
       },
       suppliers: P.suppliers, purchase_orders: [], movements: [], stock: {},
@@ -139,19 +144,19 @@
       staff_extra: {}, devices: [], imports: []
     };
 
-    // Items: options, image, barcode, tax (FIS-04 waits for D-03), supplier, reorder point
+    // Items: options, image, barcode, tax (FIS-04: one tenant rate now, per-item later), supplier, reorder point
     items.forEach(function (it, i) {
       ops.item_meta[it.id] = { options: P.options[it.id] || [], has_image: i % 3 !== 2, barcode: P.barcodes[it.id] || "",
         subcategory_id: P.item_sub[it.id] || null, tax_rate: null, supplier_id: P.item_supplier[it.id] || null, reorder_at: 15, cost: Math.round(it.price * 0.38) };
     });
     // Price history (PRC-03)
     items.forEach(function (it) {
-      if (it.updated_at > "2026-09-01") ops.price_history.push({ item_id: it.id, from: Math.round(it.price * 0.9 / 500) * 500 || it.price - 1, to: it.price, at: it.updated_at, by: it.updated_by });
+      if (it.updated_at > "2026-09-01") ops.price_history.push({ item_id: it.id, from: Math.round(it.price * 0.9 / 5) * 5 || it.price - 1, to: it.price, at: it.updated_at, by: it.updated_by });
     });
-    ops.price_history.push({ item_id: items[0].id, from: Math.round(items[0].price * 0.8), to: Math.round(items[0].price * 0.9 / 500) * 500 || items[0].price, at: "2026-07-01T08:00:00Z", by: hq.users[0].id });
+    ops.price_history.push({ item_id: items[0].id, from: Math.round(items[0].price * 0.8), to: Math.round(items[0].price * 0.9 / 5) * 5 || items[0].price, at: "2026-07-01T08:00:00Z", by: hq.users[0].id });
 
     // Rates per day (PAY-04 history, PAY-05 differences)
-    for (var d = 14; d >= 0; d--) { var dd = day(d).toISOString().slice(0, 10); ops.rates[dd] = d === 0 && hq.exchange_rate ? hq.exchange_rate.rate : P.base_rate > 100 ? Math.round(P.base_rate * (1 + (r() - 0.5) * 0.03) / 10) * 10 : Math.round(P.base_rate * (1 + (r() - 0.5) * 0.03) * 100) / 100; }
+    for (var d = 14; d >= 0; d--) { var dd = day(d).toISOString().slice(0, 10); ops.rates[dd] = d === 0 && hq.exchange_rate ? hq.exchange_rate.rate : P.base_rate > 100 ? Math.round(P.base_rate * (1 + (r() - 0.5) * 0.03)) : Math.round(P.base_rate * (1 + (r() - 0.5) * 0.03) * 100) / 100; }
 
     // Staff extras: login method, branches (USR-03, USR-06), meal allowance (USR-07)
     hq.users.forEach(function (u) { ops.staff_extra[u.id] = { login: u.role === "cashier" ? "pin" : "pin", card_id: "", branches: u.branch_id ? [u.branch_id] : [], meals_today: 0 }; });
