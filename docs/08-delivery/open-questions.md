@@ -16,14 +16,14 @@ Group: `management` · `client` · `accountant` · `team` (PO, tech lead, design
 ## Questions
 | ID | Sprint | Group | Question | Who answers | Needed by | Status | Answer |
 |---|---|---|---|---|---|---|---|
-| Q-01 | 1 | management | Who is the backend developer? | Management | 2026-10-04 | answered | Chosen and invited (3 Oct). Left: record the name, assign POSD-97…100 and 108, and the developer reads the handoff (POSD-104) |
+| Q-01 | 1 | management | Who is the backend developer? | Management | 2026-10-04 | answered | Abdulaziz Abdulkader — backend developer and tech lead, one person for now. Assigned to POSD-97, 98 and 110. Left: he reads the handoff and the start guide (POSD-104) |
 | Q-02 | 1 | team | Does the PO confirm the calls of 3 Oct: stack accepted, invoice series per branch, the 26 Module 1 answers? | PO | 2026-10-04 | assumed | Treated as confirmed: the PO worked on from them and pushed them. Say so if any should change |
 | Q-03 | 1 | team | When will Sale and Payment be drawn at the till sizes? | Designer | 2026-10-08 | open | Changed by D-37: the till is an iPad. Draw at 1180 × 820 and check at 1080 × 810, once the model is known (Q-24) |
 | Q-04 | 1 | management | Who owns the product? | Management | 2026-10-08 | answered | Quantara (Sankari) owns the SaaS software. Electro Café is the first café using it (D-22) |
 | Q-05 | 2 | team | Where does the code live? | Tech lead + PO | 2026-10-04 | answered | Not in PosD — PosD is the specifications only (PO, 3 Oct). The tech lead names the code repository |
 | Q-06 | 2 | team | Which hosting provider is reachable and allowed from Syria? | Tech lead | 2026-10-06 | open | Recommended: shortlist two, test from the café's line; staging on any single server meanwhile |
 | Q-07 | 2 | team | How are invites sent (email service, SMS in Syria)? | Tech lead | 2026-10-06 | open | Recommended: email; otherwise show the invite link once for head office to pass on. SMS after go-live |
-| Q-08 | 2 | team | Sprint 2 is one day over capacity. What spills? | PO | 2026-10-06 | open | Recommended: finish the catalogue; from the sync skeleton do enrolment and heartbeat; drop the audit log |
+| Q-08 | 2 | team | Sprint 2 is over capacity. What spills? | PO | 2026-10-06 | assumed | The developer is also the tech lead, so the iPad decision (POSD-110) takes a day. This week: POSD-97, 110, 98, 99. The catalogue (POSD-100) and the sync skeleton (POSD-108) move to the start of Sprint 3; the audit log later |
 | Q-09 | 2 | client | Should the Owner sell at the till, and the head-office manager add and disable staff? | Client owner | 2026-10-08 | assumed | The client said every staff member can sell everything (D-38), so all till roles sell. Owner and head-office manager stay as in the spec until confirmed |
 | Q-10 | 2 | client | Which staff card? | Client admin | 2026-10-08 | answered | A printed 8-digit number, scanned or typed |
 | Q-11 | 2 | accountant | Which invoice number format for a business with 5 branches and one head office? | PO (research) | 2026-10-08 | answered | One gapless series per branch, `EC-MAIN-000001`, given by the branch server; head office checks each series for gaps (D-27) |
@@ -43,7 +43,7 @@ Group: `management` · `client` · `accountant` · `team` (PO, tech lead, design
 | Q-25 | 2 | management | Who is the front-end developer for the iPad till, and when do they start? | Management | 2026-10-08 | open | The backend for Sale starts on 11 Oct; the till app must start no later |
 | Q-26 | 3 | client | How is a card or wallet payment refunded? | Client owner | 2026-10-15 | open | Kept open by the client (D-40). Until answered: not from the drawer; recorded as "to return through the provider" |
 | Q-27 | 3 | client | "Our beans": sold in fixed packs with no preparation ticket? | Client admin | 2026-10-08 | assumed | Yes: fixed packs, a price per pack, no ticket; the cashier hands them over |
-| Q-28 | 2 | team | Does the tech lead accept ADR-002: the till as a web app on iPad, HTTPS in the branch, head office offline in two steps? | Tech lead | 2026-10-06 | open | Recommended: web app now, native shell later; head office: branch view now, offline queue after go-live |
+| Q-28 | 2 | team | Does the tech lead accept ADR-002: the till as a web app on iPad, HTTPS in the branch, head office offline in two steps? | Abdulaziz (tech lead) | 2026-10-06 | open | Recommended: web app now, native shell later; head office: branch view now, offline queue after go-live |
 | Q-29 | 3 | client | Everything must work on opening day: in which order do we build, so the least important slips if time runs out? | PO + client owner | 2026-10-08 | open | Recommended: the earlier cut as the order — 66 items first, 14 in a simple form next, 23 last |
 | Q-30 | 3 | accountant | Which notes are in daily use (is there a 5 or a 1)? | Accountant | 2026-10-15 | assumed | Step 5 works with the 10 and 25 notes. Head office can change the step |
 | Q-31 | 3 | client | How many hours must the branch run through a power cut? | Client admin | 2026-10-15 | open | Sizes the UPS for the branch server, network and printers |

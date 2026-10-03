@@ -54,8 +54,8 @@ Sprints are **1 week, Sun–Thu**, named as in Jira. The backend builds **one mo
 |---|---|---|
 | Product Owner | Sankari DT (PO) | Scope, priorities, decisions, this plan |
 | Designer | Mariam Kabbani | Figma, screen registry |
-| Tech lead | wrote the recommended stack (name to record) | ADR-001, hosting, sync design |
-| Developers | 1 backend developer (chosen and invited 3 Oct; name to record); the iPad till app is built by Quantara — developer to name | Build, module handoffs |
+| Tech lead + backend developer | Abdulaziz Abdulkader (one person, for now) | ADR-001 and ADR-002, hosting, sync design; builds the modules — start guide: [START-HERE-DEVELOPER](../START-HERE-DEVELOPER.md) |
+| Till (iPad) developer | Built by Quantara — person to name (Q-25) | The cashier app |
 | QA | TBD | Test cases, UAT support |
 | Client owner | Electro Café owner | Business decisions |
 | Client technical contact | TBD (D-20) | Site, hardware, UAT |

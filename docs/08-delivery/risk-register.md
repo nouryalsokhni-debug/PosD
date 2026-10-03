@@ -15,7 +15,7 @@ Score = Likelihood (1–3) × Impact (1–3). Review every Thursday; the PO agen
 | R-02 | Open decisions block build (9 closed on 3 Oct; stock level, card, card and wallet refunds still open) | 2 | 3 | 6 | Decision log with dates; weekly client check-in | Any group-A item open on Thu 1 Oct (Sprint 1 close) | PO |
 | R-03 | Offline sync bugs (duplicates, conflicts, double print) | 2 | 3 | 6 | Offline behaviour settled in HTML before M2; append-only events, idempotent on (branch, event id) — ADR-001; no auto-replay of prints; real outage tests | Sync defect found in Sprint 4 | Tech lead |
 | R-04 | Local payments (Syriatel Cash, Sham Cash, cards) can't integrate in time | 2 | 3 | 6 | Spike on day 1 of M2 (Sprint 3); fallback = record method + reference manually | Spike fails by 13 Oct | Tech lead |
-| R-05 | Only 1 backend developer; front end not staffed | 3 | 3 | 9 | One module per sprint; P0/P1/P2 order; catalogue may spill one day; name front-end dev before Sprint 3 | Any Sprint 2 P0 not done on 8 Oct | PO |
+| R-05 | Only 1 backend developer, who is also the tech lead; till developer not named | 3 | 3 | 9 | One module per sprint; P0/P1/P2 order; catalogue may spill one day; name front-end dev before Sprint 3 | Any Sprint 2 P0 not done on 8 Oct | PO |
 | R-06 | ~~IP ownership not written~~ — closed 3 Oct: Quantara owns the software (D-22) | — | — | — | — | — | Management |
 | R-07 | Hardware not on site / incompatible | 2 | 2 | 4 | Decide hardware in S1, order by 15 Oct | Not ordered by 15 Oct | Client tech contact |
 | R-08 | Figma and HTML drift | 2 | 2 | 4 | Registry + sync rules; agent drift check | Screen changed without registry update | Designer |

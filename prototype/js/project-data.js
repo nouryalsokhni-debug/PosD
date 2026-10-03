@@ -15,7 +15,7 @@ window.PROJECT = {
 {
 "Area": "Team",
 "Health": "amber",
-"Summary": "Backend developer chosen and invited (name to record). The till app is built by Quantara, but no front-end developer is named; no QA; client technical contact unknown"
+"Summary": "One person is backend developer and tech lead (Abdulaziz Abdulkader). No developer named for the iPad till; no QA; client technical contact unknown"
 },
 {
 "Area": "Architecture",
@@ -114,12 +114,12 @@ window.PROJECT = {
 {
 "ID": "G-02",
 "Area": "Team",
-"Gap": "Backend developer chosen and invited; the name is not recorded and the tickets are unassigned",
-"Fix": "PO records the name, assigns POSD-97…100 and 108; developer reads the handoff v2.1 (POSD-104)",
+"Gap": "Backend developer",
+"Fix": "Named and assigned 3 Oct: Abdulaziz Abdulkader, also tech lead. Start guide: `START-HERE-DEVELOPER.md`. He reads the handoff, then POSD-104 closes",
 "Owner": "PO",
 "Due": "2026-10-04",
-"Status": "doing",
-"Blocks": "M1"
+"Status": "done",
+"Blocks": "—"
 },
 {
 "ID": "G-03",
@@ -540,6 +540,16 @@ window.PROJECT = {
 "Due": "2026-10-15",
 "Status": "open",
 "Blocks": "M2, M3"
+},
+{
+"ID": "G-45",
+"Area": "Team",
+"Gap": "One person is both the only backend developer and the tech lead: every architecture decision takes time from building",
+"Fix": "Keep his decisions short and prepared (recommended answers in the start guide); ask management for a second developer before Module 2",
+"Owner": "Management + PO",
+"Due": "2026-10-08",
+"Status": "open",
+"Blocks": "M2"
 }
 ],
 "build": [
@@ -598,7 +608,7 @@ window.PROJECT = {
 "Who answers": "Management",
 "Needed by": "2026-10-04",
 "Status": "answered",
-"Answer": "Chosen and invited (3 Oct). Left: record the name, assign POSD-97…100 and 108, and the developer reads the handoff (POSD-104)"
+"Answer": "Abdulaziz Abdulkader — backend developer and tech lead, one person for now. Assigned to POSD-97, 98 and 110. Left: he reads the handoff and the start guide (POSD-104)"
 },
 {
 "ID": "Q-02",
@@ -664,11 +674,11 @@ window.PROJECT = {
 "ID": "Q-08",
 "Sprint": "2",
 "Group": "team",
-"Question": "Sprint 2 is one day over capacity. What spills?",
+"Question": "Sprint 2 is over capacity. What spills?",
 "Who answers": "PO",
 "Needed by": "2026-10-06",
-"Status": "open",
-"Answer": "Recommended: finish the catalogue; from the sync skeleton do enrolment and heartbeat; drop the audit log"
+"Status": "assumed",
+"Answer": "The developer is also the tech lead, so the iPad decision (POSD-110) takes a day. This week: POSD-97, 110, 98, 99. The catalogue (POSD-100) and the sync skeleton (POSD-108) move to the start of Sprint 3; the audit log later"
 },
 {
 "ID": "Q-09",
@@ -865,7 +875,7 @@ window.PROJECT = {
 "Sprint": "2",
 "Group": "team",
 "Question": "Does the tech lead accept ADR-002: the till as a web app on iPad, HTTPS in the branch, head office offline in two steps?",
-"Who answers": "Tech lead",
+"Who answers": "Abdulaziz (tech lead)",
 "Needed by": "2026-10-06",
 "Status": "open",
 "Answer": "Recommended: web app now, native shell later; head office: branch view now, offline queue after go-live"

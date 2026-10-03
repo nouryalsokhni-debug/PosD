@@ -16,12 +16,12 @@ jira: Sprint 2 — Platform core (board 638, sprint 690)
 - Sprint 1 stays open (D-34); design continues there with [Day 14](day-14.md).
 - **Jira updated 3 Oct:** POSD-96 (epic), POSD-97, 98, 99, 100 rewritten for the stack; **POSD-108** (BE-6 sync skeleton) created in Sprint 2; **POSD-109** (Day 14) created in Sprint 1; status comment on POSD-104 (stays open until the developer is named and has read the handoff); cashier fixes added to POSD-105.
 - **Answers of 3 Oct (management, client, accountant):** backend developer chosen and invited · the till is an iPad built by Quantara (D-37, ADR-002 proposed) · everything must work on opening day (D-21) · tax, rounding, mixed payment, refunds, stations and offline limits decided. All questions and their status: [open-questions](open-questions.md).
-- Still to do: record the developer's name and assign the tickets.
+- **Developer and tech lead:** Abdulaziz Abdulkader, assigned to POSD-97, 98 and 110. Start guide: [START-HERE-DEVELOPER](../../START-HERE-DEVELOPER.md).
 
 ## Capacity
 | Person | Days | Plan to | Notes |
 |---|---|---|---|
-| Backend developer | 5 | 4 days (80%) | Starts only if G1 is met (POSD-104, closes with Sprint 1) |
+| Backend developer + tech lead (Abdulaziz Abdulkader) | 5 | 4 days (80%) | One person: architecture decisions (POSD-110) come out of the same days |
 | Designer | 5 | 4 days | POSD-95 carryover first |
 | PO | — | — | Gate G1, Module 2 readiness, HTML step 2 C–D |
 
@@ -40,7 +40,7 @@ Backend tickets follow the [Module 1 handoff v2](../05-architecture/module-01-pl
 | P0 | POSD-105 | Module 2 ready for backend: cashier logic fixes (gap G-39), check at iPad sizes, handoff doc (order lines saved on the branch server as they are entered), remaining decisions (due Thu 8 Oct) | — | PO | — |
 | P0 | POSD-110 | Tech lead: accept ADR-002 and run the iPad spike (web app from the branch server, HTTPS in the branch, two tills at once) | 1 d | Tech lead | — |
 
-**Backend load:** P0 = 3 d (75% of 4 days) · with P1 = 5 d — **over capacity by 1 day.** The catalogue and the sync skeleton are both needed before Module 2; whichever is not finished is the first item of Sprint 3 (R-14). Audit (P2) is cut first.
+**Backend load:** the developer is also the tech lead, so POSD-110 (1 day) comes out of the same 4 days. **This week: POSD-97, 110, 98, 99 = 4 days.** The catalogue (POSD-100) and the sync skeleton (POSD-108) move to the start of Sprint 3 and take about 2 days from Module 2 (R-14). Audit (P2) moves later. Day-by-day plan: [START-HERE-DEVELOPER](../../START-HERE-DEVELOPER.md).
 
 **Seed:** load [Electro Café seed](../../clients/electro-cafe/seed.md) in staging for the Thursday demo.
 

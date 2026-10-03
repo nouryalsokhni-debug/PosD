@@ -18,7 +18,7 @@ Health: `green` = nothing blocks · `amber` = gaps with a plan · `red` = gaps t
 |---|---|---|
 | Plan & scope | red | Client decided: everything on the launch list must work on opening day (D-21). No cut — the build order and capacity are now the main risk |
 | Decisions | amber | 9 client and management decisions closed on 3 Oct (scope, ownership, tax, rounding, mixed payment, refunds, stations, offline, invoice numbers). Still open: stock level, card and wallet refunds, card payment, staff meals |
-| Team | amber | Backend developer chosen and invited (name to record). The till app is built by Quantara, but no front-end developer is named; no QA; client technical contact unknown |
+| Team | amber | One person is backend developer and tech lead (Abdulaziz Abdulkader). No developer named for the iPad till; no QA; client technical contact unknown |
 | Architecture | amber | Stack accepted (ADR-001). The till is an iPad, so the till technology changes: ADR-002 proposed (web app on iPad, whole-branch offline, head office offline) — tech lead to accept. Hosting and non-functional requirements open |
 | HTML prototype | green | All 111 requirements shown; Module 1 corrected; the client's answers applied (three sections, two stations, new Syrian pound, tax as a head-office setting). Cashier logic fixes for Module 2 listed |
 | Design (Figma) | amber | Library fixed, cashier part 1–2 drawn — but at desktop sizes; the till is an iPad, so till screens need iPad sizes. Module 1 screens need the Day 14 changes; 0 screens approved |
@@ -55,7 +55,7 @@ Status: `open` · `doing` · `done`. Due = the date it stops being fine. Blocks 
 | ID | Area | Gap | Fix | Owner | Due | Status | Blocks |
 |---|---|---|---|---|---|---|---|
 | G-01 | Architecture | Stack not accepted — ADR-001 | Accepted 3 Oct from the tech lead's recommendation (D-35); POSD-104 stays open only for the developer's review | Tech lead + PO | 2026-10-01 | done | — |
-| G-02 | Team | Backend developer chosen and invited; the name is not recorded and the tickets are unassigned | PO records the name, assigns POSD-97…100 and 108; developer reads the handoff v2.1 (POSD-104) | PO | 2026-10-04 | doing | M1 |
+| G-02 | Team | Backend developer | Named and assigned 3 Oct: Abdulaziz Abdulkader, also tech lead. Start guide: `START-HERE-DEVELOPER.md`. He reads the handoff, then POSD-104 closes | PO | 2026-10-04 | done | — |
 | G-03 | Decisions | Group A client decisions: 3 closed on 3 Oct (D-14, D-21, D-22). Still open: D-01 stock level, D-08 branches in 2 years, D-20 technical contact, D-24 warehouse; D-09 and D-15 proposed | Next client check-in | PO + client owner | 2026-10-08 | doing | M4 |
 | G-04 | Plan & scope | Everything on the launch list must work on opening day (D-21) — 105 launch items, one backend developer, no till developer yet | Agree the build order with the client (Q-29); ask management for more hands; weekly burn-up check | PO + management | 2026-10-08 | open | G2 feature complete |
 | G-05 | Plan & scope | PRC-11 is an empty row carried from the client spec | Ask the client what it was, or delete it | PO | 2026-10-01 | open | — |
@@ -98,3 +98,4 @@ Status: `open` · `doing` · `done`. Due = the date it stops being fine. Blocks 
 | G-42 | Architecture | The till is an iPad: Electron (ADR-001 #2) is out, and an installed web app with HTTPS inside the branch is unproven | Tech lead accepts ADR-002 (Q-28) and runs the first-week spike on a real iPad | Tech lead | 2026-10-08 | open | M2 · the till app |
 | G-43 | HTML prototype | The cashier prototype is not yet checked at iPad sizes and with touch only | PO tests `pos.html` at 1180×820 and 1080×810 with the Module 2 fixes (POSD-105) | PO | 2026-10-08 | open | M2 |
 | G-44 | Decisions | New questions from the 3 Oct answers: card and wallet refunds (D-40), beans sold in packs with no ticket (Q-27), which small notes are in use (Q-30) | Client and accountant answer; tracked in [open-questions](open-questions.md) | PO + client | 2026-10-15 | open | M2, M3 |
+| G-45 | Team | One person is both the only backend developer and the tech lead: every architecture decision takes time from building | Keep his decisions short and prepared (recommended answers in the start guide); ask management for a second developer before Module 2 | Management + PO | 2026-10-08 | open | M2 |

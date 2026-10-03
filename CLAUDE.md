@@ -50,6 +50,7 @@ If two sources disagree: follow the table, then **flag the conflict** to the PO 
 
 ## Map
 ```
+START-HERE-DEVELOPER.md       one page for the developer: infrastructure, plan, first week, open technical decisions
 docs/00-master-plan.md        plan, timeline, team, governance (mirror of Google Doc)
 docs/01-product/              overview, glossary (EN/AR), roles, ownership boundaries (Quantara · HQ · branch)
 docs/02-requirements/         requirements (master), out-of-scope
